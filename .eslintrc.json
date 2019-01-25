@@ -1,7 +1,7 @@
 {
   "parser": "babel-eslint",
   "extends": ["standard", "prettier", "prettier/standard"],
-  "plugins": ["prettier", "standard", "promise", "node", "import"],
+  "plugins": ["prettier", "standard", "node", "import"],
   "parserOptions": {
     "sourceType": "module",
     "ecmaFeatures": {
