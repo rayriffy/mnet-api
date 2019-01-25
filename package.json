@@ -1,0 +1,33 @@
+{
+  "name": "mnet-api",
+  "version": "0.0.1",
+  "description": "M-NET API",
+  "main": "index.js",
+  "repository": "git@github.com:rayriffy/mnet-api.git",
+  "author": "Phumrapee Limpianchop <contact@rayriffy.com>",
+  "license": "MIT",
+  "dependencies": {
+    "backpack-core": "^0.8.3",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.12.1",
+    "eslint-config-prettier": "^3.6.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.15.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "prettier": "^1.16.1"
+  },
+  "scripts": {
+    "build": "backpack build",
+    "dev": "backpack",
+    "format": "prettier --write --no-semi --list-different './src/**/*.js'",
+    "lint": "eslint ./src/**/*.js",
+    "start": "node ./build/main.js"
+  }
+}
