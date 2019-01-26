@@ -1,13 +1,40 @@
 import axios from 'axios'
 import dotenv from 'dotenv'
 import express from 'express'
+import passport from 'passport'
+
+import User from '../../../models/user'
 
 dotenv.config()
 const {FCM_KEY} = process.env
 
 const router = express.Router()
 
-router.post('/', (req, res) => {
+router.all('*', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+  User.getUserById(req.user.id, (err, user) => {
+    if (err) {
+      res.status(401).send({
+        status: 'failure',
+        response: {
+          message: 'id not found',
+        },
+      })
+    } else {
+      if (user.role !== 'administrator') {
+        res.status(401).send({
+          status: 'failure',
+          response: {
+            message: 'insufficient permission',
+          },
+        })
+      } else {
+        next()
+      }
+    }
+  })
+})
+
+router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
   const payload = {
     to: `/topics/${req.body.to}`,
     priority: 'normal',
