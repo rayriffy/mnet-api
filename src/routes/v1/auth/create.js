@@ -5,17 +5,18 @@ import User from '../../../models/user'
 const router = express.Router()
 
 router.get('/', (req, res) => {
-  const userData = {
-    username: req.body.user,
-    password: req.body.pass,
-  }
+  const userData = new User({
+    user: req.body.user,
+    pass: req.body.pass,
+  })
 
-  User.create(userData, (err, user) => {
+  User.addUser(userData, (err, user) => {
     if (err) {
       return res.status(401).send({
         status: 'failure',
         response: {
-          message: err,
+          message: 'failed to create new user',
+          data: err,
         },
       })
     } else {
@@ -23,9 +24,6 @@ router.get('/', (req, res) => {
         status: 'success',
         response: {
           message: 'user created',
-          data: {
-            id: user._id,
-          },
         },
       })
     }

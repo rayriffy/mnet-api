@@ -14,35 +14,31 @@ const UserSchema = new mongoose.Schema({
   },
 })
 
-UserSchema.statics.authenticate = (user, pass, callback) => {
-  User.findOne({user: user}).exec((err, res) => {
-    if (err) {
-      return callback(err)
-    } else if (!res) {
-      let err = new Error('User not found.')
-      err.status = 401
-      return callback(err)
-    }
-    bcrypt.compare(pass, res.pass, (err, res) => {
-      if (res === true) {
-        return callback(null, this.res)
-      } else {
-        return callback(err)
-      }
-    })
+UserSchema.statics.register = (data, callback) => {
+  bcrypt.hash(data.pass, 10, (err, res) => {
+    if (err) throw err
+    data.pass = res
+    data.save(callback)
   })
 }
 
-UserSchema.pre('save', function(next) {
-  var user = this
-  bcrypt.hash(user.password, 10, function(err, hash) {
-    if (err) {
-      return next(err)
+UserSchema.statics.getUserById = (id, callback) => {
+  User.findById(id, callback)
+}
+
+UserSchema.statics.getUserByUsername = (user, callback) => {
+  User.findOne({user: user}, callback)
+}
+
+UserSchema.statics.comparePassword = (candidatePassword, hash, callback) => {
+  bcrypt.compare(candidatePassword, hash, (err, res) => {
+    if (res === true) {
+      callback(null, res)
+    } else {
+      callback(err)
     }
-    user.password = hash
-    next()
   })
-})
+}
 
 const User = mongoose.model('User', UserSchema)
 
