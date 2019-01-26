@@ -5,14 +5,15 @@ import mongoose from 'mongoose'
 import passport from 'passport'
 
 import dbConfig from './config/database'
-import passportService from './services/passport'
 import serverConfig from './config/server'
+
+import passportService from './services/passport'
 
 import v1Routes from './routes/v1/index'
 
 const {PORT = 3000} = serverConfig
 
-mongoose.connect(dbConfig.database, {useMongoClient: true})
+mongoose.connect(dbConfig.database, {useCreateIndex: true, useNewUrlParser: true})
 
 mongoose.connection.on('connected', () => {
   console.log('connected to the database')

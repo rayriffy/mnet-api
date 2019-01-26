@@ -4,13 +4,13 @@ import User from '../../../models/user'
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
   const userData = new User({
     user: req.body.user,
     pass: req.body.pass,
   })
 
-  User.addUser(userData, (err, user) => {
+  User.register(userData, (err, user) => {
     if (err) {
       return res.status(401).send({
         status: 'failure',

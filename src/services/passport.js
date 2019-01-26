@@ -1,4 +1,4 @@
-import {JwtStrategy, ExtractJwt} from 'passport-jwt'
+import {Strategy, ExtractJwt} from 'passport-jwt'
 
 import User from '../models/user'
 
@@ -9,8 +9,8 @@ export default passport => {
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt')
   opts.secretOrKey = dbConfig.secret
   passport.use(
-    new JwtStrategy(opts, (payload, res) => {
-      User.getUserById(payload._doc._id, (err, user) => {
+    new Strategy(opts, (payload, res) => {
+      User.getUserById(payload.id, (err, user) => {
         if (err) {
           return res(null, false)
         }
