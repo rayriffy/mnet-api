@@ -35,7 +35,7 @@ passportService(passport)
 
 server.use('/api/v1', v1Routes)
 
-server.get('*', (req, res) => {
+server.all('*', (req, res) => {
   res.status(404).send({
     status: 'failure',
     response: 'route not found',
