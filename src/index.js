@@ -1,19 +1,18 @@
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import dotenv from 'dotenv'
 import express from 'express'
 import mongoose from 'mongoose'
 import passport from 'passport'
-
-import dbConfig from './config/database'
-import serverConfig from './config/server'
 
 import passportService from './services/passport'
 
 import v1Routes from './routes/v1/index'
 
-const {PORT = 3000} = serverConfig
+dotenv.config()
+const {PORT = 3000, MONGO_DATABASE} = process.env
 
-mongoose.connect(dbConfig.database, {useCreateIndex: true, useNewUrlParser: true})
+mongoose.connect(MONGO_DATABASE, {useCreateIndex: true, useNewUrlParser: true})
 
 mongoose.connection.on('connected', () => {
   console.log('connected to the database')

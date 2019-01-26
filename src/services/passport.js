@@ -1,13 +1,15 @@
-import {Strategy, ExtractJwt} from 'passport-jwt'
+import dotenv from 'dotenv'
+import {ExtractJwt, Strategy} from 'passport-jwt'
 
 import User from '../models/user'
 
-import dbConfig from '../config/database'
+dotenv.config()
+const {SECRET} = process.env
 
 export default passport => {
   let opts = {}
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt')
-  opts.secretOrKey = dbConfig.secret
+  opts.secretOrKey = SECRET
   passport.use(
     new Strategy(opts, (payload, res) => {
       User.getUserById(payload.id, (err, user) => {

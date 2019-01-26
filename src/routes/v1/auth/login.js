@@ -1,9 +1,11 @@
+import dotenv from 'dotenv'
 import express from 'express'
 import jwt from 'jsonwebtoken'
 
-import dbConfig from '../../../config/database'
-
 import User from '../../../models/user'
+
+dotenv.config()
+const {SECRET} = process.env
 
 const router = express.Router()
 
@@ -32,7 +34,7 @@ router.post('/', (req, res) => {
             id: user._id,
             user: user.user,
           }
-          const token = jwt.sign(payload, dbConfig.secret, {expiresIn: 18144000})
+          const token = jwt.sign(payload, SECRET, {expiresIn: 18144000})
           return res.status(200).send({
             status: 'success',
             response: {
