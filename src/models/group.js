@@ -26,13 +26,7 @@ GroupSchema.statics.addUserToGroup = (data, callback) => {
     if (err) {
       callback(err)
     } else {
-      Group.findByIdAndUpdate(group._id, {$push: {member: data.user.id}}, (err, res) => {
-        if (err) {
-          callback(err)
-        } else {
-          callback(null, res)
-        }
-      })
+      Group.findByIdAndUpdate(group._id, {$push: {member: data.user.id}}, callback)
     }
   })
 }
