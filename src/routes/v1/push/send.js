@@ -35,28 +35,37 @@ router.all('*', passport.authenticate('jwt', {session: false}), (req, res, next)
 })
 
 router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
-  const payload = {
-    to: `/topics/${req.body.to}`,
-    priority: 'normal',
-    notification: {
-      title: req.body.title,
-      text: req.body.text,
-    },
+  if (!req.body.to || !req.body.title || !req.body.text) {
+    res.status(401).send({
+      status: 'failure',
+      response: {
+        message: 'invalid argruments',
+      },
+    })
+  } else {
+    const payload = {
+      to: `/topics/${req.body.to}`,
+      priority: 'normal',
+      notification: {
+        title: req.body.title,
+        text: req.body.text,
+      },
+    }
+
+    const options = {
+      headers: {
+        Authorization: `key=${FCM_KEY}`,
+        'Content-Type': 'application/json',
+      },
+    }
+
+    axios.post('https://fcm.googleapis.com/fcm/send', payload, options)
+
+    res.status(200).send({
+      status: 'success',
+      response: `sending push notification to ${req.body.to}`,
+    })
   }
-
-  const options = {
-    headers: {
-      Authorization: `key=${FCM_KEY}`,
-      'Content-Type': 'application/json',
-    },
-  }
-
-  axios.post('https://fcm.googleapis.com/fcm/send', payload, options)
-
-  res.status(200).send({
-    status: 'success',
-    response: `sending push notification to ${req.body.to}`,
-  })
 })
 
 export default router
