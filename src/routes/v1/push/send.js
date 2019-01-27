@@ -31,7 +31,7 @@ router.all('*', passport.authenticate('jwt', {session: false}), (req, res, next)
   })
 })
 
-router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
+router.post('/', (req, res) => {
   if (!req.body.to || !req.body.title || !req.body.text) {
     res.status(401).send({
       status: 'failure',

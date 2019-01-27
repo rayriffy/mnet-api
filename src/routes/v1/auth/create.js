@@ -8,6 +8,11 @@ router.post('/', (req, res) => {
   const userData = new User({
     user: req.body.user,
     pass: req.body.pass,
+    activation: {
+      ref: Math.random()
+        .toString(36)
+        .substr(2, 8),
+    },
   })
 
   User.addUser(userData, (err, user) => {

@@ -30,7 +30,7 @@ router.post('/', (req, res) => {
           })
         }
         if (compare) {
-          if (!user.activated) {
+          if (!user.activation.isActivated) {
             return res.status(401).send({
               status: 'failure',
               response: {

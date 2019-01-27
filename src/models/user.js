@@ -24,6 +24,7 @@ const UserSchema = new mongoose.Schema({
     },
     isActivated: {
       type: Boolean,
+      required: true,
       default: false,
     },
   },
@@ -40,7 +41,11 @@ UserSchema.statics.addUser = (data, callback) => {
 }
 
 UserSchema.statics.activateUser = (ref, callback) => {
-  User.update({activation: {ref: ref}}, {$set: {activation: {isActivated: true}}}, callback)
+  User.updateOne(
+    {$and: [{'activation.ref': {$eq: ref}}, {'activation.isActivated': {$eq: false}}]},
+    {$set: {activation: {isActivated: true}}},
+    callback,
+  )
 }
 
 UserSchema.statics.getUserById = (id, callback) => {
