@@ -11,7 +11,7 @@ import passportService from './services/passport'
 import v1Routes from './routes/v1/index'
 
 dotenv.config()
-const {PORT = 3000, MONGO_DATABASE, NODE_ENV} = process.env
+const {PORT = 3000, MONGO_DATABASE, APP_ENV} = process.env
 
 mongoose.connect(MONGO_DATABASE, {useCreateIndex: true, useNewUrlParser: true})
 
@@ -45,7 +45,7 @@ server.all('*', (req, res) => {
 
 server.listen(PORT, () => {
   console.log(`${chalk.black.bgGreen(' INFO ')} app is running on port ${PORT}`)
-  if (NODE_ENV !== 'production') {
-    console.log(`${chalk.black.bgYellow(' WARN ')} this app is running on ${NODE_ENV} environment!`)
+  if (APP_ENV !== 'production') {
+    console.log(`${chalk.black.bgYellow(' WARN ')} this app is running on ${APP_ENV} environment!`)
   }
 })

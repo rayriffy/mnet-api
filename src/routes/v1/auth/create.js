@@ -5,11 +5,11 @@ import passport from 'passport'
 import User from '../../../models/user'
 
 dotenv.config()
-const {NODE_ENV} = process.env
+const {APP_ENV} = process.env
 
 const router = express.Router()
 
-if (NODE_ENV === 'production') {
+if (APP_ENV === 'production') {
   router.all('*', passport.authenticate('jwt', {session: false}), (req, res, next) => {
     User.getUserById(req.user.id, (err, user) => {
       if (err) {
