@@ -1,5 +1,6 @@
 import express from 'express'
 
+import authActivate from './auth/activate'
 import authCreate from './auth/create'
 import authLogin from './auth/login'
 
@@ -12,6 +13,7 @@ router.get('/', (req, res) => {
   })
 })
 
+router.use('/activate', authActivate)
 router.use('/create', authCreate)
 router.use('/login', authLogin)
 

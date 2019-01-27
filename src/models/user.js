@@ -17,14 +17,24 @@ const UserSchema = new mongoose.Schema({
     required: true,
     default: 'normal',
   },
+  activated: {
+    type: Boolean,
+    default: false,
+  },
 })
 
-UserSchema.statics.register = (data, callback) => {
+UserSchema.statics.addUser = (data, callback) => {
   bcrypt.hash(data.pass, 10, (err, res) => {
-    if (err) throw err
+    if (err) {
+      callback(err)
+    }
     data.pass = res
     data.save(callback)
   })
+}
+
+UserSchema.statics.activateUser = (id, callback) => {
+  User.findByIdAndUpdate(id, {activated: true}, callback)
 }
 
 UserSchema.statics.getUserById = (id, callback) => {
