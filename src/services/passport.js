@@ -18,7 +18,8 @@ export default passport => {
         }
 
         if (user) {
-          return res(null, user)
+          if (user.activation.isActivated) return res(null, user)
+          else return res(null, false)
         } else {
           return res(null, false)
         }
