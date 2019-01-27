@@ -30,7 +30,9 @@ router.post('/', (req, res) => {
         status: 'success',
         response: {
           message: 'user created',
-          ref: refCode,
+          data: {
+            ref: refCode,
+          },
         },
       })
     }
