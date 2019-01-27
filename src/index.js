@@ -1,4 +1,5 @@
 import bodyParser from 'body-parser'
+import chalk from 'chalk'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import express from 'express'
@@ -10,16 +11,16 @@ import passportService from './services/passport'
 import v1Routes from './routes/v1/index'
 
 dotenv.config()
-const {PORT = 3000, MONGO_DATABASE} = process.env
+const {PORT = 3000, MONGO_DATABASE, NODE_ENV} = process.env
 
 mongoose.connect(MONGO_DATABASE, {useCreateIndex: true, useNewUrlParser: true})
 
 mongoose.connection.on('connected', () => {
-  console.log('connected to the database')
+  console.log(`${chalk.black.bgGreen(' INFO ')} connected to the database`)
 })
 
 mongoose.connection.on('error', err => {
-  console.log(`cannot connect to the database: ${err}`)
+  console.log(`${chalk.black.bgRed(' FAIL ')} cannot connect to the database: ${err}`)
 })
 
 const server = express()
@@ -43,5 +44,8 @@ server.all('*', (req, res) => {
 })
 
 server.listen(PORT, () => {
-  console.log(`App is running on port ${PORT}`)
+  console.log(`${chalk.black.bgGreen(' INFO ')} app is running on port ${PORT}`)
+  if (NODE_ENV !== 'production') {
+    console.log(`${chalk.black.bgYellow(' WARN ')} this app is running on ${NODE_ENV} environment!`)
+  }
 })
