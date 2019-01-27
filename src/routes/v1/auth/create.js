@@ -5,13 +5,14 @@ import User from '../../../models/user'
 const router = express.Router()
 
 router.post('/', (req, res) => {
+  const refCode = Math.random()
+    .toString(36)
+    .substr(2, 8)
   const userData = new User({
     user: req.body.user,
     pass: req.body.pass,
     activation: {
-      ref: Math.random()
-        .toString(36)
-        .substr(2, 8),
+      ref: refCode,
     },
   })
 
@@ -29,6 +30,7 @@ router.post('/', (req, res) => {
         status: 'success',
         response: {
           message: 'user created',
+          ref: refCode,
         },
       })
     }
