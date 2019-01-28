@@ -7,7 +7,9 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
   res.status(200).send({
     status: 'success',
     response: {
-      data: req.user,
+      data: {
+        user: req.user,
+      },
     },
   })
 })

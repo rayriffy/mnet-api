@@ -8,7 +8,7 @@ router.post('/', (req, res) => {
   const refCode = Math.random()
     .toString(36)
     .substr(2, 8)
-  const userData = new User({
+  const payload = new User({
     user: req.body.user,
     pass: req.body.pass,
     activation: {
@@ -16,7 +16,7 @@ router.post('/', (req, res) => {
     },
   })
 
-  User.addUser(userData, (err, user) => {
+  User.addUser(payload, (err, user) => {
     if (err) {
       return res.status(401).send({
         status: 'failure',
@@ -31,7 +31,11 @@ router.post('/', (req, res) => {
         response: {
           message: 'user created',
           data: {
-            ref: refCode,
+            user: {
+              activation: {
+                ref: refCode,
+              },
+            },
           },
         },
       })
