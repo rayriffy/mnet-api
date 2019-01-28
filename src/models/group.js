@@ -6,6 +6,11 @@ const GroupSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  owner: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   member: {
     type: Array,
     required: true,
@@ -22,13 +27,7 @@ GroupSchema.statics.getGroupById = (id, callback) => {
 }
 
 GroupSchema.statics.addUserToGroup = (data, callback) => {
-  Group.findById(data.group.id, (err, group) => {
-    if (err) {
-      callback(err)
-    } else {
-      Group.findByIdAndUpdate(group._id, {$push: {member: data.user.id}}, callback)
-    }
-  })
+  Group.findByIdAndUpdate(data.group.id, {$push: {member: data.user.id}}, callback)
 }
 
 const Group = mongoose.model('Group', GroupSchema)
