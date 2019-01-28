@@ -66,6 +66,36 @@ UserSchema.statics.comparePassword = (candidatePassword, hash, callback) => {
   })
 }
 
+UserSchema.static.changePassword = (id, oldPassword, newPassword, callback) => {
+  User.getUserById(id, (err, user) => {
+    if (err || !user) {
+      callback(null, false)
+    } else {
+      User.comparePassword(oldPassword, user.pass, (err, compare) => {
+        if (err) {
+          callback(err)
+        }
+        if (compare) {
+          bcrypt.hash(newPassword, 10, (err, res) => {
+            if (err) {
+              callback(err)
+            }
+            User.findByIdAndUpdate(id, {$set: {pass: res}}, (err, res) => {
+              if (err) {
+                callback(err)
+              } else {
+                callback(null, res)
+              }
+            })
+          })
+        } else {
+          callback(null, false)
+        }
+      })
+    }
+  })
+}
+
 const User = mongoose.model('User', UserSchema)
 
 export default User
