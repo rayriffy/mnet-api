@@ -37,8 +37,7 @@ router.post('/', (req, res) => {
                 message: 'not activated',
               },
             })
-          }
-          else {
+          } else {
             const payload = {
               id: user._id,
               user: user.user,
