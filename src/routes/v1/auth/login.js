@@ -30,30 +30,21 @@ router.post('/', (req, res) => {
           })
         }
         if (compare) {
-          if (!user.activation.isActivated) {
-            return res.status(401).send({
-              status: 'failure',
-              response: {
-                message: 'not activated',
-              },
-            })
-          } else {
-            const payload = {
-              id: user._id,
-              user: user.user,
-            }
-            const token = jwt.sign(payload, SECRET, {expiresIn: 18144000})
-            return res.status(200).send({
-              status: 'success',
-              response: {
-                message: 'authenticated',
-                data: {
-                  token: 'JWT ' + token,
-                  user: payload,
-                },
-              },
-            })
+          const payload = {
+            id: user._id,
+            user: user.user,
           }
+          const token = jwt.sign(payload, SECRET, {expiresIn: 18144000})
+          return res.status(200).send({
+            status: 'success',
+            response: {
+              message: 'authenticated',
+              data: {
+                token: 'JWT ' + token,
+                user: payload,
+              },
+            },
+          })
         } else {
           return res.status(401).send({
             status: 'failure',

@@ -1,11 +1,10 @@
 import express from 'express'
-import passport from 'passport'
 
 import Group from '../../../models/group'
 
 const router = express.Router()
 
-router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
+router.post('/', (req, res) => {
   Group.getGroupById(req.body.id, (err, group) => {
     if (err) {
       return res.status(401).send({
@@ -17,7 +16,6 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
       })
     } else {
       if (group) {
-        // TODO: JOIN
         const payload = {
           group: {
             id: group._id,

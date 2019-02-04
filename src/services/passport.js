@@ -14,12 +14,10 @@ export default passport => {
     new Strategy(opts, (payload, res) => {
       User.getUserById(payload.id, (err, user) => {
         if (err) {
-          return res(null, false)
+          return res(err, false)
         }
-
         if (user) {
-          if (user.activation.isActivated) return res(null, user)
-          else return res(null, false)
+          return res(null, user)
         } else {
           return res(null, false)
         }

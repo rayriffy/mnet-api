@@ -1,5 +1,4 @@
 import express from 'express'
-import passport from 'passport'
 
 import notifyService from '../../../services/notify'
 
@@ -7,7 +6,7 @@ import User from '../../../models/user'
 
 const router = express.Router()
 
-router.all('*', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+router.all('*', (req, res, next) => {
   User.getUserById(req.user.id, (err, user) => {
     if (err) {
       res.status(401).send({

@@ -1,11 +1,13 @@
 import express from 'express'
 
+import AnnounceRoutes from './AnnounceRoutes'
 import AuthRoutes from './AuthRoutes'
 import PushRoutes from './PushRoutes'
 import UserRoutes from './UserRoutes'
 
 const router = express.Router()
 
+router.use('/announce', AnnounceRoutes)
 router.use('/auth', AuthRoutes)
 router.use('/push', PushRoutes)
 router.use('/user', UserRoutes)

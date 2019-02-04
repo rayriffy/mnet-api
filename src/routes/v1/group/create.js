@@ -1,11 +1,10 @@
 import express from 'express'
-import passport from 'passport'
 
 import Group from '../../../models/group'
 
 const router = express.Router()
 
-router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
+router.post('/', (req, res) => {
   const payload = {
     name: req.body.name,
     owner: req.user.id,
