@@ -1,11 +1,22 @@
 M-NET API
 =========
 
+![forthebadge](https://forthebadge.com/images/badges/fuck-it-ship-it.svg)
+![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)
+![forthebadge](https://forthebadge.com/images/badges/uses-js.svg)
+![forthebadge](https://forthebadge.com/images/badges/powered-by-electricity.svg)
+
+[![Build Status](https://img.shields.io/travis/rayriffy/mnet-api.svg?style=for-the-badge)](https://travis-ci.org/rayriffy/mnet-api)
+[![Javascript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=for-the-badge)](https://standardjs.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+
 M-NET API for MWIT
 
 Requirements
 ------------
 
+- (Recommended) CentOS 7.x
+- MongoDB 4.x
 - Node LTS
 
 Installation
@@ -36,6 +47,11 @@ Contributing
 ------------
 
 We welcome all contributions by sending PR to this repository.
+
+Licence
+-------
+
+M-NET API is licensed under the [MIT licence](https://opensource.org/licenses/MIT). Please see [the licence file](LICENCE) for more information. [tl;dr](https://tldrlegal.com/license/mit-license) you can do whatever you want as long as you include the original copyright and license notice in any copy of the software/source.
 
 Need Help ?
 -----------
