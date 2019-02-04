@@ -8,6 +8,8 @@ import passport from 'passport'
 
 import passportService from './services/passport'
 
+import homeRoute from './routes/homeRoute'
+
 import v1Routes from './routes/v1/index'
 
 dotenv.config()
@@ -34,12 +36,16 @@ server.use(passport.initialize())
 server.use(passport.session())
 passportService(passport)
 
+server.use('/', homeRoute)
+
 server.use('/api/v1', v1Routes)
 
 server.all('*', (req, res) => {
   res.status(404).send({
     status: 'failure',
-    response: 'route not found',
+    response: {
+      message: 'route not found',
+    },
   })
 })
 

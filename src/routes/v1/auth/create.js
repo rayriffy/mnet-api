@@ -18,7 +18,7 @@ router.post('/', (req, res) => {
 
   User.addUser(payload, (err, user) => {
     if (err) {
-      return res.status(401).send({
+      return res.status(400).send({
         status: 'failure',
         response: {
           message: 'failed to create new user',
@@ -40,6 +40,15 @@ router.post('/', (req, res) => {
         },
       })
     }
+  })
+})
+
+router.all('/', (req, res) => {
+  res.status(405).send({
+    status: 'failure',
+    response: {
+      message: 'invalid method',
+    },
   })
 })
 

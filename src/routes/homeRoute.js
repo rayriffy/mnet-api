@@ -6,9 +6,7 @@ router.get('/', (req, res) => {
   res.status(200).send({
     status: 'success',
     response: {
-      data: {
-        user: req.user,
-      },
+      message: 'hello',
     },
   })
 })

@@ -8,7 +8,7 @@ const router = express.Router()
 router.all('*', passport.authenticate('jwt', {session: false}), (req, res, next) => {
   User.getUserById(req.user.id, (err, user) => {
     if (err) {
-      res.status(401).send({
+      res.status(404).send({
         status: 'failure',
         response: {
           message: 'id not found',
@@ -16,7 +16,7 @@ router.all('*', passport.authenticate('jwt', {session: false}), (req, res, next)
       })
     } else {
       if (user.role !== 'administrator') {
-        res.status(401).send({
+        res.status(400).send({
           status: 'failure',
           response: {
             message: 'insufficient permission',
@@ -32,7 +32,7 @@ router.all('*', passport.authenticate('jwt', {session: false}), (req, res, next)
 router.post('/', (req, res) => {
   User.activateUser(req.body.ref, (err, data) => {
     if (err) {
-      return res.status(401).send({
+      return res.status(400).send({
         status: 'failure',
         response: {
           message: 'unexpected error',
@@ -41,7 +41,7 @@ router.post('/', (req, res) => {
       })
     } else {
       if (data.n === 0) {
-        return res.status(401).send({
+        return res.status(404).send({
           status: 'failure',
           response: {
             message: 'ref code is not found',
@@ -57,6 +57,15 @@ router.post('/', (req, res) => {
         })
       }
     }
+  })
+})
+
+router.all('*', (req, res) => {
+  res.status(405).send({
+    status: 'failure',
+    response: {
+      message: 'invalid method',
+    },
   })
 })
 

@@ -6,10 +6,10 @@ import User from '../../../models/user'
 
 const router = express.Router()
 
-router.all('*', (req, res, next) => {
+router.post('/', (req, res, next) => {
   User.getUserById(req.user.id, (err, user) => {
     if (err) {
-      res.status(401).send({
+      res.status(404).send({
         status: 'failure',
         response: {
           message: 'id not found',
@@ -32,7 +32,7 @@ router.all('*', (req, res, next) => {
 
 router.post('/', (req, res) => {
   if (!req.body.to || !req.body.title || !req.body.text) {
-    res.status(401).send({
+    res.status(406).send({
       status: 'failure',
       response: {
         message: 'invalid argruments',
@@ -41,11 +41,20 @@ router.post('/', (req, res) => {
   } else {
     notifyService(req.body.to, req.body.title, req.body.text)
 
-    res.status(200).send({
+    res.status(202).send({
       status: 'success',
       response: `sending push notification to ${req.body.to}`,
     })
   }
+})
+
+router.all('/', (req, res) => {
+  res.status(405).send({
+    status: 'failure',
+    response: {
+      message: 'invalid method',
+    },
+  })
 })
 
 export default router

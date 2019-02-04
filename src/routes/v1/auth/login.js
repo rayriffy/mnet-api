@@ -12,7 +12,7 @@ const router = express.Router()
 router.post('/', (req, res) => {
   User.getUserByUsername(req.body.user, (err, user) => {
     if (err || !user) {
-      return res.status(401).send({
+      return res.status(404).send({
         status: 'failure',
         response: {
           message: 'user not found',
@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
     } else {
       User.comparePassword(req.body.pass, user.pass, (err, compare) => {
         if (err) {
-          return res.status(401).send({
+          return res.status(400).send({
             status: 'failure',
             response: {
               message: 'unexpected error',
@@ -46,7 +46,7 @@ router.post('/', (req, res) => {
             },
           })
         } else {
-          return res.status(401).send({
+          return res.status(400).send({
             status: 'failure',
             response: {
               message: 'invalid password',
@@ -55,6 +55,15 @@ router.post('/', (req, res) => {
         }
       })
     }
+  })
+})
+
+router.all('/', (req, res) => {
+  res.status(405).send({
+    status: 'failure',
+    response: {
+      message: 'invalid method',
+    },
   })
 })
 
