@@ -2,27 +2,12 @@ import express from 'express'
 
 import authenticationMiddleware from '../../middlewares/v1/authenticationMiddleware'
 
+import userIndex from './user/index'
 import userProfile from './user/profile'
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
-  res.status(200).send({
-    status: 'success',
-    response: {
-      message: 'hi from user',
-    },
-  })
-})
-
-router.all('/', (req, res) => {
-  res.status(405).send({
-    status: 'failure',
-    response: {
-      message: 'invalid method',
-    },
-  })
-})
+router.get('/', userIndex)
 
 router.use(authenticationMiddleware)
 
