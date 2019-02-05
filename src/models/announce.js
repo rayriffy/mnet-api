@@ -13,6 +13,11 @@ const AnnounceSchema = mongoose.Schema({
       trim: true,
     },
   },
+  to: {
+    type: Array,
+    required: true,
+    default: [],
+  },
 })
 
 AnnounceSchema.statics.addAnnounce = (data, callback) => {

@@ -1,4 +1,7 @@
 import express from 'express'
+import _ from 'lodash'
+
+import notifyService from '../../../services/notify'
 
 import Announce from '../../../models/announce'
 import User from '../../../models/user'
@@ -32,6 +35,7 @@ router.post('/', (req, res, next) => {
 router.post('/', (req, res) => {
   const payload = {
     message: req.body.message,
+    to: req.body.to,
   }
 
   Announce.addAnnounce(payload, (err, announce) => {
@@ -39,17 +43,20 @@ router.post('/', (req, res) => {
       return res.status(400).send({
         status: 'failure',
         response: {
-          message: 'failed to create new group',
+          message: 'failed to create new announce',
           data: err,
         },
       })
     } else {
-      return res.status(200).send({
+      _.each(req.body.to, to => {
+        notifyService(to, 'ประกาศ!', announce.message)
+      })
+      return res.status(202).send({
         status: 'success',
         response: {
-          message: 'announce created',
+          message: 'announce created and being notified to specified users',
           data: {
-            group: {
+            message: {
               id: announce._id,
             },
           },
