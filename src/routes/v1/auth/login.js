@@ -14,6 +14,7 @@ router.post('/', (req, res) => {
     if (err || !user) {
       return res.status(404).send({
         status: 'failure',
+        code: 704,
         response: {
           message: 'user not found',
         },
@@ -23,6 +24,7 @@ router.post('/', (req, res) => {
         if (err) {
           return res.status(400).send({
             status: 'failure',
+            code: 701,
             response: {
               message: 'unexpected error',
               data: err,
@@ -37,6 +39,7 @@ router.post('/', (req, res) => {
           const token = jwt.sign(payload, SECRET, {expiresIn: 6 * 30 * 24 * 60 * 60})
           return res.status(200).send({
             status: 'success',
+            code: 201,
             response: {
               message: 'authenticated',
               data: {
@@ -48,6 +51,7 @@ router.post('/', (req, res) => {
         } else {
           return res.status(400).send({
             status: 'failure',
+            code: 702,
             response: {
               message: 'invalid password',
             },

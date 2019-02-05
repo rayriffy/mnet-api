@@ -10,6 +10,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res, next
     if (err) {
       res.status(404).send({
         status: 'failure',
+        code: 704,
         response: {
           message: 'id not found',
         },
@@ -18,6 +19,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res, next
       if (user.role !== 'administrator') {
         res.status(400).send({
           status: 'failure',
+          code: 707,
           response: {
             message: 'insufficient permission',
           },
@@ -34,6 +36,7 @@ router.post('/', (req, res) => {
     if (err) {
       return res.status(400).send({
         status: 'failure',
+        code: 701,
         response: {
           message: 'unexpected error',
           data: err,
@@ -43,6 +46,7 @@ router.post('/', (req, res) => {
       if (data.n === 0) {
         return res.status(404).send({
           status: 'failure',
+          code: 704,
           response: {
             message: 'ref code is not found',
             data: data,
@@ -51,6 +55,7 @@ router.post('/', (req, res) => {
       } else {
         return res.status(200).send({
           status: 'success',
+          code: 201,
           response: {
             message: 'user activated',
           },
@@ -63,6 +68,7 @@ router.post('/', (req, res) => {
 router.all('/', (req, res) => {
   res.status(405).send({
     status: 'failure',
+    code: 705,
     response: {
       message: 'invalid method',
     },
