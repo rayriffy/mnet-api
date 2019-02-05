@@ -7,6 +7,7 @@ M-NET API
 ![forthebadge](https://forthebadge.com/images/badges/powered-by-electricity.svg)
 
 [![Build Status](https://img.shields.io/travis/rayriffy/mnet-api.svg?style=for-the-badge)](https://travis-ci.org/rayriffy/mnet-api)
+[![Known Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/rayriffy/mnet-api.svg?style=for-the-badge)](https://snyk.io/test/github/rayriffy/mnet-api?targetFile=package.json)
 [![Javascript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=for-the-badge)](https://standardjs.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
