@@ -21,25 +21,25 @@ Common Specifications
 
 The following HTTP status codes are returned by the API
 
-|Status Code|Description                                                                               |
-|-----------|------------------------------------------------------------------------------------------|
-|200        |Request successful                                                                        |
-|202        |Request has been accepted for further processing, which will be completed sometime later. |
-|400        |Problem with the request                                                                  |
-|401        |Valid JWT token is not specified                                                          |
-|405        |Request method is invalid                                                                 |
-|500        |Error on the internal server                                                              |
+| Status Code | Description                                                                               |
+| ----------- | ----------------------------------------------------------------------------------------- |
+| 200         | Request successful                                                                        |
+| 202         | Request has been accepted for further processing, which will be completed sometime later. |
+| 400         | Problem with the request                                                                  |
+| 401         | Valid JWT token is not specified                                                          |
+| 405         | Request method is invalid                                                                 |
+| 500         | Error on the internal server                                                              |
 
 ### Response Structure
 
 The following JSON data is returned in the response body
 
-|Property|Type|Description|
-|-|-|-|
-|status|String|Give the result of the request that it's success or not|
-|code|Number|Request status code. Note that this code does not related to HTTP status code|
-|response.message|String|Result summary|
-|response.data|Object|(Optional) Provide useful data for processing|
+| Property         | Type   | Description                                                                   |
+| ---------------- | ------ | ----------------------------------------------------------------------------- |
+| status           | String | Give the result of the request that it's success or not                       |
+| code             | Number | Request status code. Note that this code does not related to HTTP status code |
+| response.message | String | Result summary                                                                |
+| response.data    | Object | (Optional) Provide useful data for processing                                 |
 
 Authentication
 --------------
@@ -54,24 +54,24 @@ Create non-activated user
 
 **Request headers**
 
-|Request header|Description      |
-|--------------|-----------------|
-|Content-Type  |application/json |
+| Request header | Description      |
+| -------------- | ---------------- |
+| Content-Type   | application/json |
 
 **Request body**
 
-|Property|Type   |Required |Description       |
-|--------|-------|---------|------------------|
-|user    |String |Required |Username (unique) |
-|pass    |String |Required |Password          |
+| Property | Type   | Required | Description       |
+| -------- | ------ | -------- | ----------------- |
+| user     | String | Required | Username (unique) |
+| pass     | String | Required | Password          |
 
 **Response**
 
 Returns a 200 HTTP status code and a JSON object with the following data.
 
-|Property                          |Type   |Description                        |
-|----------------------------------|-------|-----------------------------------|
-|response.data.user.activation.ref |String |Reference code for user activation |
+| Property                          | Type   | Description                        |
+| --------------------------------- | ------ | ---------------------------------- |
+| response.data.user.activation.ref | String | Reference code for user activation |
 
 <details>
 <summary>JSON</summary>
@@ -104,26 +104,26 @@ Request authenticated JWT token
 
 **Request headers**
 
-|Request header |Description      |
-|---------------|-----------------|
-|Content-Type   |application/json |
+| Request header | Description      |
+| -------------- | ---------------- |
+| Content-Type   | application/json |
 
 **Request body**
 
-|Property |Type   |Required |Description |
-|---------|-------|---------|------------|
-|user     |String |Required |Username    |
-|pass     |String |Required |Password    |
+| Property | Type   | Required | Description |
+| -------- | ------ | -------- | ----------- |
+| user     | String | Required | Username    |
+| pass     | String | Required | Password    |
 
 **Response**
 
 Returns a 200 HTTP status code and a JSON object with the following data.
 
-|Property                |Type   |Description                                   |
-|------------------------|-------|----------------------------------------------|
-|response.data.token     |String |JWT token which being used for authentication |
-|response.data.user.id   |String |User ID                                       |
-|response.data.user.user |String |Username                                      |
+| Property                | Type   | Description                                   |
+| ----------------------- | ------ | --------------------------------------------- |
+| response.data.token     | String | JWT token which being used for authentication |
+| response.data.user.id   | String | User ID                                       |
+| response.data.user.user | String | Username                                      |
 
 <details>
 <summary>JSON</summary>
@@ -156,16 +156,16 @@ Acticate user
 
 **Request headers**
 
-|Request header |Description       |
-|---------------|------------------|
-|Content-Type   |application/json  |
-|Authorization  |JWT `{JWT token}` |
+| Request header | Description       |
+| -------------- | ----------------- |
+| Content-Type   | application/json  |
+| Authorization  | JWT `{JWT token}` |
 
 **Request body**
 
-|Property |Type   |Required |Description               |
-|---------|-------|---------|--------------------------|
-|ref      |String |Required |Activation reference code |
+| Property | Type   | Required | Description               |
+| -------- | ------ | -------- | ------------------------- |
+| ref      | String | Required | Activation reference code |
 
 **Response**
 
