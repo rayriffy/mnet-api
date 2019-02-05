@@ -16,9 +16,9 @@ M-NET API for MWIT
 Requirements
 ------------
 
-  - (Recommended) CentOS 7.x
-  - MongoDB 4.x
-  - Node LTS
+- (Recommended) CentOS 7.x
+- MongoDB 4.x
+- Node LTS
 
 Installation
 ------------
@@ -62,3 +62,5 @@ If you need help with anything, here're following methods:
 ### Create an Issue
 
 If you have something you want to discuss in detail, or have hit an issue which you believe others will also have in deployment or development of the system, [opening an issue](https://github.com/rayriffy/mnet-api/issues) is the best way to get help. It creates a permanent resource for others wishing to contribute to conversation.
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frayriffy%2Fmnet-api.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frayriffy%2Fmnet-api?ref=badge_large)
