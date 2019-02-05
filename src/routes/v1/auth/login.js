@@ -2,8 +2,6 @@ import dotenv from 'dotenv'
 import express from 'express'
 import jwt from 'jsonwebtoken'
 
-import invalidMethodMiddleware from '../../../middlewares/v1/invalidMethodMiddleware'
-
 import User from '../../../models/user'
 
 dotenv.config()
@@ -60,6 +58,13 @@ router.post('/', (req, res) => {
   })
 })
 
-router.use('/', invalidMethodMiddleware)
+router.all('/', (req, res) => {
+  res.status(405).send({
+    status: 'failure',
+    response: {
+      message: 'invalid method',
+    },
+  })
+})
 
 export default router

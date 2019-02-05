@@ -1,8 +1,6 @@
 import express from 'express'
 import passport from 'passport'
 
-import invalidMethodMiddleware from '../../../middlewares/v1/invalidMethodMiddleware'
-
 import User from '../../../models/user'
 
 const router = express.Router()
@@ -62,6 +60,13 @@ router.post('/', (req, res) => {
   })
 })
 
-router.use('/', invalidMethodMiddleware)
+router.all('/', (req, res) => {
+  res.status(405).send({
+    status: 'failure',
+    response: {
+      message: 'invalid method',
+    },
+  })
+})
 
 export default router

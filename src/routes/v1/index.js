@@ -1,7 +1,5 @@
 import express from 'express'
 
-import invalidMethodMiddleware from '../../middlewares/v1/invalidMethodMiddleware'
-
 import AnnounceRoutes from './AnnounceRoutes'
 import AuthRoutes from './AuthRoutes'
 import PushRoutes from './PushRoutes'
@@ -18,7 +16,14 @@ router.get('/', (req, res) => {
   })
 })
 
-router.use('/', invalidMethodMiddleware)
+router.all('/', (req, res) => {
+  res.status(405).send({
+    status: 'failure',
+    response: {
+      message: 'invalid method',
+    },
+  })
+})
 
 router.use('/announce', AnnounceRoutes)
 router.use('/auth', AuthRoutes)
