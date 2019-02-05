@@ -58,6 +58,9 @@ router.post('/', (req, res) => {
           data: {
             message: {
               id: announce._id,
+              date: announce.date,
+              message: announce.message,
+              to: announce.to,
             },
           },
         },

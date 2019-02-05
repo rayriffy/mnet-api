@@ -1,10 +1,11 @@
+import moment from 'moment'
 import mongoose from 'mongoose'
 
 const AnnounceSchema = mongoose.Schema({
   date: {
-    type: Date,
+    type: String,
     required: true,
-    default: Date.now(),
+    default: moment().toISOString(),
   },
   message: {
     body: {
