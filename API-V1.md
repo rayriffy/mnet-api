@@ -4,20 +4,20 @@ API V1 Documentation
 Table of Contents
 -----------------
 
-* [Common Specifications](#common-specifications)
+*   [Common Specifications](#common-specifications)
 
-* [Authentication](#authentication)
-  * [Create](#create)
-  * [Login](#login)
-  * [Activate](#activate)
+*   [Authentication](#authentication)
+  *   [Create](#create)
+  *   [Login](#login)
+  *   [Activate](#activate)
 
-* [Announcement](#announcement)
+*   [Announcement](#announcement)
 
-* [Group](#group)
+*   [Group](#group)
 
-* [User](#user)
+*   [User](#user)
 
-* [Push Notifications](#push-notifications)
+*   [Push Notifications](#push-notifications)
 
 Common Specifications
 ---------------------

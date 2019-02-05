@@ -16,9 +16,9 @@ M-NET API for MWIT
 Requirements
 ------------
 
-- (Recommended) CentOS 7.x
-- MongoDB 4.x
-- Node LTS
+-   (Recommended) CentOS 7.x
+-   MongoDB 4.x
+-   Node LTS
 
 Installation
 ------------
