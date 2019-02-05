@@ -171,3 +171,23 @@ Returns a 200 HTTP status code and a JSON object with empty data.
 }
 ```
 </details>
+
+Announcement
+------------
+
+TBA
+
+Group
+-----
+
+TBA
+
+User
+----
+
+TBA
+
+Push Notifications
+------------------
+
+TBA
