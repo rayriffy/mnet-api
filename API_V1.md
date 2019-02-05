@@ -156,7 +156,7 @@ Acticate user
 
 #### Response
 
-Returns a 200 HTTP status code and a JSON object.
+Returns a 200 HTTP status code and a JSON object with empty data.
 
 <details>
 <summary>JSON</summary>
