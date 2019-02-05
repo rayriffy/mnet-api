@@ -7,9 +7,9 @@ Table of Contents
 *   [Common Specifications](#common-specifications)
 
 *   [Authentication](#authentication)
-  *   [Create](#create)
-  *   [Login](#login)
-  *   [Activate](#activate)
+  * [Create](#create)
+  * [Login](#login)
+  * [Activate](#activate)
 
 *   [Announcement](#announcement)
 
