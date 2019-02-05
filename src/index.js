@@ -8,7 +8,7 @@ import passport from 'passport'
 
 import passportService from './services/passport'
 
-import homeRoute from './routes/homeRoute'
+import indexRoute from './routes/indexRoute'
 
 import v1Routes from './routes/v1/index'
 
@@ -36,7 +36,12 @@ server.use(passport.initialize())
 server.use(passport.session())
 passportService(passport)
 
-server.use('/', homeRoute)
+server.use((req, res, next) => {
+  res.setHeader('X-Powered-By', 'rayriffy')
+  next()
+})
+
+server.use('/', indexRoute)
 
 server.use('/api/v1', v1Routes)
 

@@ -1,11 +1,13 @@
 import express from 'express'
 import passport from 'passport'
 
+import invalidMethodMiddleware from '../../../middlewares/v1/invalidMethodMiddleware'
+
 import User from '../../../models/user'
 
 const router = express.Router()
 
-router.all('*', passport.authenticate('jwt', {session: false}), (req, res, next) => {
+router.post('/', passport.authenticate('jwt', {session: false}), (req, res, next) => {
   User.getUserById(req.user.id, (err, user) => {
     if (err) {
       res.status(404).send({
@@ -60,13 +62,6 @@ router.post('/', (req, res) => {
   })
 })
 
-router.all('*', (req, res) => {
-  res.status(405).send({
-    status: 'failure',
-    response: {
-      message: 'invalid method',
-    },
-  })
-})
+router.use('/', invalidMethodMiddleware)
 
 export default router
