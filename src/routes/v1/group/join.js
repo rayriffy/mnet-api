@@ -9,6 +9,7 @@ router.post('/', (req, res) => {
     if (err) {
       return res.status(400).send({
         status: 'failure',
+        code: 701,
         response: {
           message: 'unexpected error',
           data: err,
@@ -28,6 +29,7 @@ router.post('/', (req, res) => {
           if (err) {
             return res.status(400).send({
               status: 'failure',
+              code: 701,
               response: {
                 message: 'unexpected error',
                 data: err,
@@ -36,6 +38,7 @@ router.post('/', (req, res) => {
           } else {
             return res.status(200).send({
               status: 'success',
+              code: 201,
               response: {
                 message: 'group joined',
                 data: {
@@ -50,6 +53,7 @@ router.post('/', (req, res) => {
       } else {
         return res.status(404).send({
           status: 'failure',
+          code: 704,
           response: {
             message: 'group not found',
           },
@@ -62,6 +66,7 @@ router.post('/', (req, res) => {
 router.all('/', (req, res) => {
   res.status(405).send({
     status: 'failure',
+    code: 705,
     response: {
       message: 'invalid method',
     },

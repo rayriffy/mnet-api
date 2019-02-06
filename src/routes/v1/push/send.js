@@ -11,14 +11,16 @@ router.post('/', (req, res, next) => {
     if (err) {
       res.status(404).send({
         status: 'failure',
+        code: 704,
         response: {
-          message: 'id not found',
+          message: 'user not found',
         },
       })
     } else {
       if (user.role !== 'administrator') {
         res.status(401).send({
           status: 'failure',
+          code: 707,
           response: {
             message: 'insufficient permission',
           },
@@ -34,6 +36,7 @@ router.post('/', (req, res) => {
   if (!req.body.to || !req.body.title || !req.body.text) {
     res.status(406).send({
       status: 'failure',
+      code: 701,
       response: {
         message: 'invalid argruments',
       },
@@ -43,7 +46,10 @@ router.post('/', (req, res) => {
 
     res.status(202).send({
       status: 'success',
-      response: `sending push notification to ${req.body.to}`,
+      code: 202,
+      response: {
+        message: `sending push notification to ${req.body.to}`,
+      },
     })
   }
 })
@@ -51,6 +57,7 @@ router.post('/', (req, res) => {
 router.all('/', (req, res) => {
   res.status(405).send({
     status: 'failure',
+    code: 705,
     response: {
       message: 'invalid method',
     },

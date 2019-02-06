@@ -13,13 +13,15 @@ router.post('/', (req, res, next) => {
     if (err) {
       res.status(404).send({
         status: 'failure',
+        code: 704,
         response: {
-          message: 'id not found',
+          message: 'user not found',
         },
       })
     } else {
       if (user.role !== 'administrator') {
         res.status(401).send({
+          code: 707,
           status: 'failure',
           response: {
             message: 'insufficient permission',
@@ -42,6 +44,7 @@ router.post('/', (req, res) => {
     if (err) {
       return res.status(400).send({
         status: 'failure',
+        code: 701,
         response: {
           message: 'failed to create new announce',
           data: err,
@@ -53,6 +56,7 @@ router.post('/', (req, res) => {
       })
       return res.status(202).send({
         status: 'success',
+        code: 202,
         response: {
           message: 'announce created and being notified to specified users',
           data: {
@@ -72,6 +76,7 @@ router.post('/', (req, res) => {
 router.all('/', (req, res) => {
   res.status(405).send({
     status: 'failure',
+    code: 705,
     response: {
       message: 'invalid method',
     },

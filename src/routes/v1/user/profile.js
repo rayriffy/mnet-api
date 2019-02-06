@@ -29,6 +29,7 @@ router.get('/', (req, res) => {
         status: 'success',
         code: 201,
         response: {
+          message: 'user data recived',
           data: {
             user: {
               id: user._id,
@@ -46,6 +47,7 @@ router.get('/', (req, res) => {
 router.all('/', (req, res) => {
   res.status(405).send({
     status: 'failure',
+    code: 705,
     response: {
       message: 'invalid method',
     },
