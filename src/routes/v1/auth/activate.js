@@ -12,7 +12,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res, next
         status: 'failure',
         code: 704,
         response: {
-          message: 'id not found',
+          message: 'user not found',
         },
       })
     } else {
