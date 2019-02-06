@@ -16,7 +16,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res, next
         },
       })
     } else {
-      if (user.role !== 'administrator') {
+      if (user.authentication.role !== 'administrator') {
         res.status(400).send({
           status: 'failure',
           code: 707,

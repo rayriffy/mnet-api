@@ -17,7 +17,7 @@ router.post('/', (req, res, next) => {
         },
       })
     } else {
-      if (user.role !== 'administrator') {
+      if (user.authentication.role !== 'administrator') {
         res.status(401).send({
           status: 'failure',
           code: 707,

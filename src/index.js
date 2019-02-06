@@ -48,6 +48,7 @@ server.use('/api/v1', v1Routes)
 server.all('*', (req, res) => {
   res.status(404).send({
     status: 'failure',
+    code: 704,
     response: {
       message: 'route not found',
     },

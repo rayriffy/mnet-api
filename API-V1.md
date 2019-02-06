@@ -21,6 +21,7 @@ Table of Contents
     *   [Profile](#userprofile)
 
 *   [Push Notifications](#push-notifications)
+    *   [Send](#pushsend)
 
 Common Specifications
 ---------------------

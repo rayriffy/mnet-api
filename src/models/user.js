@@ -2,20 +2,22 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 
 const UserSchema = new mongoose.Schema({
-  user: {
-    type: String,
-    unique: true,
-    required: true,
-    trim: true,
-  },
-  pass: {
-    type: String,
-    required: true,
-  },
-  role: {
-    type: String,
-    required: true,
-    default: 'normal',
+  authentication: {
+    user: {
+      type: String,
+      unique: true,
+      required: true,
+      trim: true,
+    },
+    pass: {
+      type: String,
+      required: true,
+    },
+    role: {
+      type: String,
+      required: true,
+      default: 'normal',
+    },
   },
   activation: {
     ref: {
@@ -26,6 +28,24 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       required: true,
       default: false,
+    },
+  },
+  profile: {
+    fullname: {
+      type: String,
+      required: true,
+    },
+    school: {
+      generation: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
+      room: {
+        type: Number,
+        required: true,
+        default: 0,
+      },
     },
   },
 })
