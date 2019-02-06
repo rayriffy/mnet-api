@@ -233,6 +233,7 @@ Returns a 200 HTTP status code and a JSON object.
   "status": "success",
   "code": 201,
   "response": {
+    "message": "user data recived"
     "data": {
       "user": {
         "id": "5c4ddcd75dfafe51104f6521",
@@ -252,4 +253,43 @@ Returns a 200 HTTP status code and a JSON object.
 Push Notifications
 ------------------
 
-TBA
+### Push/Send
+
+Manually send push notification to topic user
+
+**HTTP request**
+
+`POST /api/v1/push/send`
+
+**Request headers**
+
+| Request header | Description                     |
+| -------------- | ------------------------------- |
+| Content-Type   | application/json                |
+| Authorization  | JWT `{Administrator JWT token}` |
+
+**Request body**
+
+| Property | Type   | Required | Description                  |
+| -------- | ------ | -------- | ---------------------------- |
+| to       | String | Required | Topic users you wish to send |
+| title    | String | Required | Notification title           |
+| text     | String | Required | Notification body            |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object with empty data.
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "status": "success",
+  "code": 202,
+  "response": {
+    "message": "sending push notification to mwit25",
+  }
+}
+```
+</details>
