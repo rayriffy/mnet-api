@@ -5,6 +5,7 @@ export default (req, res, next) => {
     if (err) {
       res.status(401).send({
         status: 'failure',
+        code: 701,
         response: {
           message: 'unexpected error',
           data: err,
@@ -14,6 +15,7 @@ export default (req, res, next) => {
     if (user === false) {
       res.status(401).send({
         status: 'failure',
+        code: 703,
         response: {
           message: 'unauthorized',
         },
@@ -21,6 +23,7 @@ export default (req, res, next) => {
     } else if (!user.activation.isActivated) {
       res.status(401).send({
         status: 'failure',
+        code: 707,
         response: {
           message: 'not activated',
           data: {
