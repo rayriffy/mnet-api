@@ -9,16 +9,11 @@ router.post('/', (req, res) => {
     .toString(36)
     .substr(2, 8)
   const payload = new User({
-    authentication: {
-      user: req.body.user,
-      pass: req.body.pass,
-    },
+    authentication: req.body.authentication,
     activation: {
       ref: refCode,
     },
-    profile: {
-      fullname: req.body.fullname,
-    },
+    profile: req.body.profile,
   })
 
   User.addUser(payload, (err, user) => {

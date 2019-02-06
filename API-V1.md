@@ -70,10 +70,11 @@ Create non-activated user
 
 **Request body**
 
-| Property | Type   | Required | Description       |
-| -------- | ------ | -------- | ----------------- |
-| user     | String | Required | Username (unique) |
-| pass     | String | Required | Password          |
+| Property                | Type   | Required | Description       |
+| ----------------------- | ------ | -------- | ----------------- |
+| authentication.user     | String | Required | Username (unique) |
+| authentication.pass     | String | Required | Password          |
+| profile.fullname        | String | Required | Fullname of user  |
 
 **Response**
 
@@ -122,8 +123,8 @@ Request authenticated JWT token
 
 | Property | Type   | Required | Description |
 | -------- | ------ | -------- | ----------- |
-| user     | String | Required | Username    |
-| pass     | String | Required | Password    |
+| authentication.user     | String | Required | Username    |
+| authentication.pass     | String | Required | Password    |
 
 **Response**
 
@@ -173,9 +174,9 @@ Acticate user
 
 **Request body**
 
-| Property | Type   | Required | Description               |
-| -------- | ------ | -------- | ------------------------- |
-| ref      | String | Required | Activation reference code |
+| Property            | Type   | Required | Description               |
+| ------------------- | ------ | -------- | ------------------------- |
+| activation.ref      | String | Required | Activation reference code |
 
 **Response**
 

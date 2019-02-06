@@ -32,7 +32,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res, next
 })
 
 router.post('/', (req, res) => {
-  User.activateUser(req.body.ref, (err, data) => {
+  User.activateUser(req.body.activation.ref, (err, data) => {
     if (err) {
       return res.status(400).send({
         status: 'failure',

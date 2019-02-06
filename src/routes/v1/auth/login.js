@@ -10,7 +10,7 @@ const {SECRET} = process.env
 const router = express.Router()
 
 router.post('/', (req, res) => {
-  User.getUserByUsername(req.body.user, (err, user) => {
+  User.getUserByUsername(req.body.authentication.user, (err, user) => {
     if (err || !user) {
       return res.status(404).send({
         status: 'failure',
@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
         },
       })
     } else {
-      User.comparePassword(req.body.pass, user.pass, (err, compare) => {
+      User.comparePassword(req.body.authentication.pass, user.pass, (err, compare) => {
         if (err) {
           return res.status(400).send({
             status: 'failure',
