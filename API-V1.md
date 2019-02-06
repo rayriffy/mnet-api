@@ -7,16 +7,16 @@ Table of Contents
 *   [Common Specifications](#common-specifications)
 
 *   [Authentication](#authentication)
-    *   [Create](#authentication-create)
-    *   [Login](#authentication-login)
-    *   [Activate](#authentication-activate)
+    *   [Create](#authenticationcreate)
+    *   [Login](#authenticationlogin)
+    *   [Activate](#authenticationactivate)
 
 *   [Announcement](#announcement)
 
 *   [Group](#group)
 
 *   [User](#user)
-    *   [Profile](#user-profile)
+    *   [Profile](#userprofile)
 
 *   [Push Notifications](#push-notifications)
 
