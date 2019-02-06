@@ -7,15 +7,16 @@ Table of Contents
 *   [Common Specifications](#common-specifications)
 
 *   [Authentication](#authentication)
-  * [Create](#create)
-  * [Login](#login)
-  * [Activate](#activate)
+    *   [Create](#authentication-create)
+    *   [Login](#authentication-login)
+    *   [Activate](#authentication-activate)
 
 *   [Announcement](#announcement)
 
 *   [Group](#group)
 
 *   [User](#user)
+    *   [Profile](#user-profile)
 
 *   [Push Notifications](#push-notifications)
 
@@ -49,7 +50,7 @@ The following JSON data is returned in the response body
 Authentication
 --------------
 
-### Create
+### Authentication/Create
 
 Create non-activated user
 
@@ -99,7 +100,7 @@ Returns a 200 HTTP status code and a JSON object with the following data.
 ```
 </details>
 
-### Login
+### Authentication/Login
 
 Request authenticated JWT token
 
@@ -151,7 +152,7 @@ Returns a 200 HTTP status code and a JSON object with the following data.
 ```
 </details>
 
-### Activate
+### Authentication/Activate
 
 Acticate user
 
@@ -203,7 +204,47 @@ TBA
 User
 ----
 
-TBA
+### User/Profile
+
+Retrive user profile
+
+**HTTP request**
+
+`GET /api/v1/user/profile`
+
+**Request headers**
+
+| Request header | Description       |
+| -------------- | ----------------- |
+| Authorization  | JWT `{JWT token}` |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object.
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "status": "success",
+  "code": 201,
+  "response": {
+    "data": {
+      "user": {
+        "id": "5c4ddcd75dfafe51104f6521",
+        "user": "rayriffy",
+        "role": "administrator",
+        "activation": {
+          "isActivated": true,
+          "ref": "ozch8fdg"
+        }
+      }
+    }
+  }
+}
+```
+</details>
 
 Push Notifications
 ------------------
