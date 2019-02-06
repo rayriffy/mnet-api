@@ -68,6 +68,10 @@ UserSchema.statics.activateUser = (ref, callback) => {
   )
 }
 
+UserSchema.statics.updateUserProfile = (id, payload, callback) => {
+  User.findByIdAndUpdate(id, {$set: {profile: payload}}, callback)
+}
+
 UserSchema.statics.getUserById = (id, callback) => {
   User.findById(id, callback)
 }

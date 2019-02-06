@@ -19,6 +19,7 @@ Table of Contents
 
 *   [User](#user)
     *   [Profile](#userprofile)
+    *   [Update](#userupdate)
 
 *   [Push Notifications](#push-notifications)
     *   [Send](#pushsend)
@@ -248,6 +249,47 @@ Returns a 200 HTTP status code and a JSON object.
       }
     }
   }
+}
+```
+</details>
+
+### User/Update
+
+Update user profile
+
+**HTTP request**
+
+`PUT /api/v1/user/update`
+
+**Request headers**
+
+| Request header | Description       |
+| -------------- | ----------------- |
+| Content-Type   | application/json  |
+| Authorization  | JWT `{JWT token}` |
+
+**Request body**
+
+| Property                  | Type   | Required | Description               |
+| ------------------------- | ------ | -------- | ------------------------- |
+| profile.fullname          | String |          | Updated fullname          |
+| profile.school.generation | Number |          | Updated school generation |
+| profile.school.room       | Number |          | Updated room number       |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object.
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "status": "success",
+  "code": 201,
+  "response": {
+    "message": "user updated",
+  },
 }
 ```
 </details>
