@@ -5,6 +5,8 @@ Table of Contents
 -----------------
 
 *   [Common Specifications](#common-specifications)
+    *   [HTTP status codes](#http-status-codes)
+    *   [Response structure](#response-structure)
 
 *   [Authentication](#authentication)
     *   [Create](#authenticationcreate)
@@ -23,7 +25,7 @@ Table of Contents
 Common Specifications
 ---------------------
 
-### HTTP Status codes
+### HTTP status Codes
 
 The following HTTP status codes are returned by the API
 
@@ -33,10 +35,11 @@ The following HTTP status codes are returned by the API
 | 202         | Request has been accepted for further processing, which will be completed sometime later. |
 | 400         | Problem with the request                                                                  |
 | 401         | Valid JWT token is not specified                                                          |
+| 404         | Request / Route is not found                                                                      |
 | 405         | Request method is invalid                                                                 |
 | 500         | Error on the internal server                                                              |
 
-### Response Structure
+### Response structure
 
 The following JSON data is returned in the response body
 
@@ -162,10 +165,10 @@ Acticate user
 
 **Request headers**
 
-| Request header | Description       |
-| -------------- | ----------------- |
-| Content-Type   | application/json  |
-| Authorization  | JWT `{JWT token}` |
+| Request header | Description                     |
+| -------------- | ------------------------------- |
+| Content-Type   | application/json                |
+| Authorization  | JWT `{Administrator JWT token}` |
 
 **Request body**
 
