@@ -77,7 +77,7 @@ UserSchema.statics.getUserById = (id, callback) => {
 }
 
 UserSchema.statics.getUserByUsername = (user, callback) => {
-  User.findOne({'authentication.user': {$eq: user}}, callback)
+  User.findOne({authentication: {$eq: user}}, callback)
 }
 
 UserSchema.statics.comparePassword = (candidatePassword, hash, callback) => {
