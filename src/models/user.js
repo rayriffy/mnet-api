@@ -51,11 +51,11 @@ const UserSchema = new mongoose.Schema({
 })
 
 UserSchema.statics.addUser = (data, callback) => {
-  bcrypt.hash(data.pass, 10, (err, res) => {
+  bcrypt.hash(data.authentication.pass, 10, (err, res) => {
     if (err) {
       callback(err)
     }
-    data.pass = res
+    data.authentication.pass = res
     data.save(callback)
   })
 }
@@ -77,7 +77,7 @@ UserSchema.statics.getUserById = (id, callback) => {
 }
 
 UserSchema.statics.getUserByUsername = (user, callback) => {
-  User.findOne({user: user}, callback)
+  User.findOne({'authentication.user': {$eq: user}}, callback)
 }
 
 UserSchema.statics.comparePassword = (candidatePassword, hash, callback) => {

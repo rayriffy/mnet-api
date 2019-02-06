@@ -236,15 +236,23 @@ Returns a 200 HTTP status code and a JSON object.
   "status": "success",
   "code": 201,
   "response": {
-    "message": "user data recived"
+    "message": "user data recived",
     "data": {
       "user": {
-        "id": "5c4ddcd75dfafe51104f6521",
-        "user": "rayriffy",
-        "role": "administrator",
+        "id": "5c5afd3c04c0a657148ebe15",
+        "authentication": {
+          "user": "rayriffy",
+          "role": "administrator"
+        },
         "activation": {
-          "isActivated": true,
-          "ref": "ozch8fdg"
+          "isActivated": true
+        },
+        "profile": {
+          "fullname": "Riffy",
+          "school": {
+            "generation": 0,
+            "room": 0
+          }
         }
       }
     }

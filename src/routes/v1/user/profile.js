@@ -33,9 +33,17 @@ router.get('/', (req, res) => {
           data: {
             user: {
               id: user._id,
-              authentication: user.authentication,
-              activation: user.activation,
-              profile: user.profile,
+              authentication: {
+                user: user.authentication.user,
+                role: user.authentication.role,
+              },
+              activation: {
+                isActivated: user.activation.isActivated,
+              },
+              profile: {
+                fullname: user.profile.fullname,
+                school: user.profile.school,
+              },
             },
           },
         },

@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
         },
       })
     } else {
-      User.comparePassword(req.body.authentication.pass, user.pass, (err, compare) => {
+      User.comparePassword(req.body.authentication.pass, user.authentication.pass, (err, compare) => {
         if (err) {
           return res.status(400).send({
             status: 'failure',
