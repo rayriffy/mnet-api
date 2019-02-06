@@ -35,7 +35,7 @@ The following HTTP status codes are returned by the API
 | 202         | Request has been accepted for further processing, which will be completed sometime later. |
 | 400         | Problem with the request                                                                  |
 | 401         | Valid JWT token is not specified                                                          |
-| 404         | Request / Route is not found                                                                      |
+| 404         | Request / Route is not found                                                              |
 | 405         | Request method is invalid                                                                 |
 | 500         | Error on the internal server                                                              |
 

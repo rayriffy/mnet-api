@@ -27,7 +27,7 @@ Installation
 yarn
 ```
 
-Usage
+Build
 -----
 
 For for development
@@ -43,6 +43,11 @@ yarn build
 ```
 
 Your complied files will be located at `./build`
+
+Usage
+-----
+
+Latest **API V1** documentation can be found [here](API-V1.md)
 
 Contributing
 ------------
