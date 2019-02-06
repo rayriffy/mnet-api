@@ -8,6 +8,7 @@ import passport from 'passport'
 
 import passportService from './services/passport'
 
+import aboutRoute from './routes/aboutRoute'
 import indexRoute from './routes/indexRoute'
 
 import v1Routes from './routes/v1/index'
@@ -42,6 +43,8 @@ server.use((req, res, next) => {
 })
 
 server.use('/', indexRoute)
+
+server.use('/about', aboutRoute)
 
 server.use('/api/v1', v1Routes)
 
