@@ -28,9 +28,7 @@ export default (req, res, next) => {
           message: 'not activated',
           data: {
             user: {
-              activation: {
-                ref: user.activation.ref,
-              },
+              activation: user.activation,
             },
           },
         },

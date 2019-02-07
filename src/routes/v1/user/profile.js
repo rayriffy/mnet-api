@@ -37,9 +37,7 @@ router.get('/', (req, res) => {
                 user: user.authentication.user,
                 role: user.authentication.role,
               },
-              activation: {
-                isActivated: user.activation.isActivated,
-              },
+              activation: user.activation,
               profile: {
                 fullname: user.profile.fullname,
                 school: user.profile.school,
