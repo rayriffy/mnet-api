@@ -122,8 +122,8 @@ Request authenticated JWT token
 
 **Request body**
 
-| Property | Type   | Required | Description |
-| -------- | ------ | -------- | ----------- |
+| Property                | Type   | Required | Description |
+| ----------------------- | ------ | -------- | ----------- |
 | authentication.user     | String | Required | Username    |
 | authentication.pass     | String | Required | Password    |
 
