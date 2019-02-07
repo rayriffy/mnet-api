@@ -34,7 +34,7 @@ router.post('/', (req, res) => {
         if (compare) {
           const payload = {
             id: user._id,
-            user: user.user,
+            user: user.authentication.user,
           }
           const token = jwt.sign(payload, SECRET, {expiresIn: 6 * 30 * 24 * 60 * 60})
           return res.status(200).send({
