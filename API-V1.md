@@ -245,7 +245,8 @@ Returns a 200 HTTP status code and a JSON object.
           "role": "administrator"
         },
         "activation": {
-          "isActivated": true
+          "isActivated": true,
+          "ref": "30st2lkt"
         },
         "profile": {
           "fullname": "Riffy",
