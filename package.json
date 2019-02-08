@@ -26,6 +26,8 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "eslint": "^5.13.0",
     "eslint-config-prettier": "^4.0.0",
     "eslint-config-standard": "^12.0.0",
@@ -34,6 +36,7 @@
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
+    "mocha": "^5.2.0",
     "prettier": "^1.16.4"
   },
   "scripts": {
@@ -41,6 +44,7 @@
     "dev": "backpack",
     "format": "prettier --write --no-semi --list-different './src/**/*.js'",
     "lint": "eslint ./src/**/*.js",
-    "start": "node ./build/main.js"
+    "start": "node ./build/main.js",
+    "test": "mocha --timeout 10000"
   }
 }
