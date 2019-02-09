@@ -1,11 +1,11 @@
-let chai = require('chai')
-let chaiHttp = require('chai-http')
-let chalk = require('chalk')
-let mongoose = require('mongoose')
-let {before, describe, it} = require('mocha')
-let dotenv = require('dotenv')
+const chai = require('chai')
+const chaiHttp = require('chai-http')
+const chalk = require('chalk')
+const mongoose = require('mongoose')
+const {before, describe, it} = require('mocha')
+const dotenv = require('dotenv')
 
-let server = require('../build/main').default
+const server = require('../build/main').default
 
 const User = mongoose.model('User')
 
