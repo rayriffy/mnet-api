@@ -346,4 +346,108 @@ describe('API V1 Testing Unit', () => {
       })
     })
   })
+
+  describe('User', () => {
+    describe('User/Profile', () => {
+      describe('/GET /api/v1/user/profile', () => {
+        it('it should not pass if user not authenticated', done => {
+          chai
+            .request(server)
+            .get('/api/v1/user/profile')
+            .end((e, res) => {
+              res.should.have.status(401)
+              res.body.should.have.property('code').eql(703)
+              res.body.response.should.have.property('message').eql('unauthorized')
+              done()
+            })
+        })
+      })
+
+      describe('/POST /api/v1/user/profile', () => {
+        it('it should not revive POST method', done => {
+          chai
+            .request(server)
+            .post('/api/v1/user/profile')
+            .set('Authorization', temp.data.user.token)
+            .end((e, res) => {
+              res.should.have.status(405)
+              res.body.should.have.property('code').eql(705)
+              done()
+            })
+        })
+      })
+
+      describe('/GET /api/v1/user/profile', () => {
+        it('it should have required response', done => {
+          chai
+            .request(server)
+            .get('/api/v1/user/profile')
+            .set('Authorization', temp.data.user.token)
+            .end((e, res) => {
+              res.should.have.status(200)
+              res.body.should.have.property('code').eql(201)
+              res.body.response.data.user.should.have.property('id')
+              res.body.response.data.user.authentication.should.have.property('user')
+              res.body.response.data.user.authentication.should.have.property('role')
+              res.body.response.data.user.activation.should.have.property('isActivated')
+              res.body.response.data.user.activation.should.have.property('ref')
+              res.body.response.data.user.profile.should.have.property('fullname')
+              res.body.response.data.user.profile.school.should.have.property('generation')
+              res.body.response.data.user.profile.school.should.have.property('room')
+              done()
+            })
+        })
+      })
+    })
+
+    describe('User/Update', () => {
+      describe('/PUT /api/v1/user/update', () => {
+        it('it should not pass if user not authenticated', done => {
+          chai
+            .request(server)
+            .put('/api/v1/user/update')
+            .end((e, res) => {
+              res.should.have.status(401)
+              res.body.should.have.property('code').eql(703)
+              res.body.response.should.have.property('message').eql('unauthorized')
+              done()
+            })
+        })
+      })
+
+      describe('/GET /api/v1/user/update', () => {
+        it('it should not revice GET method', done => {
+          chai
+            .request(server)
+            .get('/api/v1/user/update')
+            .set('Authorization', temp.data.user.token)
+            .end((e, res) => {
+              res.should.have.status(405)
+              res.body.should.have.property('code').eql(705)
+              done()
+            })
+        })
+      })
+
+      describe('/PUT /api/v1/user/update', () => {
+        it('it should update user information', done => {
+          chai
+            .request(server)
+            .put('/api/v1/user/update')
+            .set('Authorization', temp.data.user.token)
+            .send({
+              profile: {
+                fullname: 'test-user2',
+              },
+            })
+            .end((e, res) => {
+              res.should.have.status(200)
+              res.body.should.have.property('code').eql(201)
+              res.body.response.should.have.property('message').eql('user updated')
+              done()
+            })
+        })
+      })
+    })
+  })
 })

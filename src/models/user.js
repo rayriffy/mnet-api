@@ -63,7 +63,7 @@ UserSchema.statics.addUser = (data, callback) => {
 UserSchema.statics.activateUser = (ref, callback) => {
   User.updateOne(
     {$and: [{'activation.ref': {$eq: ref}}, {'activation.isActivated': {$eq: false}}]},
-    {$set: {activation: {isActivated: true}}},
+    {$set: {'activation.isActivated': true}},
     callback,
   )
 }

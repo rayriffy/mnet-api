@@ -26,6 +26,8 @@ mongoose.connection.on('error', err => {
   console.log(`${chalk.black.bgRed(' FAIL ')} cannot connect to the database: ${err}`)
 })
 
+mongoose.set('useFindAndModify', false)
+
 const server = express()
 
 server.use(bodyParser.json())
