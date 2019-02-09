@@ -69,7 +69,7 @@ describe('API V1 Testing Unit', () => {
     })
 
     mongoose.connection.on('connected', () => {
-      console.log(`${chalk.black.bgGreen(' INFO ')} changed to test database`)
+      console.log(`${chalk.black.bgGreen(' INFO ')} connected to the test database`)
     })
   })
 
@@ -83,6 +83,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(405)
               res.body.should.have.property('code').eql(705)
+              res.body.response.should.have.property('message').eql('invalid method')
               done()
             })
         })
@@ -124,6 +125,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(200)
               res.body.should.have.property('code').eql(201)
+              res.body.response.should.have.property('message').eql('user created')
               res.body.response.data.user.activation.should.have.property('ref')
               temp.credentials.user.activation.ref = res.body.response.data.user.activation.ref
               done()
@@ -146,6 +148,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(200)
               res.body.should.have.property('code').eql(201)
+              res.body.response.should.have.property('message').eql('user created')
               res.body.response.data.user.activation.should.have.property('ref')
               temp.credentials.admin.activation.ref = res.body.response.data.user.activation.ref
               done()
@@ -179,6 +182,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(405)
               res.body.should.have.property('code').eql(705)
+              res.body.response.should.have.property('message').eql('invalid method')
               done()
             })
         })
@@ -217,6 +221,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(200)
               res.body.should.have.property('code').eql(201)
+              res.body.response.should.have.property('message').eql('authenticated')
               res.body.response.data.should.have.property('token')
               temp.data.user.token = res.body.response.data.token
               done()
@@ -236,6 +241,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(200)
               res.body.should.have.property('code').eql(201)
+              res.body.response.should.have.property('message').eql('authenticated')
               res.body.response.data.should.have.property('token')
               temp.data.admin.token = res.body.response.data.token
               done()
@@ -254,6 +260,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(401)
               res.body.should.have.property('code').eql(707)
+              res.body.response.should.have.property('message').eql('not activated')
               done()
             })
         })
@@ -267,6 +274,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(405)
               res.body.should.have.property('code').eql(705)
+              res.body.response.should.have.property('message').eql('invalid method')
               done()
             })
         })
@@ -286,6 +294,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(400)
               res.body.should.have.property('code').eql(707)
+              res.body.response.should.have.property('message').eql('insufficient permission')
               done()
             })
         })
@@ -301,6 +310,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(400)
               res.body.should.have.property('code').eql(702)
+              res.body.response.should.have.property('message').eql('provided data is not enough')
               done()
             })
         })
@@ -320,6 +330,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(404)
               res.body.should.have.property('code').eql(704)
+              res.body.response.should.have.property('message').eql('ref code is not found')
               done()
             })
         })
@@ -339,6 +350,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(200)
               res.body.should.have.property('code').eql(201)
+              res.body.response.should.have.property('message').eql('user activated')
               temp.credentials.user.activation.isActivated = true
               done()
             })
@@ -372,6 +384,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(405)
               res.body.should.have.property('code').eql(705)
+              res.body.response.should.have.property('message').eql('invalid method')
               done()
             })
         })
@@ -386,6 +399,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(200)
               res.body.should.have.property('code').eql(201)
+              res.body.response.should.have.property('message').eql('user data recived')
               res.body.response.data.user.should.have.property('id')
               res.body.response.data.user.authentication.should.have.property('user')
               res.body.response.data.user.authentication.should.have.property('role')
@@ -424,6 +438,7 @@ describe('API V1 Testing Unit', () => {
             .end((e, res) => {
               res.should.have.status(405)
               res.body.should.have.property('code').eql(705)
+              res.body.response.should.have.property('message').eql('invalid method')
               done()
             })
         })
