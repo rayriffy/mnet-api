@@ -130,7 +130,7 @@ describe('API V1 Testing Unit', () => {
             })
         })
 
-        it('it create admin user for more testing', done => {
+        it('it create admin user for future testing', done => {
           chai
             .request(server)
             .post('/api/v1/auth/create')
