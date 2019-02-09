@@ -9,6 +9,20 @@ const {SECRET} = process.env
 
 const router = express.Router()
 
+router.post('/', (req, res, next) => {
+  if (!req.body.authentication || !req.body.authentication.user || !req.body.authentication.pass) {
+    res.status(400).send({
+      status: 'failure',
+      code: 702,
+      response: {
+        message: 'provided data is not enough',
+      },
+    })
+  } else {
+    next()
+  }
+})
+
 router.post('/', (req, res) => {
   User.getUserByUsername(req.body.authentication.user, (err, user) => {
     if (err || !user) {
@@ -65,6 +79,7 @@ router.post('/', (req, res) => {
 router.all('/', (req, res) => {
   res.status(405).send({
     status: 'failure',
+    code: 705,
     response: {
       message: 'invalid method',
     },

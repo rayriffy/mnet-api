@@ -14,9 +14,9 @@ import indexRoute from './routes/indexRoute'
 import v1Routes from './routes/v1/index'
 
 dotenv.config()
-const {PORT = 3000, MONGO_DATABASE, APP_ENV} = process.env
+const {PORT = 3000, MONGO_HOST, APP_ENV} = process.env
 
-mongoose.connect(MONGO_DATABASE, {useCreateIndex: true, useNewUrlParser: true})
+mongoose.connect(`${MONGO_HOST}/mnet`, {useCreateIndex: true, useNewUrlParser: true})
 
 mongoose.connection.on('connected', () => {
   console.log(`${chalk.black.bgGreen(' INFO ')} connected to the database`)
@@ -64,3 +64,5 @@ server.listen(PORT, () => {
     console.log(`${chalk.black.bgYellow(' WARN ')} this app is running on ${APP_ENV} environment!`)
   }
 })
+
+export default server

@@ -31,6 +31,20 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res, next
   })
 })
 
+router.post('/', (req, res, next) => {
+  if (!req.body.activation || !req.body.activation.ref) {
+    res.status(400).send({
+      status: 'failure',
+      code: 702,
+      response: {
+        message: 'provided data is not enough',
+      },
+    })
+  } else {
+    next()
+  }
+})
+
 router.post('/', (req, res) => {
   User.activateUser(req.body.activation.ref, (err, data) => {
     if (err) {

@@ -4,10 +4,31 @@ import User from '../../../models/user'
 
 const router = express.Router()
 
+router.post('/', (req, res, next) => {
+  if (
+    !req.body.authentication ||
+    !req.body.authentication.user ||
+    !req.body.authentication.pass ||
+    !req.body.profile ||
+    !req.body.profile.fullname
+  ) {
+    res.status(400).send({
+      status: 'failure',
+      code: 702,
+      response: {
+        message: 'provided data is not enough',
+      },
+    })
+  } else {
+    next()
+  }
+})
+
 router.post('/', (req, res) => {
   const refCode = Math.random()
     .toString(36)
     .substr(2, 8)
+
   const payload = new User({
     authentication: req.body.authentication,
     activation: {
