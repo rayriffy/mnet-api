@@ -14,12 +14,16 @@ import indexRoute from './routes/indexRoute'
 import v1Routes from './routes/v1/index'
 
 dotenv.config()
-const {PORT = 3000, MONGO_HOST, APP_ENV} = process.env
+const {PORT = 3000, MONGO_HOST, APP_ENV, MOCHA_TEST = false} = process.env
 
-mongoose.connect(`${MONGO_HOST}/mnet`, {useCreateIndex: true, useNewUrlParser: true})
+let databaseEndpoint
+if (MOCHA_TEST === false) databaseEndpoint = `${MONGO_HOST}/mnet`
+else databaseEndpoint = `${MONGO_HOST}/mnet-test`
+
+mongoose.connect(databaseEndpoint, {useCreateIndex: true, useNewUrlParser: true})
 
 mongoose.connection.on('connected', () => {
-  console.log(`${chalk.black.bgGreen(' INFO ')} connected to the database`)
+  console.log(`${chalk.black.bgGreen(' INFO ')} connected to the database ${databaseEndpoint}`)
 })
 
 mongoose.connection.on('error', err => {
