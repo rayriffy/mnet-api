@@ -1,16 +1,11 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const chalk = require('chalk')
 const mongoose = require('mongoose')
-const {before, describe, it} = require('mocha')
-const dotenv = require('dotenv')
+const {after, before, describe, it} = require('mocha')
 
 const server = require('../build/main').default
 
 const User = mongoose.model('User')
-
-dotenv.config()
-const {MONGO_HOST} = process.env
 
 chai.use(chaiHttp)
 chai.should()
@@ -20,8 +15,12 @@ describe('API V1 Testing Unit', () => {
     credentials: {
       admin: {
         authentication: {
-          user: 'admin',
-          pass: 'admin',
+          user: Math.random()
+            .toString(36)
+            .substr(2),
+          pass: Math.random()
+            .toString(36)
+            .substr(2),
           role: 'administrator',
         },
         activation: {
@@ -29,7 +28,9 @@ describe('API V1 Testing Unit', () => {
           isActivated: true,
         },
         profile: {
-          fullname: 'test-admin',
+          fullname: Math.random()
+            .toString(36)
+            .substr(2),
           school: {
             generation: 25,
             room: 9,
@@ -38,8 +39,12 @@ describe('API V1 Testing Unit', () => {
       },
       user: {
         authentication: {
-          user: 'test',
-          pass: 'test',
+          user: Math.random()
+            .toString(36)
+            .substr(2),
+          pass: Math.random()
+            .toString(36)
+            .substr(2),
           role: null,
         },
         activation: {
@@ -47,7 +52,9 @@ describe('API V1 Testing Unit', () => {
           isActivated: false,
         },
         profile: {
-          fullname: 'test-user',
+          fullname: Math.random()
+            .toString(36)
+            .substr(2),
           school: {
             generation: null,
             room: null,
@@ -62,14 +69,9 @@ describe('API V1 Testing Unit', () => {
   }
 
   before(done => {
-    mongoose.connect(`${MONGO_HOST}/mnet-test`, {useCreateIndex: true, useNewUrlParser: true}, done)
-
     mongoose.connection.on('open', () => {
       mongoose.connection.db.dropDatabase()
-    })
-
-    mongoose.connection.on('connected', () => {
-      console.log(`${chalk.black.bgGreen(' INFO ')} connected to the test database`)
+      done()
     })
   })
 
@@ -160,7 +162,7 @@ describe('API V1 Testing Unit', () => {
     describe('Authentication/Login', () => {
       before(done => {
         User.updateOne(
-          {'authentication.user': {$eq: 'admin'}},
+          {'authentication.user': {$eq: temp.credentials.admin.authentication.user}},
           {
             $set: {
               'authentication.role': temp.credentials.admin.authentication.role,
@@ -464,5 +466,10 @@ describe('API V1 Testing Unit', () => {
         })
       })
     })
+  })
+
+  after(done => {
+    mongoose.connection.db.dropDatabase()
+    done()
   })
 })
