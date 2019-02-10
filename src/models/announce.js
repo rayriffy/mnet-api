@@ -8,11 +8,20 @@ const AnnounceSchema = mongoose.Schema({
     default: moment().toISOString(),
   },
   message: {
+    title: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     body: {
       type: String,
       required: true,
       trim: true,
     },
+  },
+  from: {
+    type: Array,
+    required: true,
   },
   to: {
     type: Array,

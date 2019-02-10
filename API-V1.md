@@ -14,6 +14,8 @@ Table of Contents
     *   [Activate](#authenticationactivate)
 
 *   [Announcement](#announcement)
+    *   [Create](#announcementcreate)
+    *   [Get](#announcementget)
 
 *   [Group](#group)
 
@@ -200,7 +202,102 @@ Returns a 200 HTTP status code and a JSON object with empty data.
 Announcement
 ------------
 
-TBA
+### Announcement/Create
+
+Create announcement and notify to devices
+
+**HTTP request**
+
+`POST /api/v1/announce/create`
+
+**Request headers**
+
+| Request header | Description                     |
+| -------------- | ------------------------------- |
+| Content-Type   | application/json                |
+| Authorization  | JWT `{Administrator JWT token}` |
+
+**Request body**
+
+| Property               | Type   | Required | Description                                                           |
+| ---------------------- | ------ | -------- | --------------------------------------------------------------------- |
+| announce.message.title | String | Required | Announce message title (will also appear as push notification title)  |
+| announce.message.body  | String | Required | Announce message body                                                 |
+| announce.to            | Array  | Required | Array of subscribed topic push notification to sent                   |
+
+**Response**
+
+Returns a 202 HTTP status code and a JSON object with announcement data.
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "status": "success",
+  "code": 202,
+  "response": {
+    "message": "announce created and being notified to specified users",
+    "data": {
+      "announce": {
+        "id": "sxr409qi6bf7k78n9q1lll7h",
+        "date": "2019-02-04T22:44:30.652Z",
+        "message": {
+          "title": "TPJR",
+          "body": "8 + 0.45 = 9 :thinking:"
+        },
+        "from": "5c4ddcd75dfafe51104f6521",
+        "to": ["mwit25", "mwit26", "mwit27"]
+      }
+    }
+  }
+}
+```
+</details>
+
+### Announcement/Get
+
+Get announcement by id
+
+**HTTP request**
+
+`GET /api/v1/announcement/get/:id`
+
+**Request headers**
+
+| Request header | Description       |
+| -------------- | ----------------- |
+| Authorization  | JWT `{JWT token}` |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object with announcement data.
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "status": "success",
+  "code": 201,
+  "response": {
+    "message": "announce data recived",
+    "data": {
+      "announce": {
+        "id": "sxr409qi6bf7k78n9q1lll7h",
+        "date": "2019-02-04T22:44:30.652Z",
+        "message": {
+          "title": "TPJR",
+          "body": "8 + 0.45 = 9 :thinking:"
+        },
+        "from": "5c4ddcd75dfafe51104f6521",
+        "to": ["mwit25", "mwit26", "mwit27"]
+      }
+    }
+  }
+}
+```
+</details>
 
 Group
 -----

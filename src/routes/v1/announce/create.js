@@ -36,8 +36,12 @@ router.post('/', (req, res, next) => {
 
 router.post('/', (req, res) => {
   const payload = {
-    message: req.body.message,
-    to: req.body.to,
+    message: {
+      title: req.body.announce.message.title,
+      body: req.body.announce.message.body,
+    },
+    from: req.user.id,
+    to: req.body.announce.to,
   }
 
   Announce.addAnnounce(payload, (err, announce) => {
@@ -51,8 +55,8 @@ router.post('/', (req, res) => {
         },
       })
     } else {
-      _.each(req.body.to, to => {
-        notifyService(to, 'ประกาศ!', announce.message)
+      _.each(req.body.announce.to, to => {
+        notifyService(to, announce.message.title, announce.message.body)
       })
       return res.status(202).send({
         status: 'success',
@@ -60,10 +64,11 @@ router.post('/', (req, res) => {
         response: {
           message: 'announce created and being notified to specified users',
           data: {
-            message: {
+            announce: {
               id: announce._id,
               date: announce.date,
               message: announce.message,
+              from: announce.from,
               to: announce.to,
             },
           },
