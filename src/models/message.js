@@ -8,9 +8,9 @@ const MessageSchema = mongoose.Schema({
     trim: true,
   },
   date: {
-    type: String,
+    type: Date,
     required: true,
-    default: moment().toISOString(),
+    default: moment(),
   },
   message: {
     body: {

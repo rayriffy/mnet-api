@@ -1,4 +1,5 @@
 import express from 'express'
+import moment from 'moment'
 import _ from 'lodash'
 
 import notifyService from '../../../services/notify'
@@ -36,6 +37,7 @@ router.post('/', (req, res, next) => {
 
 router.post('/', (req, res) => {
   const payload = {
+    date: moment(),
     message: {
       title: req.body.announce.message.title,
       body: req.body.announce.message.body,

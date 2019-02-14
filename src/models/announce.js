@@ -1,11 +1,9 @@
-import moment from 'moment'
 import mongoose from 'mongoose'
 
 const AnnounceSchema = mongoose.Schema({
   date: {
-    type: String,
+    type: Date,
     required: true,
-    default: moment().toISOString(),
   },
   message: {
     title: {
@@ -31,7 +29,10 @@ const AnnounceSchema = mongoose.Schema({
 })
 
 AnnounceSchema.statics.addAnnounce = (data, callback) => {
-  data.save(callback)
+  const Announce = mongoose.model('Announce', AnnounceSchema)
+  const payload = new Announce(data)
+  payload.save(callback)
+  // data.save(callback)
 }
 
 AnnounceSchema.statics.getAnnounceById = (id, callback) => {
