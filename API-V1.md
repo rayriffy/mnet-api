@@ -299,6 +299,24 @@ Returns a 200 HTTP status code and a JSON object with announcement data.
 ```
 </details>
 
+### Announcement/List
+
+List announcements by page (1 - Infinite)
+
+**HTTP request**
+
+`GET /api/v1/announcement/list/:page`
+
+**Request headers**
+
+| Request header | Description       |
+| -------------- | ----------------- |
+| Authorization  | JWT `{JWT token}` |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object with announcement data.
+
 Group
 -----
 
