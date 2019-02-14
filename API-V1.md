@@ -16,6 +16,7 @@ Table of Contents
 *   [Announcement](#announcement)
     *   [Create](#announcementcreate)
     *   [Get](#announcementget)
+    *   [List](#announcementlist)
 
 *   [Group](#group)
 
