@@ -261,7 +261,7 @@ Get announcement by id
 
 **HTTP request**
 
-`GET /api/v1/announcement/get/:id`
+`GET /api/v1/announce/get/:id`
 
 **Request headers**
 
@@ -305,7 +305,7 @@ List announcements by page (1 - Infinite)
 
 **HTTP request**
 
-`GET /api/v1/announcement/list/:page`
+`GET /api/v1/announce/list/:page`
 
 **Request headers**
 
