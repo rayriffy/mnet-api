@@ -318,6 +318,34 @@ List announcements by page (1 - Infinite)
 
 Returns a 200 HTTP status code and a JSON object with announcement data.
 
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "status": "success",
+  "code": 201,
+  "response": {
+    "message": "announces data recived",
+    "data": {
+      "announce": [
+        "5c657a1ebbbd7938b4e54689",
+        "5c657a1abbbd7938b4e54688",
+        "5c657a16bbbd7938b4e54687",
+        "5c657a13bbbd7938b4e54686",
+        "5c657a0fbbbd7938b4e54685",
+        "5c657a0cbbbd7938b4e54684",
+        "5c657a07bbbd7938b4e54683",
+        "5c657a02bbbd7938b4e54682",
+        "5c6579fcbbbd7938b4e54681",
+        "5c6579f8bbbd7938b4e54680"
+      ]
+    }
+  }
+}
+```
+</details>
+
 Group
 -----
 
