@@ -8,6 +8,7 @@ const router = express.Router()
 router.get('/:page', (req, res) => {
   Announce.find()
     .select('_id')
+    .sort({date: 'desc'})
     .limit(10)
     .skip(10 * (req.params.page - 1))
     .exec((err, announces) => {
