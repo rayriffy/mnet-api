@@ -7,7 +7,6 @@ const router = express.Router()
 
 router.get('/:page', (req, res) => {
   Announce.find()
-    .select('_id')
     .sort({date: 'desc'})
     .limit(10)
     .skip(10 * (req.params.page - 1))
@@ -24,7 +23,13 @@ router.get('/:page', (req, res) => {
       }
       let payload = []
       _.each(announces, announce => {
-        payload.push(announce._id)
+        payload.push({
+          id: announce._id,
+          date: announce.date,
+          message: announce.message,
+          from: announce.from,
+          to: announce.to,
+        })
       })
       if (_.isEmpty(payload)) {
         return res.status(404).send({
