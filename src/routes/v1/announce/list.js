@@ -13,7 +13,14 @@ router.get('/:page', (req, res) => {
     .skip(10 * (req.params.page - 1))
     .exec((err, announces) => {
       if (err) {
-        throw err
+        return res.status(400).send({
+          status: 'failure',
+          code: 701,
+          response: {
+            message: 'unexpected error',
+            data: err,
+          },
+        })
       }
       let payload = []
       _.each(announces, announce => {
