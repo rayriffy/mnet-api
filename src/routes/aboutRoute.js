@@ -1,5 +1,6 @@
 import express from 'express'
 import latestCommit from 'repo-latest-commit'
+import moment from 'moment'
 
 const router = express.Router()
 
@@ -14,7 +15,7 @@ router.get('/', (req, res) => {
         repository: 'https://github.com/rayriffy/mnet-api.git',
         server: {
           version: latest.commit,
-          date: latest.date,
+          date: moment(latest.date).toISOString(),
         },
         api: {
           stable: {
