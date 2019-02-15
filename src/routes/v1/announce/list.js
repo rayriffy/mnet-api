@@ -19,16 +19,26 @@ router.get('/:page', (req, res) => {
       _.each(announces, announce => {
         payload.push(announce._id)
       })
-      res.status(200).send({
-        status: 'success',
-        code: 201,
-        response: {
-          message: 'announces data recived',
-          data: {
-            announce: payload,
+      if (_.isEmpty(payload)) {
+        return res.status(404).send({
+          status: 'failure',
+          code: 704,
+          response: {
+            message: 'you reached the limit :(',
           },
-        },
-      })
+        })
+      } else {
+        return res.status(200).send({
+          status: 'success',
+          code: 201,
+          response: {
+            message: 'announces data recived',
+            data: {
+              announce: payload,
+            },
+          },
+        })
+      }
     })
 })
 
