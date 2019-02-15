@@ -7,6 +7,7 @@ const router = express.Router()
 
 router.get('/:page', (req, res) => {
   Announce.find()
+    .select('_id')
     .limit(10)
     .skip(10 * (req.params.page - 1))
     .exec((err, announces) => {
@@ -15,13 +16,7 @@ router.get('/:page', (req, res) => {
       }
       let payload = []
       _.each(announces, announce => {
-        payload.push({
-          id: announce._id,
-          date: announce.date,
-          message: announce.message,
-          from: announce.from,
-          to: announce.to,
-        })
+        payload.push(announce._id)
       })
       res.status(200).send({
         status: 'success',
