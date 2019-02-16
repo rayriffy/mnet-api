@@ -6,6 +6,7 @@ import announceCreate from './announce/create'
 import announceGet from './announce/get'
 import announceIndex from './announce/index'
 import announceList from './announce/list'
+import announceRemove from './announce/remove'
 
 const router = express.Router()
 
@@ -16,5 +17,6 @@ router.use(authenticationMiddleware)
 router.use('/create', announceCreate)
 router.use('/get', announceGet)
 router.use('/list', announceList)
+router.use('/remove', announceRemove)
 
 export default router
