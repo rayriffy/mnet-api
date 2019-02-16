@@ -346,6 +346,38 @@ Returns a 200 HTTP status code and a JSON object with announcement data.
 ```
 </details>
 
+### Announcement/Remove
+
+Remove announcements by id
+
+**HTTP request**
+
+`DELETE /api/v1/announce/remove/:id`
+
+**Request headers**
+
+| Request header | Description                     |
+| -------------- | ------------------------------- |
+| Authorization  | JWT `{Administrator JWT token}` |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object.
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "status": "success",
+  "code": 201,
+  "response": {
+    "message": "announce sucessfully deleted"
+  }
+}
+```
+</details>
+
 Group
 -----
 
