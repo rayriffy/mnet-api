@@ -32,7 +32,7 @@ router.delete('/:id', (req, res, next) => {
 })
 
 router.delete('/:id', (req, res) => {
-  Announce.findByIdAndDelete(req.params.id, (err) => {
+  Announce.findByIdAndDelete(req.params.id, err => {
     if (err) {
       return res.status(404).send({
         status: 'failure',
