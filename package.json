@@ -2,9 +2,11 @@
   "name": "mnet-api",
   "version": "0.0.1",
   "description": "M-NET API",
+  "homepage": "https://rayriffy.com",
   "main": "build/main.js",
+  "private": true,
   "repository": "git@github.com:rayriffy/mnet-api.git",
-  "author": "Phumrapee Limpianchop <contact@rayriffy.com>",
+  "author": "Phumrapee Limpianchop <contact@rayriffy.com> (https://blog.rayriffy.com)",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
