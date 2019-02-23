@@ -1,3 +1,4 @@
+const _ = require('lodash')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const mongoose = require('mongoose')
@@ -65,6 +66,7 @@ describe('API V1 Testing Unit', () => {
     data: {
       admin: [],
       user: [],
+      announces: [],
     },
   }
 
@@ -108,9 +110,7 @@ describe('API V1 Testing Unit', () => {
               done()
             })
         })
-      })
 
-      describe('/POST /api/v1/auth/create', () => {
         it('it should create a user', done => {
           chai
             .request(server)
@@ -207,9 +207,7 @@ describe('API V1 Testing Unit', () => {
               done()
             })
         })
-      })
 
-      describe('/POST /api/v1/auth/login', () => {
         it('it should logged in', done => {
           chai
             .request(server)
@@ -266,9 +264,7 @@ describe('API V1 Testing Unit', () => {
               done()
             })
         })
-      })
 
-      describe('/GET /api/v1/auth/activate', () => {
         it('it should not recive GET method', done => {
           chai
             .request(server)
@@ -300,9 +296,7 @@ describe('API V1 Testing Unit', () => {
               done()
             })
         })
-      })
 
-      describe('/POST /api/v1/auth/activate', () => {
         it('it should not pass if required data is not enough', done => {
           chai
             .request(server)
@@ -316,9 +310,7 @@ describe('API V1 Testing Unit', () => {
               done()
             })
         })
-      })
 
-      describe('/POST /api/v1/auth/activate', () => {
         it('it should not pass if req is not found', done => {
           chai
             .request(server)
@@ -336,9 +328,7 @@ describe('API V1 Testing Unit', () => {
               done()
             })
         })
-      })
 
-      describe('/POST /api/v1/auth/activate', () => {
         it('it should activate user', done => {
           chai
             .request(server)
@@ -461,6 +451,235 @@ describe('API V1 Testing Unit', () => {
               res.should.have.status(200)
               res.body.should.have.property('code').eql(201)
               res.body.response.should.have.property('message').eql('user updated')
+              done()
+            })
+        })
+      })
+    })
+  })
+
+  describe('Announcement', () => {
+    describe('Announcement/Create', () => {
+      describe('/GET /api/v1/announce/create', () => {
+        it('it should not pass if user not authenticated', done => {
+          chai
+            .request(server)
+            .get('/api/v1/announce/create')
+            .end((e, res) => {
+              res.should.have.status(401)
+              res.body.should.have.property('code').eql(703)
+              res.body.response.should.have.property('message').eql('unauthorized')
+              done()
+            })
+        })
+
+        it('it should not recive GET method', done => {
+          chai
+            .request(server)
+            .get('/api/v1/announce/create')
+            .set('Authorization', temp.data.user.token)
+            .end((e, res) => {
+              res.should.have.status(405)
+              res.body.should.have.property('code').eql(705)
+              res.body.response.should.have.property('message').eql('invalid method')
+              done()
+            })
+        })
+      })
+
+      describe('/POST /api/v1/announce/create', () => {
+        it('it should not get pass if authenticated user is not admin', done => {
+          chai
+            .request(server)
+            .post('/api/v1/announce/create')
+            .set('Authorization', temp.data.user.token)
+            .end((e, res) => {
+              res.should.have.status(401)
+              res.body.should.have.property('code').eql(707)
+              res.body.response.should.have.property('message').eql('insufficient permission')
+              done()
+            })
+        })
+
+        it('it should not pass if required data is not enough', done => {
+          chai
+            .request(server)
+            .post('/api/v1/announce/create')
+            .set('Authorization', temp.data.admin.token)
+            .end((e, res) => {
+              res.should.have.status(400)
+              res.body.should.have.property('code').eql(702)
+              res.body.response.should.have.property('message').eql('provided data is not enough')
+              done()
+            })
+        })
+
+        _.times(10, i => {
+          it('it should create announcement (' + (i + 1) + '/10)', done => {
+            chai
+              .request(server)
+              .post('/api/v1/announce/create')
+              .set('Authorization', temp.data.admin.token)
+              .send({
+                announce: {
+                  to: ['mwit25', 'mwit26', 'mwit27'],
+                  message: {
+                    title: Math.random()
+                      .toString(36)
+                      .substr(2),
+                    body: Math.random()
+                      .toString(36)
+                      .substr(2),
+                  },
+                },
+              })
+              .end((e, res) => {
+                res.should.have.status(202)
+                res.body.should.have.property('code').eql(202)
+                res.body.response.should.have
+                  .property('message')
+                  .eql('announce created and being notified to specified users')
+                res.body.response.data.should.have.property('announce')
+                res.body.response.data.announce.should.have.property('id')
+                res.body.response.data.announce.should.have.property('date')
+                res.body.response.data.announce.should.have.property('message')
+                res.body.response.data.announce.should.have.property('from')
+                res.body.response.data.announce.should.have.property('to')
+                temp.data.announces.push(res.body.response.data.announce.id)
+                done()
+              })
+          })
+        })
+      })
+    })
+
+    describe('Announcement/Get', () => {
+      describe('/POST /api/v1/announce/get', () => {
+        it('it should not pass if user not authenticated', done => {
+          chai
+            .request(server)
+            .post(
+              '/api/v1/announce/get/' + temp.data.announces[Math.floor(Math.random() * (temp.data.announces.length - 1))],
+            )
+            .end((e, res) => {
+              res.should.have.status(401)
+              res.body.should.have.property('code').eql(703)
+              res.body.response.should.have.property('message').eql('unauthorized')
+              done()
+            })
+        })
+
+        it('it should not recive POST method', done => {
+          chai
+            .request(server)
+            .post(
+              '/api/v1/announce/get/' + temp.data.announces[Math.floor(Math.random() * (temp.data.announces.length - 1))],
+            )
+            .set('Authorization', temp.data.user.token)
+            .end((e, res) => {
+              res.should.have.status(405)
+              res.body.should.have.property('code').eql(705)
+              res.body.response.should.have.property('message').eql('invalid method')
+              done()
+            })
+        })
+      })
+
+      describe('/GET /api/v1/announce/get', () => {
+        it('it should have required response', done => {
+          chai
+            .request(server)
+            .get('/api/v1/announce/get/' + temp.data.announces[Math.floor(Math.random() * (temp.data.announces.length - 1))])
+            .set('Authorization', temp.data.user.token)
+            .end((e, res) => {
+              res.should.have.status(200)
+              res.body.should.have.property('code').eql(201)
+              res.body.response.should.have.property('message').eql('announce data recived')
+              res.body.response.data.should.have.property('announce')
+              res.body.response.data.announce.should.have.property('id')
+              res.body.response.data.announce.should.have.property('date')
+              res.body.response.data.announce.should.have.property('message')
+              res.body.response.data.announce.should.have.property('from')
+              res.body.response.data.announce.should.have.property('to')
+              done()
+            })
+        })
+
+        it('it should be able to handle not found event', done => {
+          chai
+            .request(server)
+            .get(
+              '/api/v1/announce/get/' +
+                Math.random()
+                  .toString(36)
+                  .substr(2),
+            )
+            .set('Authorization', temp.data.user.token)
+            .end((e, res) => {
+              res.should.have.status(404)
+              res.body.should.have.property('code').eql(704)
+              res.body.response.should.have.property('message').eql('announce not found')
+              done()
+            })
+        })
+      })
+    })
+
+    describe('Announcement/List', () => {
+      describe('/POST /api/v1/announce/list', () => {
+        it('it should not pass if user not authenticated', done => {
+          chai
+            .request(server)
+            .post('/api/v1/announce/list/1')
+            .end((e, res) => {
+              res.should.have.status(401)
+              res.body.should.have.property('code').eql(703)
+              res.body.response.should.have.property('message').eql('unauthorized')
+              done()
+            })
+        })
+
+        it('it should not recive POST method', done => {
+          chai
+            .request(server)
+            .post('/api/v1/announce/list/1')
+            .set('Authorization', temp.data.user.token)
+            .end((e, res) => {
+              res.should.have.status(405)
+              res.body.should.have.property('code').eql(705)
+              res.body.response.should.have.property('message').eql('invalid method')
+              done()
+            })
+        })
+      })
+
+      describe('/GET /api/v1/announce/list', () => {
+        it('it should have required response', done => {
+          chai
+            .request(server)
+            .get('/api/v1/announce/list/1')
+            .set('Authorization', temp.data.user.token)
+            .end((e, res) => {
+              res.should.have.status(200)
+              res.body.should.have.property('code').eql(201)
+              res.body.response.should.have.property('message').eql('announces data recived')
+              res.body.response.should.have.property('data')
+              res.body.response.data.should.have.property('announce')
+              res.body.response.data.announce.should.be.an('array')
+              res.body.response.data.announce.length.should.eql(10)
+              done()
+            })
+        })
+
+        it('it should be able to handle not found event', done => {
+          chai
+            .request(server)
+            .get('/api/v1/announce/list/2')
+            .set('Authorization', temp.data.user.token)
+            .end((e, res) => {
+              res.should.have.status(404)
+              res.body.should.have.property('code').eql(704)
+              res.body.response.should.have.property('message').eql('you reached the limit :(')
               done()
             })
         })
