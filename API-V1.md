@@ -544,7 +544,7 @@ Add like to requested id
 
 | Request params | Description                            |
 | -------------- | -------------------------------------- |
-| type           | Types of likes (Available: `announce`) |
+| type           | Types of data (Available: `announce`) |
 | id             | ID of that type                        |
 
 **Request headers**
@@ -583,7 +583,7 @@ Remove like from requested id
 
 | Request params | Description                            |
 | -------------- | -------------------------------------- |
-| type           | Types of likes (Available: `announce`) |
+| type           | Types of data (Available: `announce`) |
 | id             | ID of that type                        |
 
 **Request headers**
@@ -622,7 +622,7 @@ Count like from requested id
 
 | Request params | Description                            |
 | -------------- | -------------------------------------- |
-| type           | Types of likes (Available: `announce`) |
+| type           | Types of data (Available: `announce`) |
 | id             | ID of that type                        |
 
 **Request headers**
@@ -664,7 +664,7 @@ Check that is user like this requested id or not
 
 | Request params | Description                            |
 | -------------- | -------------------------------------- |
-| type           | Types of likes (Available: `announce`) |
+| type           | Types of data (Available: `announce`) |
 | id             | ID of that type                        |
 
 **Request headers**
