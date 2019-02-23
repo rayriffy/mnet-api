@@ -25,6 +25,11 @@ const MessageSchema = mongoose.Schema({
       default: null,
     },
   },
+  like: {
+    type: Array,
+    required: true,
+    default: [],
+  },
 })
 
 MessageSchema.statics.addMessage = (data, callback) => {
