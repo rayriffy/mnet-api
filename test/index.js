@@ -67,6 +67,7 @@ describe('API V1 Testing Unit', () => {
       admin: [],
       user: [],
       announces: [],
+      other: [],
     },
   }
 
@@ -682,6 +683,304 @@ describe('API V1 Testing Unit', () => {
               res.body.response.should.have.property('message').eql('you reached the limit :(')
               done()
             })
+        })
+      })
+    })
+  })
+
+  describe('Like', () => {
+    describe('Like/Announcement', () => {
+      before(done => {
+        temp.data.other.selectedAnnounce = temp.data.announces[Math.floor(Math.random() * (temp.data.announces.length - 1))]
+        done()
+      })
+
+      describe('Like/Announcement/Add', () => {
+        describe('/GET /api/v1/like/announce/islike', () => {
+          it('it should return false when not like yet', done => {
+            chai
+              .request(server)
+              .get('/api/v1/like/announce/islike/' + temp.data.other.selectedAnnounce)
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(200)
+                res.body.should.have.property('code').eql(201)
+                res.body.response.should.have.property('message').eql('here is the result')
+                res.body.response.data.should.have.property('id').eql(temp.data.other.selectedAnnounce)
+                res.body.response.data.should.have.property('isLike').eql(false)
+                done()
+              })
+          })
+        })
+
+        describe('/GET /api/v1/like/announce/add', () => {
+          it('it should not pass if user not authenticated', done => {
+            chai
+              .request(server)
+              .get('/api/v1/like/announce/add/' + temp.data.other.selectedAnnounce)
+              .end((e, res) => {
+                res.should.have.status(401)
+                res.body.should.have.property('code').eql(703)
+                res.body.response.should.have.property('message').eql('unauthorized')
+                done()
+              })
+          })
+
+          it('it should not recive GET method', done => {
+            chai
+              .request(server)
+              .get('/api/v1/like/announce/add/' + temp.data.other.selectedAnnounce)
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(405)
+                res.body.should.have.property('code').eql(705)
+                res.body.response.should.have.property('message').eql('invalid method')
+                done()
+              })
+          })
+        })
+
+        describe('/POST /api/v1/like/announce/add', () => {
+          it('it should add like into announce', done => {
+            chai
+              .request(server)
+              .post('/api/v1/like/announce/add/' + temp.data.other.selectedAnnounce)
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(200)
+                res.body.should.have.property('code').eql(201)
+                res.body.response.should.have.property('message').eql('you liked this announce')
+                done()
+              })
+          })
+
+          it('it should be able to handle not found event', done => {
+            chai
+              .request(server)
+              .post('/api/v1/like/announce/add/wow')
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(404)
+                res.body.should.have.property('code').eql(704)
+                res.body.response.should.have.property('message').eql('announce not found')
+                done()
+              })
+          })
+        })
+
+        describe('/GET /api/v1/like/announce/islike', () => {
+          it('it should return true after like announce', done => {
+            chai
+              .request(server)
+              .get('/api/v1/like/announce/islike/' + temp.data.other.selectedAnnounce)
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(200)
+                res.body.should.have.property('code').eql(201)
+                res.body.response.should.have.property('message').eql('here is the result')
+                res.body.response.data.should.have.property('id').eql(temp.data.other.selectedAnnounce)
+                res.body.response.data.should.have.property('isLike').eql(true)
+                done()
+              })
+          })
+        })
+      })
+
+      describe('Like/Announcement/Count', () => {
+        describe('/POST /api/v1/like/announce/count', () => {
+          it('it should not pass if user not authenticated', done => {
+            chai
+              .request(server)
+              .post('/api/v1/like/announce/count/' + temp.data.other.selectedAnnounce)
+              .end((e, res) => {
+                res.should.have.status(401)
+                res.body.should.have.property('code').eql(703)
+                res.body.response.should.have.property('message').eql('unauthorized')
+                done()
+              })
+          })
+
+          it('it should not recive POST method', done => {
+            chai
+              .request(server)
+              .post('/api/v1/like/announce/count/' + temp.data.other.selectedAnnounce)
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(405)
+                res.body.should.have.property('code').eql(705)
+                res.body.response.should.have.property('message').eql('invalid method')
+                done()
+              })
+          })
+        })
+
+        describe('/GET /api/v1/like/announce/count', () => {
+          it('it should count 1', done => {
+            chai
+              .request(server)
+              .get('/api/v1/like/announce/count/' + temp.data.other.selectedAnnounce)
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(200)
+                res.body.should.have.property('code').eql(201)
+                res.body.response.should.have.property('message').eql('counted this announce')
+                res.body.response.data.should.have.property('count').eql(1)
+                done()
+              })
+          })
+        })
+
+        describe('/POST /api/v1/like/announce/add', () => {
+          it('it will add like from user for testing duplicate like', done => {
+            chai
+              .request(server)
+              .post('/api/v1/like/announce/add/' + temp.data.other.selectedAnnounce)
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(200)
+                res.body.should.have.property('code').eql(201)
+                res.body.response.should.have.property('message').eql('you liked this announce')
+                done()
+              })
+          })
+
+          it('it should add like from admin', done => {
+            chai
+              .request(server)
+              .post('/api/v1/like/announce/add/' + temp.data.other.selectedAnnounce)
+              .set('Authorization', temp.data.admin.token)
+              .end((e, res) => {
+                res.should.have.status(200)
+                res.body.should.have.property('code').eql(201)
+                res.body.response.should.have.property('message').eql('you liked this announce')
+                done()
+              })
+          })
+        })
+
+        describe('/GET /api/v1/like/announce/count', () => {
+          it('it should count 2', done => {
+            chai
+              .request(server)
+              .get('/api/v1/like/announce/count/' + temp.data.other.selectedAnnounce)
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(200)
+                res.body.should.have.property('code').eql(201)
+                res.body.response.should.have.property('message').eql('counted this announce')
+                res.body.response.data.should.have.property('count').eql(2)
+                done()
+              })
+          })
+
+          it('it should be able to handle not found event', done => {
+            chai
+              .request(server)
+              .get('/api/v1/like/announce/count/wow')
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(404)
+                res.body.should.have.property('code').eql(704)
+                res.body.response.should.have.property('message').eql('announce not found')
+                done()
+              })
+          })
+        })
+      })
+
+      describe('Like/Announcement/Remove', () => {
+        describe('/GET /api/v1/like/announce/remove', () => {
+          it('it should not pass if user not authenticated', done => {
+            chai
+              .request(server)
+              .get('/api/v1/like/announce/remove/' + temp.data.other.selectedAnnounce)
+              .end((e, res) => {
+                res.should.have.status(401)
+                res.body.should.have.property('code').eql(703)
+                res.body.response.should.have.property('message').eql('unauthorized')
+                done()
+              })
+          })
+
+          it('it should not recive GET method', done => {
+            chai
+              .request(server)
+              .get('/api/v1/like/announce/remove/' + temp.data.other.selectedAnnounce)
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(405)
+                res.body.should.have.property('code').eql(705)
+                res.body.response.should.have.property('message').eql('invalid method')
+                done()
+              })
+          })
+        })
+
+        describe('/DELETE /api/v1/like/announce/remove', () => {
+          it('it should unlike announce', done => {
+            chai
+              .request(server)
+              .delete('/api/v1/like/announce/remove/' + temp.data.other.selectedAnnounce)
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(200)
+                res.body.should.have.property('code').eql(201)
+                res.body.response.should.have.property('message').eql('you unliked this announce')
+                done()
+              })
+          })
+
+          it('it should be able to handle not found event', done => {
+            chai
+              .request(server)
+              .delete('/api/v1/like/announce/remove/wow')
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(404)
+                res.body.should.have.property('code').eql(704)
+                res.body.response.should.have.property('message').eql('announce not found')
+                done()
+              })
+          })
+        })
+
+        describe('/GET /api/v1/like/announce/count', () => {
+          it('it should count 1', done => {
+            chai
+              .request(server)
+              .get('/api/v1/like/announce/count/' + temp.data.other.selectedAnnounce)
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(200)
+                res.body.should.have.property('code').eql(201)
+                res.body.response.should.have.property('message').eql('counted this announce')
+                res.body.response.data.should.have.property('count').eql(1)
+                done()
+              })
+          })
+        })
+
+        describe('/GET /api/v1/like/announce/islike', () => {
+          it('it should return false after unlike', done => {
+            chai
+              .request(server)
+              .get('/api/v1/like/announce/islike/' + temp.data.other.selectedAnnounce)
+              .set('Authorization', temp.data.user.token)
+              .end((e, res) => {
+                res.should.have.status(200)
+                res.body.should.have.property('code').eql(201)
+                res.body.response.should.have.property('message').eql('here is the result')
+                res.body.response.data.should.have.property('id').eql(temp.data.other.selectedAnnounce)
+                res.body.response.data.should.have.property('isLike').eql(false)
+                done()
+              })
+          })
+        })
+      })
+
+      describe('Like/Announcement/IsLike', () => {
+        it('this test has been skipped because it already tested during past tests', done => {
+          done()
         })
       })
     })
