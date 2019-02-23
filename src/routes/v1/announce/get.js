@@ -26,22 +26,32 @@ router.get('/:id', (req, res) => {
         })
       }
     } else {
-      return res.status(200).send({
-        status: 'success',
-        code: 201,
-        response: {
-          message: 'announce data recived',
-          data: {
-            announce: {
-              id: announce._id,
-              date: announce.date,
-              message: announce.message,
-              from: announce.from,
-              to: announce.to,
+      if (!announce) {
+        return res.status(404).send({
+          status: 'failure',
+          code: 704,
+          response: {
+            message: 'announce not found',
+          },
+        })
+      } else {
+        return res.status(200).send({
+          status: 'success',
+          code: 201,
+          response: {
+            message: 'announce data recived',
+            data: {
+              announce: {
+                id: announce._id,
+                date: announce.date,
+                message: announce.message,
+                from: announce.from,
+                to: announce.to,
+              },
             },
           },
-        },
-      })
+        })
+      }
     }
   })
 })
