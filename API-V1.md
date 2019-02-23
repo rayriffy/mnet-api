@@ -27,6 +27,12 @@ Table of Contents
 *   [Push Notifications](#push-notifications)
     *   [Send](#pushsend)
 
+*   [Like](#like)
+    *   [Add](#likeadd)
+    *   [Remove](#likeremove)
+    *   [Count](#likecount)
+    *   [IsLike](#likeislike)
+
 Common Specifications
 ---------------------
 
@@ -522,3 +528,170 @@ Returns a 200 HTTP status code and a JSON object with empty data.
 }
 ```
 </details>
+
+Like
+----
+
+### Like/Add
+
+Add like to requested id
+
+**HTTP request**
+
+`POST /api/v1/like/:type/add/:id`
+
+**Request params**
+
+| Request params | Description                            |
+| -------------- | -------------------------------------- |
+| type           | Types of likes (Available: `announce`) |
+| id             | ID of that type                        |
+
+**Request headers**
+
+| Request header | Description       |
+| -------------- | ----------------- |
+| Authorization  | JWT `{JWT token}` |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object.
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "status": "success",
+  "code": 201,
+  "response": {
+    "message": "you liked this announce"
+  }
+}
+```
+</details>
+
+### Like/Remove
+
+Remove like from requested id
+
+**HTTP request**
+
+`DELETE /api/v1/like/:type/remove/:id`
+
+**Request params**
+
+| Request params | Description                            |
+| -------------- | -------------------------------------- |
+| type           | Types of likes (Available: `announce`) |
+| id             | ID of that type                        |
+
+**Request headers**
+
+| Request header | Description       |
+| -------------- | ----------------- |
+| Authorization  | JWT `{JWT token}` |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object.
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "status": "success",
+  "code": 201,
+  "response": {
+    "message": "you unliked this announce"
+  }
+}
+```
+</details>
+
+### Like/Count
+
+Count like from requested id
+
+**HTTP request**
+
+`GET /api/v1/like/:type/count/:id`
+
+**Request params**
+
+| Request params | Description                            |
+| -------------- | -------------------------------------- |
+| type           | Types of likes (Available: `announce`) |
+| id             | ID of that type                        |
+
+**Request headers**
+
+| Request header | Description       |
+| -------------- | ----------------- |
+| Authorization  | JWT `{JWT token}` |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object.
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "status": "success",
+  "code": 201,
+  "response": {
+    "message": "counted this announce",
+    "data": {
+      "count": 20
+    }
+  }
+}
+```
+</details>
+
+### Like/IsLike
+
+Check that is user like this requested id or not
+
+**HTTP request**
+
+`GET /api/v1/like/:type/islike/:id`
+
+**Request params**
+
+| Request params | Description                            |
+| -------------- | -------------------------------------- |
+| type           | Types of likes (Available: `announce`) |
+| id             | ID of that type                        |
+
+**Request headers**
+
+| Request header | Description       |
+| -------------- | ----------------- |
+| Authorization  | JWT `{JWT token}` |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object.
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "status": "success",
+  "code": 201,
+  "response": {
+    "message": "here is the result",
+    "data": {
+      "id": "5c71634482b93779c4fa7728",
+      "isLike": true
+    }
+  }
+}
+```
+</details>
+
