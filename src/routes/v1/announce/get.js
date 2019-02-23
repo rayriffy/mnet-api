@@ -7,16 +7,7 @@ const router = express.Router()
 router.get('/:id', (req, res) => {
   Announce.getAnnounceById(req.params.id, (err, announce) => {
     if (err) {
-      return res.status(400).send({
-        status: 'failure',
-        code: 701,
-        response: {
-          message: 'unexpected error',
-          data: err,
-        },
-      })
-    } else {
-      if (!announce) {
+      if (err.name === 'CastError') {
         return res.status(404).send({
           status: 'failure',
           code: 704,
@@ -25,23 +16,32 @@ router.get('/:id', (req, res) => {
           },
         })
       } else {
-        return res.status(200).send({
-          status: 'success',
-          code: 201,
+        return res.status(400).send({
+          status: 'failure',
+          code: 701,
           response: {
-            message: 'announce data recived',
-            data: {
-              announce: {
-                id: announce._id,
-                date: announce.date,
-                message: announce.message,
-                from: announce.from,
-                to: announce.to,
-              },
-            },
+            message: 'unexpected error',
+            data: err,
           },
         })
       }
+    } else {
+      return res.status(200).send({
+        status: 'success',
+        code: 201,
+        response: {
+          message: 'announce data recived',
+          data: {
+            announce: {
+              id: announce._id,
+              date: announce.date,
+              message: announce.message,
+              from: announce.from,
+              to: announce.to,
+            },
+          },
+        },
+      })
     }
   })
 })

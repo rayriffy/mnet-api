@@ -35,6 +35,26 @@ router.post('/', (req, res, next) => {
   })
 })
 
+router.post('/', (req, res, next) => {
+  if (
+    !req.body.announce ||
+    !req.body.announce.to ||
+    !req.body.announce.message ||
+    !req.body.announce.message.title ||
+    !req.body.announce.message.body
+  ) {
+    res.status(400).send({
+      status: 'failure',
+      code: 702,
+      response: {
+        message: 'provided data is not enough',
+      },
+    })
+  } else {
+    next()
+  }
+})
+
 router.post('/', (req, res) => {
   const payload = {
     date: moment(),
