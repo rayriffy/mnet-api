@@ -398,13 +398,20 @@ Retrive user profile
 
 **HTTP request**
 
-`GET /api/v1/user/profile`
+`GET /api/v1/user/profile/:id/:type`
 
 **Request headers**
 
 | Request header | Description       |
 | -------------- | ----------------- |
 | Authorization  | JWT `{JWT token}` |
+
+**Path parameters**
+
+| Parameter | Description                               |
+| --------- | ----------------------------------------- |
+| type      | Types of data (Available: `full`, `min`)  |
+| id        | User ID                                   |
 
 **Response**
 

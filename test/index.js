@@ -225,6 +225,7 @@ describe('API V1 Testing Unit', () => {
               res.body.response.should.have.property('message').eql('authenticated')
               res.body.response.data.should.have.property('token')
               temp.data.user.token = res.body.response.data.token
+              temp.data.user.id = res.body.response.data.user.id
               done()
             })
         })
@@ -245,6 +246,7 @@ describe('API V1 Testing Unit', () => {
               res.body.response.should.have.property('message').eql('authenticated')
               res.body.response.data.should.have.property('token')
               temp.data.admin.token = res.body.response.data.token
+              temp.data.admin.id = res.body.response.data.user.id
               done()
             })
         })
@@ -384,10 +386,10 @@ describe('API V1 Testing Unit', () => {
       })
 
       describe('/GET /api/v1/user/profile', () => {
-        it('it should have required response', done => {
+        it('it should have required full response', done => {
           chai
             .request(server)
-            .get('/api/v1/user/profile')
+            .get('/api/v1/user/profile/' + temp.data.user.id + '/full')
             .set('Authorization', temp.data.user.token)
             .end((e, res) => {
               res.should.have.status(200)
@@ -401,6 +403,22 @@ describe('API V1 Testing Unit', () => {
               res.body.response.data.user.profile.should.have.property('fullname')
               res.body.response.data.user.profile.school.should.have.property('generation')
               res.body.response.data.user.profile.school.should.have.property('room')
+              done()
+            })
+        })
+
+        it('it should have required full response', done => {
+          chai
+            .request(server)
+            .get('/api/v1/user/profile/' + temp.data.user.id + '/min')
+            .set('Authorization', temp.data.user.token)
+            .end((e, res) => {
+              res.should.have.status(200)
+              res.body.should.have.property('code').eql(201)
+              res.body.response.should.have.property('message').eql('user data recived')
+              res.body.response.data.user.should.have.property('id')
+              res.body.response.data.user.authentication.should.have.property('user')
+              res.body.response.data.user.profile.should.have.property('fullname')
               done()
             })
         })
