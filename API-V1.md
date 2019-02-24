@@ -540,18 +540,18 @@ Add like to requested id
 
 `POST /api/v1/like/:type/add/:id`
 
-**Request params**
-
-| Request params | Description                            |
-| -------------- | -------------------------------------- |
-| type           | Types of data (Available: `announce`)  |
-| id             | ID of that type                        |
-
 **Request headers**
 
 | Request header | Description       |
 | -------------- | ----------------- |
 | Authorization  | JWT `{JWT token}` |
+
+**Path parameters**
+
+| Parameter | Description                            |
+| --------- | -------------------------------------- |
+| type      | Types of data (Available: `announce`)  |
+| id        | ID of that type                        |
 
 **Response**
 
@@ -579,18 +579,18 @@ Remove like from requested id
 
 `DELETE /api/v1/like/:type/remove/:id`
 
-**Request params**
-
-| Request params | Description                            |
-| -------------- | -------------------------------------- |
-| type           | Types of data (Available: `announce`)  |
-| id             | ID of that type                        |
-
 **Request headers**
 
 | Request header | Description       |
 | -------------- | ----------------- |
 | Authorization  | JWT `{JWT token}` |
+
+**Path parameters**
+
+| Parameter | Description                            |
+| --------- | -------------------------------------- |
+| type      | Types of data (Available: `announce`)  |
+| id        | ID of that type                        |
 
 **Response**
 
@@ -618,18 +618,18 @@ Count like from requested id
 
 `GET /api/v1/like/:type/count/:id`
 
-**Request params**
-
-| Request params | Description                            |
-| -------------- | -------------------------------------- |
-| type           | Types of data (Available: `announce`)  |
-| id             | ID of that type                        |
-
 **Request headers**
 
 | Request header | Description       |
 | -------------- | ----------------- |
 | Authorization  | JWT `{JWT token}` |
+
+**Path parameters**
+
+| Parameter | Description                            |
+| --------- | -------------------------------------- |
+| type      | Types of data (Available: `announce`)  |
+| id        | ID of that type                        |
 
 **Response**
 
@@ -660,18 +660,18 @@ Check that is user like this requested id or not
 
 `GET /api/v1/like/:type/islike/:id`
 
-**Request params**
-
-| Request params | Description                            |
-| -------------- | -------------------------------------- |
-| type           | Types of data (Available: `announce`)  |
-| id             | ID of that type                        |
-
 **Request headers**
 
 | Request header | Description       |
 | -------------- | ----------------- |
 | Authorization  | JWT `{JWT token}` |
+
+**Path parameters**
+
+| Parameter | Description                            |
+| --------- | -------------------------------------- |
+| type      | Types of data (Available: `announce`)  |
+| id        | ID of that type                        |
 
 **Response**
 
