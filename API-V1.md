@@ -298,7 +298,10 @@ Returns a 200 HTTP status code and a JSON object with announcement data.
           "body": "8 + 0.45 = 9 :thinking:"
         },
         "from": "5c4ddcd75dfafe51104f6521",
-        "to": ["mwit25", "mwit26", "mwit27"]
+        "to": ["mwit25", "mwit26", "mwit27"],
+        "like": {
+          "count": 20
+        }
       }
     }
   }
