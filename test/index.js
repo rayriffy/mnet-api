@@ -620,6 +620,7 @@ describe('API V1 Testing Unit', () => {
               res.body.response.data.announce.should.have.property('message')
               res.body.response.data.announce.should.have.property('from')
               res.body.response.data.announce.should.have.property('to')
+              res.body.response.data.announce.like.should.have.property('count')
               done()
             })
         })
