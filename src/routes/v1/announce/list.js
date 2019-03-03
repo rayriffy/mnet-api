@@ -29,6 +29,9 @@ router.get('/:page', (req, res) => {
           message: announce.message,
           from: announce.from,
           to: announce.to,
+          like: {
+            count: _.isNumber(announce.like.length) ? announce.like.length : 0,
+          },
         })
       })
       if (_.isEmpty(payload)) {
