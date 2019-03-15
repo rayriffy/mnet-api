@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import express from 'express'
 
 import User from '../../../models/user'
@@ -24,7 +25,7 @@ router.post('/', (req, res, next) => {
   }
 })
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const refCode = Math.random()
     .toString(36)
     .substr(2, 8)
@@ -37,33 +38,33 @@ router.post('/', (req, res) => {
     profile: req.body.profile,
   })
 
-  User.addUser(payload, (err, user) => {
-    if (err) {
-      return res.status(400).send({
-        status: 'failure',
-        code: 701,
-        response: {
-          message: 'failed to create new user',
-          data: err,
-        },
-      })
-    } else {
-      return res.status(200).send({
-        status: 'success',
-        code: 201,
-        response: {
-          message: 'user created',
-          data: {
-            user: {
-              activation: {
-                ref: refCode,
-              },
+  let user = await User.addUser(payload)
+
+  if (_.isEmpty(user)) {
+    return res.status(400).send({
+      status: 'failure',
+      code: 701,
+      response: {
+        message: 'failed to create new user',
+        data: user,
+      },
+    })
+  } else {
+    return res.status(200).send({
+      status: 'success',
+      code: 201,
+      response: {
+        message: 'user created',
+        data: {
+          user: {
+            activation: {
+              ref: refCode,
             },
           },
         },
-      })
-    }
-  })
+      },
+    })
+  }
 })
 
 router.all('/', (req, res) => {

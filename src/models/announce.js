@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import mongoose from 'mongoose'
 
 const AnnounceSchema = mongoose.Schema({
@@ -33,28 +34,25 @@ const AnnounceSchema = mongoose.Schema({
   },
 })
 
-AnnounceSchema.statics.addAnnounce = (data, callback) => {
+AnnounceSchema.statics.addAnnounce = async data => {
   const Announce = mongoose.model('Announce', AnnounceSchema)
   const payload = new Announce(data)
-  payload.save(callback)
+
+  return payload.save()
 }
 
-AnnounceSchema.statics.getAnnounceById = (id, callback) => {
-  Announce.findById(id, callback)
+AnnounceSchema.statics.getAnnounceById = async id => {
+  return Announce.findOne({_id: {$eq: id}})
 }
 
-AnnounceSchema.statics.countLikeById = (id, callback) => {
-  Announce.findById(id, callback, (err, announce) => {
-    if (err) {
-      callback(err)
-    } else {
-      if (!announce) {
-        callback(null, false)
-      } else {
-        callback(null, announce.like.length)
-      }
-    }
-  })
+AnnounceSchema.statics.countLikeById = async id => {
+  let announce = await Announce.findById(id)
+
+  if (_.isEmpty(announce)) {
+    return false
+  } else {
+    return announce.like.length
+  }
 }
 
 const Announce = mongoose.model('Announce', AnnounceSchema)

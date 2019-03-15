@@ -32,16 +32,16 @@ const MessageSchema = mongoose.Schema({
   },
 })
 
-MessageSchema.statics.addMessage = (data, callback) => {
-  data.save(callback)
+MessageSchema.statics.addMessage = async data => {
+  return data.save()
 }
 
-MessageSchema.statics.getMessageById = (id, callback) => {
-  Message.findById(id, callback)
+MessageSchema.statics.getMessageById = async id => {
+  return Message.findById(id)
 }
 
-MessageSchema.statics.getRelatedMessageById = (id, callback) => {
-  Message.find({message: {relatedMessage: id}}, callback)
+MessageSchema.statics.getRelatedMessageById = async id => {
+  return Message.find({message: {relatedMessage: id}})
 }
 
 const Message = mongoose.model('Message', MessageSchema)

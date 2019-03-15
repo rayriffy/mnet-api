@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import express from 'express'
 
 import notifyService from '../../../services/notify'
@@ -6,30 +7,30 @@ import User from '../../../models/user'
 
 const router = express.Router()
 
-router.post('/', (req, res, next) => {
-  User.getUserById(req.user.id, (err, user) => {
-    if (err) {
-      res.status(404).send({
+router.post('/', async (req, res, next) => {
+  let user = await User.getUserById(req.user.id)
+
+  if (_.isEmpty(user)) {
+    return res.status(404).send({
+      status: 'failure',
+      code: 704,
+      response: {
+        message: 'user not found',
+      },
+    })
+  } else {
+    if (user.authentication.role !== 'administrator') {
+      return res.status(401).send({
+        code: 707,
         status: 'failure',
-        code: 704,
         response: {
-          message: 'user not found',
+          message: 'insufficient permission',
         },
       })
     } else {
-      if (user.authentication.role !== 'administrator') {
-        res.status(401).send({
-          status: 'failure',
-          code: 707,
-          response: {
-            message: 'insufficient permission',
-          },
-        })
-      } else {
-        next()
-      }
+      next()
     }
-  })
+  }
 })
 
 router.post('/', (req, res) => {

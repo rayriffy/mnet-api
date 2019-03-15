@@ -47,77 +47,53 @@ const UserSchema = new mongoose.Schema({
         default: 0,
       },
     },
+    pusher_id: {
+      type: String,
+      required: false,
+      default: null,
+    },
   },
 })
 
-UserSchema.statics.addUser = (data, callback) => {
-  bcrypt.hash(data.authentication.pass, 10, (err, res) => {
-    if (err) {
-      callback(err)
-    }
-    data.authentication.pass = res
-    data.save(callback)
-  })
+UserSchema.statics.addUser = async data => {
+  data.authentication.pass = await bcrypt.hash(data.authentication.pass, 10)
+  return data.save()
 }
 
-UserSchema.statics.activateUser = (ref, callback) => {
-  User.updateOne(
+UserSchema.statics.activateUser = async ref => {
+  return User.updateOne(
     {$and: [{'activation.ref': {$eq: ref}}, {'activation.isActivated': {$eq: false}}]},
     {$set: {'activation.isActivated': true}},
-    callback,
   )
 }
 
-UserSchema.statics.updateUserProfile = (id, payload, callback) => {
-  User.findByIdAndUpdate(id, {$set: {profile: payload}}, callback)
+UserSchema.statics.updateUserProfile = async (id, payload) => {
+  return User.findByIdAndUpdate(id, {$set: {profile: payload}})
 }
 
-UserSchema.statics.getUserById = (id, callback) => {
-  User.findById(id, callback)
+UserSchema.statics.getUserById = async id => {
+  return User.findById(id)
 }
 
-UserSchema.statics.getUserByUsername = (user, callback) => {
-  User.findOne({'authentication.user': {$eq: user}}, callback)
+UserSchema.statics.getUserByUsername = async user => {
+  return User.findOne({'authentication.user': {$eq: user}})
 }
 
-UserSchema.statics.comparePassword = (candidatePassword, hash, callback) => {
-  bcrypt.compare(candidatePassword, hash, (err, res) => {
-    if (res === true) {
-      callback(null, res)
-    } else {
-      callback(err)
-    }
-  })
+UserSchema.statics.comparePassword = async (candidatePassword, hash) => {
+  let res = await bcrypt.compare(candidatePassword, hash)
+  if (res === true) return true
+  else return false
 }
 
-UserSchema.static.changePassword = (id, oldPassword, newPassword, callback) => {
-  User.getUserById(id, (err, user) => {
-    if (err || !user) {
-      callback(null, false)
-    } else {
-      User.comparePassword(oldPassword, user.pass, (err, compare) => {
-        if (err) {
-          callback(err)
-        }
-        if (compare) {
-          bcrypt.hash(newPassword, 10, (err, res) => {
-            if (err) {
-              callback(err)
-            }
-            User.findByIdAndUpdate(id, {$set: {pass: res}}, (err, res) => {
-              if (err) {
-                callback(err)
-              } else {
-                callback(null, res)
-              }
-            })
-          })
-        } else {
-          callback(null, false)
-        }
-      })
-    }
-  })
+UserSchema.static.changePassword = async (id, oldPassword, newPassword) => {
+  let user = await User.getUserById(id)
+
+  if ((await User.comparePassword(oldPassword, user.pass)) === true) {
+    let newHashedPassword = await bcrypt.hash(newPassword, 10)
+    return User.findByIdAndUpdate(id, {$set: {pass: newHashedPassword}})
+  } else {
+    return false
+  }
 }
 
 const User = mongoose.model('User', UserSchema)

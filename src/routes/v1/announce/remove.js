@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import express from 'express'
 
 import Announce from '../../../models/announce'
@@ -5,51 +6,43 @@ import User from '../../../models/user'
 
 const router = express.Router()
 
-router.delete('/:id', (req, res, next) => {
-  User.getUserById(req.user.id, (err, user) => {
-    if (err) {
-      res.status(404).send({
+router.delete('/:id', async (req, res, next) => {
+  let user = await User.getUserById(req.user.id)
+
+  if (_.isEmpty(user)) {
+    return res.status(404).send({
+      status: 'failure',
+      code: 704,
+      response: {
+        message: 'user not found',
+      },
+    })
+  } else {
+    if (user.authentication.role !== 'administrator') {
+      return res.status(401).send({
+        code: 707,
         status: 'failure',
-        code: 704,
         response: {
-          message: 'user not found',
+          message: 'insufficient permission',
         },
       })
     } else {
-      if (user.authentication.role !== 'administrator') {
-        res.status(401).send({
-          code: 707,
-          status: 'failure',
-          response: {
-            message: 'insufficient permission',
-          },
-        })
-      } else {
-        next()
-      }
+      next()
     }
-  })
+  }
 })
 
-router.delete('/:id', (req, res) => {
-  Announce.findByIdAndDelete(req.params.id, err => {
-    if (err) {
-      return res.status(404).send({
-        status: 'failure',
-        code: 704,
-        response: {
-          message: 'announce not found',
-        },
-      })
-    } else {
-      return res.status(200).send({
-        status: 'success',
-        code: 201,
-        response: {
-          message: 'announce sucessfully deleted',
-        },
-      })
-    }
+router.delete('/:id', async (req, res) => {
+  let operation = await Announce.findByIdAndDelete(req.params.id)
+
+  console.log(operation)
+
+  return res.status(200).send({
+    status: 'success',
+    code: 201,
+    response: {
+      message: 'announce sucessfully deleted',
+    },
   })
 })
 

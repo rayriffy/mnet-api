@@ -11,17 +11,14 @@ export default passport => {
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt')
   opts.secretOrKey = SECRET
   passport.use(
-    new Strategy(opts, (payload, res) => {
-      User.getUserById(payload.id, (err, user) => {
-        if (err) {
-          return res(err, false)
-        }
-        if (user) {
-          return res(null, user)
-        } else {
-          return res(null, false)
-        }
-      })
+    new Strategy(opts, async (payload, res) => {
+      let user = await User.getUserById(payload.id)
+
+      if (user) {
+        return res(null, user)
+      } else {
+        return res(null, false)
+      }
     }),
   )
 }
