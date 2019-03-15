@@ -314,7 +314,7 @@ describe('API V1 Testing Unit', () => {
             })
         })
 
-        it('it should not pass if req is not found', done => {
+        it('it should not pass if ref code is not found', done => {
           chai
             .request(server)
             .post('/api/v1/auth/activate')
@@ -386,6 +386,19 @@ describe('API V1 Testing Unit', () => {
       })
 
       describe('/GET /api/v1/user/profile', () => {
+        it('it should handle not found event', done => {
+          chai
+            .request(server)
+            .get('/api/v1/user/profile/iamnumberten/full')
+            .set('Authorization', temp.data.user.token)
+            .end((e, res) => {
+              res.should.have.status(404)
+              res.body.should.have.property('code').eql(704)
+              res.body.response.should.have.property('message').eql('user not found')
+              done()
+            })
+        })
+
         it('it should have required full response', done => {
           chai
             .request(server)
