@@ -23,57 +23,37 @@ router.post('/', (req, res, next) => {
   }
 })
 
-router.post('/', (req, res) => {
-  User.getUserByUsername(req.body.authentication.user, (err, user) => {
-    if (err || !user) {
-      return res.status(404).send({
-        status: 'failure',
-        code: 704,
-        response: {
-          message: 'user not found',
-        },
-      })
-    } else {
-      User.comparePassword(req.body.authentication.pass, user.authentication.pass, (err, compare) => {
-        if (err) {
-          return res.status(400).send({
-            status: 'failure',
-            code: 701,
-            response: {
-              message: 'unexpected error',
-              data: err,
-            },
-          })
-        }
-        if (compare) {
-          const payload = {
-            id: user._id,
-            user: user.authentication.user,
-          }
-          const token = jwt.sign(payload, SECRET, {expiresIn: 6 * 30 * 24 * 60 * 60})
-          return res.status(200).send({
-            status: 'success',
-            code: 201,
-            response: {
-              message: 'authenticated',
-              data: {
-                token: 'JWT ' + token,
-                user: payload,
-              },
-            },
-          })
-        } else {
-          return res.status(400).send({
-            status: 'failure',
-            code: 702,
-            response: {
-              message: 'invalid password',
-            },
-          })
-        }
-      })
+router.post('/', async (req, res) => {
+  let user = await User.getUserByUsername(req.body.authentication.user)
+
+  let compare = await User.comparePassword(req.body.authentication.pass, user.authentication.pass)
+
+  if (compare) {
+    const payload = {
+      id: user._id,
+      user: user.authentication.user,
     }
-  })
+    const token = jwt.sign(payload, SECRET, {expiresIn: 6 * 30 * 24 * 60 * 60})
+    return res.status(200).send({
+      status: 'success',
+      code: 201,
+      response: {
+        message: 'authenticated',
+        data: {
+          token: 'JWT ' + token,
+          user: payload,
+        },
+      },
+    })
+  } else {
+    return res.status(400).send({
+      status: 'failure',
+      code: 702,
+      response: {
+        message: 'invalid password',
+      },
+    })
+  }
 })
 
 router.all('/', (req, res) => {
