@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import express from 'express'
 import passport from 'passport'
 
@@ -8,16 +9,26 @@ const router = express.Router()
 router.post('/', passport.authenticate('jwt', {session: false}), async (req, res, next) => {
   let user = await User.getUserById(req.user.id)
 
-  if (user.authentication.role !== 'administrator') {
-    res.status(400).send({
+  if (_.isEmpty(user)) {
+    return res.status(404).send({
       status: 'failure',
-      code: 707,
+      code: 704,
       response: {
-        message: 'insufficient permission',
+        message: 'user not found',
       },
     })
   } else {
-    next()
+    if (user.authentication.role !== 'administrator') {
+      return res.status(401).send({
+        code: 707,
+        status: 'failure',
+        response: {
+          message: 'insufficient permission',
+        },
+      })
+    } else {
+      next()
+    }
   }
 })
 
