@@ -293,7 +293,7 @@ describe('API V1 Testing Unit', () => {
               },
             })
             .end((e, res) => {
-              res.should.have.status(400)
+              res.should.have.status(401)
               res.body.should.have.property('code').eql(707)
               res.body.response.should.have.property('message').eql('insufficient permission')
               done()
@@ -641,12 +641,7 @@ describe('API V1 Testing Unit', () => {
         it('it should be able to handle not found event', done => {
           chai
             .request(server)
-            .get(
-              '/api/v1/announce/get/' +
-                Math.random()
-                  .toString(36)
-                  .substr(2),
-            )
+            .get('/api/v1/announce/get/5c8bdc9caa5944f5786a4e2' + _.random(0, 9))
             .set('Authorization', temp.data.user.token)
             .end((e, res) => {
               res.should.have.status(404)
