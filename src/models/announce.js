@@ -42,7 +42,7 @@ AnnounceSchema.statics.addAnnounce = async data => {
 }
 
 AnnounceSchema.statics.getAnnounceById = async id => {
-  return Announce.findById(id)
+  return Announce.findOne({_id: {$eq: id}})
 }
 
 AnnounceSchema.statics.countLikeById = async id => {
