@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import express from 'express'
 
 import notifyService from '../../../services/notify'
@@ -6,7 +7,7 @@ import User from '../../../models/user'
 
 const router = express.Router()
 
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
   let user = await User.getUserById(req.user.id)
 
   if (_.isEmpty(user)) {
