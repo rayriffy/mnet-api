@@ -49,6 +49,6 @@
     "format": "prettier --write --no-semi --list-different './src/**/*.js'",
     "lint": "eslint ./src/**/*.js",
     "start": "cross-env NODE_ENV=production node ./build/main.js",
-    "test": "yarn build && cross-env MOCHA_TEST=true mocha ./test --exit"
+    "test": "yarn build && cross-env MOCHA_TEST=true mocha ./test --timeout 5000 --exit"
   }
 }
