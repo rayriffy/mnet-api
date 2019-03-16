@@ -22,21 +22,23 @@ export default async (to, title, body) => {
 
     let messages = []
 
-    let users = await User.find({group: {$eq: to}})
+    let users = await User.find({'profile.notification.group': {$eq: to}})
 
-    _.each(users.profile.notification.id, token => {
-      if (Expo.isExpoPushToken(token)) {
-        messages.push(addMessages(token, title, body))
-      }
-    })
+    if (!_.isEmpty(users)) {
+      _.each(users.profile.notification.id, token => {
+        if (Expo.isExpoPushToken(token)) {
+          messages.push(addMessages(token, title, body))
+        }
+      })
 
-    await Promise.all(messages)
+      await Promise.all(messages)
 
-    let chunks = expo.chunkPushNotifications(messages)
+      let chunks = expo.chunkPushNotifications(messages)
 
-    _.each(chunks, async chunk => {
-      await expo.sendPushNotificationsAsync(chunk)
-    })
+      _.each(chunks, async chunk => {
+        await expo.sendPushNotificationsAsync(chunk)
+      })
+    }
   }
 
   return true
