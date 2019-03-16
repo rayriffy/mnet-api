@@ -641,7 +641,12 @@ describe('API V1 Testing Unit', () => {
         it('it should be able to handle not found event', done => {
           chai
             .request(server)
-            .get('/api/v1/announce/get/5c8bdc9caa5944f5786a4e2' + _.random(0, 9))
+            .get(
+              '/api/v1/announce/get/' +
+                Math.random()
+                  .toString(36)
+                  .substr(2),
+            )
             .set('Authorization', temp.data.user.token)
             .end((e, res) => {
               res.should.have.status(404)
@@ -784,7 +789,12 @@ describe('API V1 Testing Unit', () => {
           it('it should be able to handle not found event', done => {
             chai
               .request(server)
-              .post('/api/v1/like/announce/add/5c8bdc9caa5944f5786a4e2' + _.random(0, 9))
+              .post(
+                '/api/v1/like/announce/add/' +
+                  Math.random()
+                    .toString(36)
+                    .substr(2),
+              )
               .set('Authorization', temp.data.user.token)
               .end((e, res) => {
                 res.should.have.status(404)
@@ -903,7 +913,12 @@ describe('API V1 Testing Unit', () => {
           it('it should be able to handle not found event', done => {
             chai
               .request(server)
-              .get('/api/v1/like/announce/count/5c8bdc9caa5944f5786a4e2' + _.random(0, 9))
+              .get(
+                '/api/v1/like/announce/count/' +
+                  Math.random()
+                    .toString(36)
+                    .substr(2),
+              )
               .set('Authorization', temp.data.user.token)
               .end((e, res) => {
                 res.should.have.status(404)
@@ -960,7 +975,12 @@ describe('API V1 Testing Unit', () => {
           it('it should be able to handle not found event', done => {
             chai
               .request(server)
-              .delete('/api/v1/like/announce/remove/5c8bdc9caa5944f5786a4e2' + _.random(0, 9))
+              .delete(
+                '/api/v1/like/announce/remove/' +
+                  Math.random()
+                    .toString(36)
+                    .substr(2),
+              )
               .set('Authorization', temp.data.user.token)
               .end((e, res) => {
                 res.should.have.status(404)
