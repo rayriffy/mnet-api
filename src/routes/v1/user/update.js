@@ -15,6 +15,10 @@ router.put('/', async (req, res) => {
       if (req.body.profile.school.generation) payload.school.generation = req.body.profile.school.generation
       if (req.body.profile.school.room) payload.school.room = req.body.profile.school.room
     }
+    if (req.body.profile.notification) {
+      if (req.body.profile.notification.id) payload.notification.id = req.body.profile.notification.id
+      if (req.body.profile.notification.group) payload.notification.group = req.body.profile.notification.group
+    }
   }
 
   let operation = await User.updateUserProfile(req.user.id, payload)

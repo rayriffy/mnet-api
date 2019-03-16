@@ -300,7 +300,8 @@ Returns a 200 HTTP status code and a JSON object with announcement data.
         "from": "5c4ddcd75dfafe51104f6521",
         "to": ["mwit25", "mwit26", "mwit27"],
         "like": {
-          "count": 20
+          "count": 20,
+          "isLike": true
         }
       }
     }
@@ -338,17 +339,21 @@ Returns a 200 HTTP status code and a JSON object with announcement data.
     "message": "announces data recived",
     "data": {
       "announce": [
-        "5c657a1ebbbd7938b4e54689",
-        "5c657a1abbbd7938b4e54688",
-        "5c657a16bbbd7938b4e54687",
-        "5c657a13bbbd7938b4e54686",
-        "5c657a0fbbbd7938b4e54685",
-        "5c657a0cbbbd7938b4e54684",
-        "5c657a07bbbd7938b4e54683",
-        "5c657a02bbbd7938b4e54682",
-        "5c6579fcbbbd7938b4e54681",
-        "5c6579f8bbbd7938b4e54680"
-      ]
+        {
+          "id": "sxr409qi6bf7k78n9q1lll7h",
+          "date": "2019-02-04T22:44:30.652Z",
+          "message": {
+            "title": "TPJR",
+            "body": "8 + 0.45 = 9 :thinking:"
+          },
+          "from": "5c4ddcd75dfafe51104f6521",
+          "to": ["mwit25", "mwit26", "mwit27"],
+          "like": {
+            "count": 20,
+            "isLike": true
+          }
+        }
+      ],...
     }
   }
 }
@@ -471,11 +476,13 @@ Update user profile
 
 **Request body**
 
-| Property                  | Type   | Required | Description               |
-| ------------------------- | ------ | -------- | ------------------------- |
-| profile.fullname          | String |          | Updated fullname          |
-| profile.school.generation | Number |          | Updated school generation |
-| profile.school.room       | Number |          | Updated room number       |
+| Property                      | Type   | Required | Description                     |
+| ----------------------------- | ------ | -------- | ------------------------------- |
+| profile.fullname              | String |          | Updated fullname                |
+| profile.school.generation     | Number |          | Updated school generation       |
+| profile.school.room           | Number |          | Updated room number             |
+| profile.notification.id       | String |          | Updated push notification token |
+| profile.notification.id.group | String |          | Updated notification group      |
 
 **Response**
 
