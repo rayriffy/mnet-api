@@ -47,10 +47,17 @@ const UserSchema = new mongoose.Schema({
         default: 0,
       },
     },
-    pusher_id: {
-      type: String,
-      required: false,
-      default: null,
+    push: {
+      id: {
+        type: String,
+        required: false,
+        default: null,
+      },
+      group: {
+        type: String,
+        required: false,
+        default: null,
+      },
     },
   },
 })

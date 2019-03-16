@@ -1,30 +1,43 @@
-import axios from 'axios'
+import _ from 'lodash'
 import dotenv from 'dotenv'
+import Expo from 'expo-server-sdk'
+
+import User from '../models/user'
 
 dotenv.config()
-const {FCM_KEY} = process.env
 const {NODE_ENV = 'development', MOCHA_TEST = false} = process.env
 
-export default (to, title, text) => {
+const expo = new Expo()
+
+export default async (to, title, body) => {
   if (NODE_ENV === 'production' || (NODE_ENV === 'production' && MOCHA_TEST === false)) {
-    const payload = {
-      to: `/topics/${to}`,
-      priority: 'normal',
-      notification: {
+    let addMessages = async (token, title, body) => {
+      return {
+        to: token,
+        sound: 'default',
         title: title,
-        text: text,
-      },
+        body: body,
+      }
     }
 
-    const options = {
-      headers: {
-        Authorization: `key=${FCM_KEY}`,
-        'Content-Type': 'application/json',
-      },
-    }
+    let messages = []
 
-    return axios.post('https://fcm.googleapis.com/fcm/send', payload, options)
-  } else {
-    return true
+    let tokens = await User.find({group: {$eq: to}}).select('push.id')
+
+    _.each(tokens, token => {
+      if (Expo.isExpoPushToken(token)) {
+        messages.push(addMessages(token, title, body))
+      }
+    })
+
+    await Promise.all(messages)
+
+    let chunks = expo.chunkPushNotifications(messages)
+
+    _.each(chunks, async chunk => {
+      await expo.sendPushNotificationsAsync(chunk)
+    })
   }
+
+  return true
 }
