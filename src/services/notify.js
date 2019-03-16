@@ -22,9 +22,9 @@ export default async (to, title, body) => {
 
     let messages = []
 
-    let tokens = await User.find({group: {$eq: to}}).select('push.id')
+    let users = await User.find({group: {$eq: to}})
 
-    _.each(tokens, token => {
+    _.each(users.profile.notification.id, token => {
       if (Expo.isExpoPushToken(token)) {
         messages.push(addMessages(token, title, body))
       }
