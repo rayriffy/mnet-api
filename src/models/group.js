@@ -18,16 +18,16 @@ const GroupSchema = new mongoose.Schema({
   },
 })
 
-GroupSchema.statics.addGroup = (data, callback) => {
-  data.save(callback)
+GroupSchema.statics.addGroup = async data => {
+  return data.save()
 }
 
-GroupSchema.statics.getGroupById = (id, callback) => {
-  Group.findById(id, callback)
+GroupSchema.statics.getGroupById = id => {
+  return Group.findById(id)
 }
 
-GroupSchema.statics.addUserToGroup = (data, callback) => {
-  Group.findByIdAndUpdate(data.group.id, {$push: {member: data.user.id}}, callback)
+GroupSchema.statics.addUserToGroup = data => {
+  return Group.findByIdAndUpdate(data.group.id, {$push: {member: data.user.id}})
 }
 
 const Group = mongoose.model('Group', GroupSchema)
