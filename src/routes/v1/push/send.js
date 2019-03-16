@@ -43,7 +43,7 @@ router.post('/', (req, res) => {
       },
     })
   } else {
-    notifyService(req.body.to, req.body.title, req.body.text)
+    notifyService(req.body.to, req.body.title, req.body.text, 'group')
 
     res.status(202).send({
       status: 'success',
