@@ -9,7 +9,7 @@ const {NODE_ENV = 'development', MOCHA_TEST = false} = process.env
 
 const expo = new Expo()
 
-export default async (to, title, body) => {
+export default async (to, title, body, type = 'group') => {
   if (NODE_ENV === 'production' || (NODE_ENV === 'production' && MOCHA_TEST === false)) {
     let addMessages = async (token, title, body) => {
       return {
@@ -21,8 +21,20 @@ export default async (to, title, body) => {
     }
 
     let messages = []
+    let users = []
 
-    let users = await User.find({'profile.notification.group': {$eq: to}})
+    if (type === 'group') {
+      users = await User.find({'profile.notification.group': {$eq: to}})
+    } else if (type === 'bulk') {
+      _.each(to, user => {
+        users.push(async () => {
+          let out = await User.getUserById(user)
+          return out
+        })
+      })
+
+      await Promise.all(users)
+    }
 
     if (!_.isEmpty(users)) {
       _.each(users.profile.notification.id, token => {
