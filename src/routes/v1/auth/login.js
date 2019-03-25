@@ -24,35 +24,66 @@ router.post('/', (req, res, next) => {
 })
 
 router.post('/', async (req, res) => {
-  let user = await User.getUserByUsername(req.body.authentication.user)
+  try {
+    let user = await User.getUserByUsername(req.body.authentication.user)
 
-  let compare = await User.comparePassword(req.body.authentication.pass, user.authentication.pass)
-
-  if (compare) {
-    const payload = {
-      id: user._id,
-      user: user.authentication.user,
-    }
-    const token = jwt.sign(payload, SECRET, {expiresIn: 6 * 30 * 24 * 60 * 60})
-    return res.status(200).send({
-      status: 'success',
-      code: 201,
-      response: {
-        message: 'authenticated',
-        data: {
-          token: 'JWT ' + token,
-          user: payload,
+    if (!user) {
+      return res.status(400).send({
+        status: 'failure',
+        code: 702,
+        response: {
+          message: 'invalid username / password',
         },
-      },
-    })
-  } else {
-    return res.status(400).send({
-      status: 'failure',
-      code: 702,
-      response: {
-        message: 'invalid password',
-      },
-    })
+      })
+    } else {
+      let compare = await User.comparePassword(req.body.authentication.pass, user.authentication.pass)
+
+      if (compare) {
+        const payload = {
+          id: user._id,
+          user: user.authentication.user,
+        }
+        const token = jwt.sign(payload, SECRET, {expiresIn: 6 * 30 * 24 * 60 * 60})
+        return res.status(200).send({
+          status: 'success',
+          code: 201,
+          response: {
+            message: 'authenticated',
+            data: {
+              token: 'JWT ' + token,
+              user: payload,
+            },
+          },
+        })
+      } else {
+        return res.status(400).send({
+          status: 'failure',
+          code: 702,
+          response: {
+            message: 'invalid username / password',
+          },
+        })
+      }
+    }
+  } catch (err) {
+    if (err.name === 'CastError') {
+      return res.status(400).send({
+        status: 'failure',
+        code: 702,
+        response: {
+          message: 'invalid username / password',
+        },
+      })
+    } else {
+      return res.status(400).send({
+        status: 'failure',
+        code: 701,
+        response: {
+          message: 'unexpected error',
+          data: err,
+        },
+      })
+    }
   }
 })
 
