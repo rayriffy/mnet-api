@@ -34,6 +34,7 @@ export default (req, res, next) => {
         },
       })
     } else {
+      console.log(req)
       req.user = {
         id: user._id,
         user: user.user,
