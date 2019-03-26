@@ -40,7 +40,8 @@ export default async (to, title, body, type = 'group') => {
       _.each(users, user => {
         console.log(user.profile.notification.id)
         if (Expo.isExpoPushToken(user.profile.notification.id)) {
-          messages.push(addMessages(user.profile.notification.id, title, body))
+          console.log('OK')
+          // messages.push(addMessages(user.profile.notification.id, title, body))
         }
       })
 
