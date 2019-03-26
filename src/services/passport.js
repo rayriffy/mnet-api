@@ -12,12 +12,16 @@ export default passport => {
   opts.secretOrKey = SECRET
   passport.use(
     new Strategy(opts, async (payload, res) => {
-      let user = await User.getUserById(payload.id)
+      try {
+        let user = await User.getUserById(payload.id)
 
-      if (user) {
-        return res(null, user)
-      } else {
-        return res(null, false)
+        if (user) {
+          return res(null, user)
+        } else {
+          return res(null, false)
+        }
+      } catch (err) {
+        return res(err, null)
       }
     }),
   )

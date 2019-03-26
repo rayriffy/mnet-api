@@ -13,8 +13,6 @@ export default (req, res, next) => {
       })
     }
     if (user === false) {
-      console.log(user)
-      console.log(req)
       res.status(401).send({
         status: 'failure',
         code: 703,
