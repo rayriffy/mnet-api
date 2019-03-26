@@ -36,6 +36,8 @@ export default async (to, title, body, type = 'group') => {
       await Promise.all(users)
     }
 
+    console.log(users)
+
     if (!_.isEmpty(users)) {
       _.each(users.profile.notification.id, token => {
         if (Expo.isExpoPushToken(token)) {
