@@ -29,7 +29,6 @@ export default async (to, title, body, type = 'group') => {
 
     if (!_.isEmpty(users)) {
       _.each(users, user => {
-        console.log(user.profile.notification.id)
         if (Expo.isExpoPushToken(user.profile.notification.id)) {
           messages.push({
             to: user.profile.notification.id,
