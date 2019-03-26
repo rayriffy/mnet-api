@@ -36,12 +36,11 @@ export default async (to, title, body, type = 'group') => {
       await Promise.all(users)
     }
 
-    console.log(users)
-
     if (!_.isEmpty(users)) {
-      _.each(users.profile.notification.id, token => {
-        if (Expo.isExpoPushToken(token)) {
-          messages.push(addMessages(token, title, body))
+      _.each(users, user => {
+        console.log(user.profile.notification.id)
+        if (Expo.isExpoPushToken(user.profile.notification.id)) {
+          messages.push(addMessages(user.profile.notification.id, title, body))
         }
       })
 
