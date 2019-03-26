@@ -11,7 +11,6 @@ const expo = new Expo()
 
 export default async (to, title, body, type = 'group') => {
   if (NODE_ENV === 'production' || (NODE_ENV === 'production' && MOCHA_TEST === false)) {
-
     let messages = []
     let users = []
 
@@ -40,8 +39,6 @@ export default async (to, title, body, type = 'group') => {
           })
         }
       })
-
-      console.log(messages)
 
       let chunks = expo.chunkPushNotifications(messages)
 
