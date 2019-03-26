@@ -67,7 +67,27 @@ router.post('/', async (req, res) => {
       })
     }
   } catch (err) {
-    console.log(err)
+    if (err.code === 11000) {
+      return res.status(400).send({
+        status: 'failure',
+        code: 701,
+        response: {
+          message: 'failed to create new user',
+          data: {
+            reason: 'duplicated user',
+          },
+        },
+      })
+    } else {
+      return res.status(400).send({
+        status: 'failure',
+        code: 701,
+        response: {
+          message: 'unexpected error',
+          data: err,
+        },
+      })
+    }
   }
 })
 
