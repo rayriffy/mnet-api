@@ -38,32 +38,36 @@ router.post('/', async (req, res) => {
     profile: req.body.profile,
   })
 
-  let user = await User.addUser(payload)
+  try {
+    let user = await User.addUser(payload)
 
-  if (_.isEmpty(user)) {
-    return res.status(400).send({
-      status: 'failure',
-      code: 701,
-      response: {
-        message: 'failed to create new user',
-        data: user,
-      },
-    })
-  } else {
-    return res.status(200).send({
-      status: 'success',
-      code: 201,
-      response: {
-        message: 'user created',
-        data: {
-          user: {
-            activation: {
-              ref: refCode,
+    if (_.isEmpty(user)) {
+      return res.status(400).send({
+        status: 'failure',
+        code: 701,
+        response: {
+          message: 'failed to create new user',
+          data: user,
+        },
+      })
+    } else {
+      return res.status(200).send({
+        status: 'success',
+        code: 201,
+        response: {
+          message: 'user created',
+          data: {
+            user: {
+              activation: {
+                ref: refCode,
+              },
             },
           },
         },
-      },
-    })
+      })
+    }
+  } catch (err) {
+    console.log(err)
   }
 })
 
