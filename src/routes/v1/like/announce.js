@@ -9,8 +9,6 @@ router.post('/add/:id', async (req, res) => {
   try {
     let operation = await Announce.findByIdAndUpdate(req.params.id, {$addToSet: {like: req.user.id}})
 
-    // console.log(req)
-
     if (_.isEmpty(operation)) {
       return res.status(404).send({
         status: 'failure',

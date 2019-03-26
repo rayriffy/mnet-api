@@ -12,8 +12,6 @@ export default (req, res, next) => {
         },
       })
     }
-    console.log(req)
-    console.log(user)
     if (user === false) {
       res.status(401).send({
         status: 'failure',
