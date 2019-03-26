@@ -40,12 +40,13 @@ export default async (to, title, body, type = 'group') => {
       _.each(users, user => {
         console.log(user.profile.notification.id)
         if (Expo.isExpoPushToken(user.profile.notification.id)) {
-          console.log('OK')
-          // messages.push(addMessages(user.profile.notification.id, title, body))
+          messages.push(addMessages(user.profile.notification.id, title, body))
         }
       })
 
       await Promise.all(messages)
+
+      console.log(messages)
 
       let chunks = expo.chunkPushNotifications(messages)
 
