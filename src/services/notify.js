@@ -11,14 +11,6 @@ const expo = new Expo()
 
 export default async (to, title, body, type = 'group') => {
   if (NODE_ENV === 'production' || (NODE_ENV === 'production' && MOCHA_TEST === false)) {
-    let addMessages = async (token, title, body) => {
-      return {
-        to: token,
-        sound: 'default',
-        title: title,
-        body: body,
-      }
-    }
 
     let messages = []
     let users = []
@@ -40,11 +32,14 @@ export default async (to, title, body, type = 'group') => {
       _.each(users, user => {
         console.log(user.profile.notification.id)
         if (Expo.isExpoPushToken(user.profile.notification.id)) {
-          messages.push(addMessages(user.profile.notification.id, title, body))
+          messages.push({
+            to: user.profile.notification.id,
+            sound: 'default',
+            title: title,
+            body: body,
+          })
         }
       })
-
-      await Promise.all(messages)
 
       console.log(messages)
 
