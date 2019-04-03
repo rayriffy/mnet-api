@@ -34,7 +34,7 @@ Table of Contents
     *   [IsLike](#likeislike)
 
 *   [Find](#find)
-    * [Announce](#findannounce)
+    *   [Regex](#findregex)
 
 Common Specifications
 ---------------------
