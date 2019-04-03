@@ -33,6 +33,9 @@ Table of Contents
     *   [Count](#likecount)
     *   [IsLike](#likeislike)
 
+*   [Find](#find)
+    * [Announce](#findannounce)
+
 Common Specifications
 ---------------------
 
@@ -712,3 +715,71 @@ Returns a 200 HTTP status code and a JSON object.
 ```
 </details>
 
+Find
+----
+
+### Find/Regex
+
+Find data title and body by using RegExp
+
+**HTTP request**
+
+`POST /api/v1/find/:type/regex`
+
+**Path parameters**
+
+| Parameter | Description                            |
+| --------- | -------------------------------------- |
+| type      | Types of data (Available: `announce`)  |
+
+**Request headers**
+
+| Request header | Description      |
+| -------------- | ---------------- |
+| Content-Type   | application/json |
+
+**Request body**
+
+| Property  | Type   | Required | Description      |
+| --------- | ------ | -------- | ---------------- |
+| regex     | RegExp | Required | RegExp object    |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object with the following data.
+
+| Property                    | Type   | Description               |
+| --------------------------- | ------ | ------------------------- |
+| response.data.announces     | Array  | Array of data object      |
+
+<details>
+<summary>JSON</summary>
+
+```json
+{
+  "status": "success",
+  "code": 201,
+  "response": {
+    "message": "announces data recived",
+    "data": {
+      "announces": [
+        {
+          "id": "sxr409qi6bf7k78n9q1lll7h",
+          "date": "2019-02-04T22:44:30.652Z",
+          "message": {
+            "title": "TPJR",
+            "body": "8 + 0.45 = 9 :thinking:"
+          },
+          "from": "5c4ddcd75dfafe51104f6521",
+          "to": ["mwit25", "mwit26", "mwit27"],
+          "like": {
+            "count": 20,
+            "isLike": true
+          }
+        },...
+      ]
+    }
+  }
+}
+```
+</details>

@@ -2,6 +2,7 @@ import express from 'express'
 
 import AnnounceRoutes from './AnnounceRoutes'
 import AuthRoutes from './AuthRoutes'
+import FindRoutes from './FindRoutes'
 import LikeRoutes from './LikeRoutes'
 import PushRoutes from './PushRoutes'
 import UserRoutes from './UserRoutes'
@@ -28,6 +29,7 @@ router.all('/', (req, res) => {
 
 router.use('/announce', AnnounceRoutes)
 router.use('/auth', AuthRoutes)
+router.use('/find', FindRoutes)
 router.use('/like', LikeRoutes)
 router.use('/push', PushRoutes)
 router.use('/user', UserRoutes)
