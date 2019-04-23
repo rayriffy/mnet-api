@@ -35,8 +35,6 @@ router.delete('/:id', async (req, res, next) => {
 router.delete('/:id', async (req, res) => {
   let operation = await Announce.findByIdAndDelete(req.params.id)
 
-  console.log(operation)
-
   return res.status(200).send({
     status: 'success',
     code: 201,
