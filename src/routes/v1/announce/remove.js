@@ -33,7 +33,7 @@ router.delete('/:id', async (req, res, next) => {
 })
 
 router.delete('/:id', async (req, res) => {
-  let operation = await Announce.findByIdAndDelete(req.params.id)
+  await Announce.findByIdAndDelete(req.params.id)
 
   return res.status(200).send({
     status: 'success',
