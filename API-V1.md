@@ -655,6 +655,10 @@ Count like from requested id
 
 Returns a 200 HTTP status code and a JSON object.
 
+| Property            | Type   | Description                        |
+| ------------------- | ------ | ---------------------------------- |
+| response.data.count | String | Reference code for user activation |
+
 <details>
 <summary>JSON</summary>
 
@@ -742,7 +746,7 @@ Find data title and body by using RegExp
 
 | Property  | Type   | Required | Description      |
 | --------- | ------ | -------- | ---------------- |
-| regex     | RegExp | Required | RegExp object    |
+| regex     | String | Required | RegExp object    |
 
 **Response**
 

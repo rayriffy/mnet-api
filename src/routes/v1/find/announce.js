@@ -6,7 +6,8 @@ import Announce from '../../../models/announce'
 const router = express.Router()
 
 router.post('/regex', async (req, res) => {
-  if (_.isEmpty(req.params.regex)) {
+  console.log(req.body)
+  if (_.isEmpty(req.body.regex)) {
     return res.send(400).send({
       status: 'failure',
       code: 702,
@@ -15,7 +16,8 @@ router.post('/regex', async (req, res) => {
       },
     })
   }
-  if (!_.isRegExp(req.params.regex)) {
+
+  if (!_.isRegExp(new RegExp(req.body.regex))) {
     return res.send(400).send({
       status: 'failure',
       code: 708,
@@ -26,8 +28,9 @@ router.post('/regex', async (req, res) => {
   }
 
   try {
+    const reg = new RegExp(req.body.regex)
     let announces = await Announce.find({
-      $or: [{'message.title': {$regex: req.params.regex}}, {'message.body': {$regex: req.params.regex}}],
+      $or: [{'message.title': {$regex: req.body.regex}}, {'message.body': {$regex: reg}}],
     })
 
     if (_.isEmpty(announces)) {

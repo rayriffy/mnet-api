@@ -11,6 +11,6 @@ router.use('/', findIndex)
 
 router.use(authenticationMiddleware)
 
-router.use('/announe', findAnnounce)
+router.use('/announce', findAnnounce)
 
 export default router
