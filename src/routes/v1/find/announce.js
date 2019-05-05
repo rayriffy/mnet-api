@@ -6,7 +6,6 @@ import Announce from '../../../models/announce'
 const router = express.Router()
 
 router.post('/regex', async (req, res) => {
-  console.log(req.body)
   if (_.isEmpty(req.body.regex)) {
     return res.send(400).send({
       status: 'failure',
@@ -64,8 +63,6 @@ router.post('/regex', async (req, res) => {
       _.each(announces, announce => {
         promises.push(fetchAnnounce(announce))
       })
-
-      console.log(promises)
 
       await Promise.all(promises)
 
