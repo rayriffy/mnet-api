@@ -30,7 +30,7 @@ router.post('/regex', async (req, res) => {
   try {
     const reg = new RegExp(req.body.regex)
     let announces = await Announce.find({
-      $or: [{'message.title': {$regex: req.body.regex}}, {'message.body': {$regex: reg}}],
+      $or: [{'message.title': {$regex: reg}}, {'message.body': {$regex: reg}}],
     })
 
     if (_.isEmpty(announces)) {
