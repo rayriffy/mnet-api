@@ -43,10 +43,11 @@ router.post('/regex', async (req, res) => {
       })
     } else {
       let announcesResponse = []
-      _.each(announces, async announce => {
+
+      const fetchAnnounce = async announce => {
         let doc = await Announce.find({$and: [{like: {$in: [req.user.id]}}, {_id: {$eq: announce._id}}]})
 
-        announcesResponse.push({
+        return {
           id: announce._id,
           date: announce.date,
           message: announce.message,
@@ -56,8 +57,14 @@ router.post('/regex', async (req, res) => {
             count: _.isNumber(announce.like.length) ? announce.like.length : 0,
             isLike: !_.isEmpty(doc),
           },
-        })
+        }
+      }
+
+      _.each(announces, announce => {
+        announcesResponse.push(fetchAnnounce(announce))
       })
+
+      await Promise.all(announcesResponse)
 
       return res.status(200).send({
         status: 'success',
