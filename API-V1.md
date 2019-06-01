@@ -798,3 +798,158 @@ Returns a 200 HTTP status code and a JSON object with the following data.
 
 Notification
 ------------
+
+### Notification/Create
+
+Create notification group
+
+**HTTP request**
+
+`POST /api/v1/noti/create`
+
+**Request headers**
+
+| Request header | Description       |
+| -------------- | ----------------- |
+| Content-Type   | application/json  |
+| Authorization  | JWT `{JWT token}` |
+
+**Request body**
+
+| Property | Type   | Required | Description              |
+| -------- | ------ | -------- | ------------------------ |
+| name     | String | Required | Notification group name  |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object with the following data.
+
+| Property           | Type   | Description           |
+| ------------------ | ------ | --------------------- |
+| response.data.id   | String | Notification group ID |
+| response.data.name | String | Notification name     |
+
+### Notification/Get
+
+Get list of subscribers token
+
+**HTTP request**
+
+`GET /api/v1/noti/get/:id`
+
+**Request headers**
+
+| Request header | Description       |
+| -------------- | ----------------- |
+| Authorization  | JWT `{JWT token}` |
+
+**Path parameters**
+
+| Parameter | Description           |
+| --------- | --------------------- |
+| id        | Notification group ID |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object.
+
+### Notification/List
+
+List all existing notification group alphabetically
+
+**HTTP request**
+
+`GET /api/v1/noti/list/:page`
+
+**Request headers**
+
+| Request header | Description       |
+| -------------- | ----------------- |
+| Authorization  | JWT `{JWT token}` |
+
+**Path parameters**
+
+| Parameter | Description     |
+| --------- | --------------- |
+| page      | Panigation page |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object.
+
+### Notification/Remove
+
+Remove notification group and related subscribers
+
+**HTTP request**
+
+`DELETE /api/v1/noti/remove`
+
+**Request headers**
+
+| Request header | Description       |
+| -------------- | ----------------- |
+| Content-Type   | application/json  |
+| Authorization  | JWT `{JWT token}` |
+
+**Request body**
+
+| Property | Type   | Required | Description           |
+| -------- | ------ | -------- | --------------------- |
+| group    | String | Required | Notification group ID |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object.
+
+### Notification/Subscribe
+
+Add expo token into notification group
+
+**HTTP request**
+
+`POST /api/v1/noti/subscribe`
+
+**Request headers**
+
+| Request header | Description       |
+| -------------- | ----------------- |
+| Content-Type   | application/json  |
+| Authorization  | JWT `{JWT token}` |
+
+**Request body**
+
+| Property | Type   | Required | Description           |
+| -------- | ------ | -------- | --------------------- |
+| group    | String | Required | Notification group ID |
+| token    | String | Required | Expo token            |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object.
+
+### Notification/Unscribe
+
+Remove expo token into notification group
+
+**HTTP request**
+
+`DELETE /api/v1/noti/unsubscribe`
+
+**Request headers**
+
+| Request header | Description       |
+| -------------- | ----------------- |
+| Content-Type   | application/json  |
+| Authorization  | JWT `{JWT token}` |
+
+**Request body**
+
+| Property | Type   | Required | Description           |
+| -------- | ------ | -------- | --------------------- |
+| group    | String | Required | Notification group ID |
+| token    | String | Required | Expo token            |
+
+**Response**
+
+Returns a 200 HTTP status code and a JSON object.
