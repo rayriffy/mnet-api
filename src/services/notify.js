@@ -2,36 +2,28 @@ import _ from 'lodash'
 import dotenv from 'dotenv'
 import Expo from 'expo-server-sdk'
 
-import User from '../models/user'
+import Notification from '../models/notification'
+import Subscriber from '../models/subscriber'
 
 dotenv.config()
 const {NODE_ENV = 'development', MOCHA_TEST = false} = process.env
 
 const expo = new Expo()
 
-export default async (to, title, body, type = 'group') => {
+export default async (to, title, body) => {
   if (NODE_ENV === 'production' || (NODE_ENV === 'production' && MOCHA_TEST === false)) {
-    let messages = []
-    let users = []
+    const group = await Notification.findOne({name: {$eq: to}})
 
-    if (type === 'group') {
-      users = await User.find({'profile.notification.group': {$eq: to}})
-    } else if (type === 'bulk') {
-      _.each(to, user => {
-        users.push(async () => {
-          let out = await User.getUserById(user)
-          return out
-        })
-      })
+    if (group === null) {
+      return false
+    } else {
+      const messages = []
+      const subscribers = await Subscriber.find({group: {$eq: group}})
 
-      await Promise.all(users)
-    }
-
-    if (!_.isEmpty(users)) {
-      _.each(users, user => {
-        if (Expo.isExpoPushToken(user.profile.notification.id)) {
+      subscribers.map(subscriber => {
+        if (Expo.isExpoPushToken(subscriber.token)) {
           messages.push({
-            to: user.profile.notification.id,
+            to: subscriber.token,
             sound: 'default',
             title: title,
             body: body,
