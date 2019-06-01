@@ -47,18 +47,6 @@ const UserSchema = new mongoose.Schema({
         default: 0,
       },
     },
-    notification: {
-      id: {
-        type: String,
-        required: false,
-        default: null,
-      },
-      group: {
-        type: String,
-        required: false,
-        default: null,
-      },
-    },
   },
 })
 

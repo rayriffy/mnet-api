@@ -8,8 +8,14 @@ const NotificationSchema = new mongoose.Schema({
   },
 })
 
+NotificationSchema.static.addGroup = async data => {
+  return data.save()
+}
+
 NotificationSchema.static.getNotificationGroupById = async id => {
   return Notification.findById(id)
 }
 
 const Notification = mongoose.model('Notification', NotificationSchema)
+
+export default Notification

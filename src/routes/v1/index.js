@@ -4,6 +4,7 @@ import AnnounceRoutes from './AnnounceRoutes'
 import AuthRoutes from './AuthRoutes'
 import FindRoutes from './FindRoutes'
 import LikeRoutes from './LikeRoutes'
+import NotificationRoutes from './NotificationRoutes'
 import PushRoutes from './PushRoutes'
 import UserRoutes from './UserRoutes'
 
@@ -31,6 +32,7 @@ router.use('/announce', AnnounceRoutes)
 router.use('/auth', AuthRoutes)
 router.use('/find', FindRoutes)
 router.use('/like', LikeRoutes)
+router.use('/noti', NotificationRoutes)
 router.use('/push', PushRoutes)
 router.use('/user', UserRoutes)
 

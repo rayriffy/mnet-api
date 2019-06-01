@@ -36,6 +36,14 @@ Table of Contents
 *   [Find](#find)
     *   [Regex](#findregex)
 
+*   [Notification](#notification)
+    *   [Create](#notificationcreate)
+    *   [Get](#notificationget)
+    *   [List](#notificationlist)
+    *   [Remove](#notificationremove)
+    *   [Subscribe](#notificationsubscribe)
+    *   [Unsubscribe](#notificationunsubscribe)
+
 Common Specifications
 ---------------------
 
@@ -787,3 +795,6 @@ Returns a 200 HTTP status code and a JSON object with the following data.
 }
 ```
 </details>
+
+Notification
+------------
