@@ -9,7 +9,10 @@ const NotificationSchema = new mongoose.Schema({
 })
 
 NotificationSchema.static.addGroup = async data => {
-  return data.save()
+  const Notification = mongoose.model('Announce', NotificationSchema)
+  const payload = new Notification(data)
+
+  return payload.save()
 }
 
 NotificationSchema.static.getNotificationGroupById = async id => {
