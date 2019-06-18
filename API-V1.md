@@ -859,19 +859,13 @@ List all existing notification group alphabetically
 
 **HTTP request**
 
-`GET /api/v1/noti/list/:page`
+`GET /api/v1/noti/list`
 
 **Request headers**
 
 | Request header | Description       |
 | -------------- | ----------------- |
 | Authorization  | JWT `{JWT token}` |
-
-**Path parameters**
-
-| Parameter | Description     |
-| --------- | --------------- |
-| page      | Panigation page |
 
 **Response**
 
