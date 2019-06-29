@@ -5,12 +5,12 @@ const NotificationSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-  }
+  },
 })
 
 NotificationSchema.statics.addGroup = function(data) {
-  const noti = mongoose.model('Notification', NotificationSchema)
-  const payload = new noti(data)
+  const Noti = mongoose.model('Notification', NotificationSchema)
+  const payload = new Noti(data)
   return payload.save()
 }
 

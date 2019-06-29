@@ -30,10 +30,9 @@ SubscriberSchema.statics.subscribe = async (group, token) => {
   if (!_.isEmpty(dups)) {
     return false
   } else {
-    const schem = mongoose.model('Subscriber', SubscriberSchema)
-    const data = new schem(payload)
+    const Sub = mongoose.model('Subscriber', SubscriberSchema)
+    const data = new Sub(payload)
     return data.save()
-    
   }
 }
 
