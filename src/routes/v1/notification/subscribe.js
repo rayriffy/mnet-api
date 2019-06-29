@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
   const {token, group} = req.body
 
   try {
-    const out = await Subscriber.add(group, token)
+    const out = await Subscriber.subscribe(group, token)
 
     if (out === false) {
       return res.status(400).send({
@@ -67,7 +67,7 @@ router.post('/', async (req, res) => {
       code: 701,
       response: {
         message: 'unexpected error',
-        data: err,
+        data: err.message,
       },
     })
   }
