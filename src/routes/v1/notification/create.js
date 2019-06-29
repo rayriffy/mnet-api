@@ -19,8 +19,8 @@ router.post('/', (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-  const { name } = req.body
-  const groups = await Notification.find({ name: { $eq: name.trim() } })
+  const {name} = req.body
+  const groups = await Notification.find({name: {$eq: name.trim()}})
 
   if (!_.isEmpty(groups)) {
     return res.status(400).send({
@@ -36,14 +36,14 @@ router.post('/', async (req, res, next) => {
 })
 
 router.post('/', async (req, res) => {
-  const { name } = req.body
+  const {name} = req.body
   const groupId = Math.random()
     .toString(36)
     .substr(2, 8)
 
   const payload = {
     name: name.trim(),
-    id: groupId
+    id: groupId,
   }
 
   try {
@@ -67,7 +67,7 @@ router.post('/', async (req, res) => {
       response: {
         message: 'unexpected error',
         data: err.message,
-        name: req.body
+        name: req.body,
       },
     })
   }
