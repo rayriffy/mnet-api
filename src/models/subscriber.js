@@ -14,11 +14,11 @@ const SubscriberSchema = new mongoose.Schema({
   },
 })
 
-SubscriberSchema.static.getSubscriberByGroup = async group => {
+SubscriberSchema.statics.getSubscriberByGroup = async group => {
   return Subscriber.find({group: {$eq: group}})
 }
 
-SubscriberSchema.static.subscribe = async (group, token) => {
+SubscriberSchema.statics.subscribe = async (group, token) => {
   const payload = {
     group: group,
     token: token,
@@ -30,11 +30,14 @@ SubscriberSchema.static.subscribe = async (group, token) => {
   if (!_.isEmpty(dups)) {
     return false
   } else {
-    return payload.save()
+    const schem = mongoose.model('Subscriber', SubscriberSchema)
+    const data = new schem(payload)
+    return data.save()
+    
   }
 }
 
-SubscriberSchema.static.unsubscribe = async (group, token) => {
+SubscriberSchema.statics.unsubscribe = async (group, token) => {
   return Subscriber.deleteOne({$and: [{group: {$eq: group}}, {token: {$eq: token}}]})
 }
 

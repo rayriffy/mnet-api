@@ -5,20 +5,18 @@ const NotificationSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-  },
+  }
 })
 
-NotificationSchema.static.addGroup = async data => {
-  const Notification = mongoose.model('Announce', NotificationSchema)
-  const payload = new Notification(data)
-
+NotificationSchema.statics.addGroup = function(data) {
+  const noti = mongoose.model('Notification', NotificationSchema)
+  const payload = new noti(data)
   return payload.save()
 }
 
-NotificationSchema.static.getNotificationGroupById = async id => {
+NotificationSchema.statics.getNotificationGroupById = async id => {
   return Notification.findById(id)
 }
 
 const Notification = mongoose.model('Notification', NotificationSchema)
-
 export default Notification

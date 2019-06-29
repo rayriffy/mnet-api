@@ -10,7 +10,7 @@ router.get('/:id', async (req, res, next) => {
   const {id} = req.params
 
   const notificationGroup = await Notification.findById(id)
-
+  console.log(notificationGroup)
   if (_.isEmpty(notificationGroup)) {
     return res.status(404).send({
       status: 'failure',
