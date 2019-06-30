@@ -26,7 +26,6 @@ SubscriberSchema.statics.getSubscriberByGroup = async group => {
 	return Subscriber.find({ group: { $eq: group } })
 }
 
-<<<<<<< HEAD
 SubscriberSchema.statics.subscribe = async (groupId, expoToken, userId) => {
 	if (!Expo.isExpoPushToken(expoToken)) {
 		throw Error('invalid notification token format')

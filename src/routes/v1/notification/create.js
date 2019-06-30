@@ -18,7 +18,6 @@ router.post('/', (req, res, next) => {
   }
 })
 
-<<<<<<< HEAD
 router.post('/', async (req, res) => {
   const payload = {
     name: req.body.groupName,
