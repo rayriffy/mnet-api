@@ -7,7 +7,7 @@ import LikeRoutes from './LikeRoutes'
 import NotificationRoutes from './NotificationRoutes'
 import PushRoutes from './PushRoutes'
 import UserRoutes from './UserRoutes'
-
+import GroupRoutes from './GroupRoutes'
 const router = express.Router()
 
 router.get('/', (req, res) => {
@@ -35,5 +35,6 @@ router.use('/like', LikeRoutes)
 router.use('/noti', NotificationRoutes)
 router.use('/push', PushRoutes)
 router.use('/user', UserRoutes)
+router.use('/group',GroupRoutes)
 
 export default router

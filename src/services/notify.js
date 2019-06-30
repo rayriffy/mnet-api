@@ -14,17 +14,16 @@ export default async function notifyService(to, title, body) {
   //if (NODE_ENV === 'production' || (NODE_ENV === 'production' && MOCHA_TEST === false)) {
   
   const group = await Notification.findOne({ _id: { $eq: to } })
-  console.log(group)
   if (group === null) {
     return false
   } else {
     const messages = []
     const subscribers = await Subscriber.find({ group: { $eq: group._id } })
-    console.log(subscribers)
+
     subscribers.map(subscriber => {
-      if (Expo.isExpoPushToken(subscriber.token)) {
+      if (Expo.isExpoPushToken(subscriber.user.token)) {
         messages.push({
-          to: subscriber.token,
+          to: subscriber.user.token,
           sound: 'default',
           title: title,
           body: body,

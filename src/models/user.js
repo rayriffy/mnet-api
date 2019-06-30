@@ -70,6 +70,10 @@ UserSchema.statics.getUserById = async id => {
   return User.findById(id)
 }
 
+UserSchema.statics.getNameById = async(id) => {
+  return User.findById(id).select('profile.fullname')
+}
+
 UserSchema.statics.getUserByUsername = async user => {
   return User.findOne({'authentication.user': {$eq: user}})
 }
