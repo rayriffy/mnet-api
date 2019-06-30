@@ -22,34 +22,6 @@ router.post('/', async (req, res) => {
   const payload = {
     name: req.body.groupName,
     owner: req.user.id
-=======
-router.post('/', async (req, res, next) => {
-  const {name} = req.body
-  const groups = await Notification.find({name: {$eq: name.trim()}})
-
-  if (!_.isEmpty(groups)) {
-    return res.status(400).send({
-      status: 'failure',
-      code: 709,
-      response: {
-        message: 'duplicated name',
-      },
-    })
-  } else {
-    next()
-  }
-})
-
-router.post('/', async (req, res) => {
-  const {name} = req.body
-  const groupId = Math.random()
-    .toString(36)
-    .substr(2, 8)
-
-  const payload = {
-    name: name.trim(),
-    id: groupId,
->>>>>>> ccbe0364a2add6673eeef01ecf43c32a4ed2090b
   }
   console.log(payload)
   try {

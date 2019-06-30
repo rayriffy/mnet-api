@@ -45,24 +45,6 @@ SubscriberSchema.statics.subscribe = async (groupId, expoToken, userId) => {
 			return data.save()
 		}
 	}
-=======
-SubscriberSchema.statics.subscribe = async (group, token) => {
-  const payload = {
-    group: group,
-    token: token,
-  }
-
-  // Check dups
-  const dups = await Subscriber.find({$and: [{group: {$eq: group}}, {token: {$eq: token}}]})
-
-  if (!_.isEmpty(dups)) {
-    return false
-  } else {
-    const Sub = mongoose.model('Subscriber', SubscriberSchema)
-    const data = new Sub(payload)
-    return data.save()
-  }
->>>>>>> ccbe0364a2add6673eeef01ecf43c32a4ed2090b
 }
 
 SubscriberSchema.statics.unsubscribe = async (group, token) => {
