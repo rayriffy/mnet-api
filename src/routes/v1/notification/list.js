@@ -7,7 +7,7 @@ const router = express.Router()
 router.get('/owned', async (req, res) => {
   var userId = req.user.id
   try {
-    const groups = await Notification.find({ owner: { $eq: userId } }).sort({ name: 1 }) //groups that the user owned
+    const groups = await Notification.find({owner: {$eq: userId}}).sort({name: 1}) // groups that the user owned
     const payload = []
 
     groups.map(group => {
@@ -42,16 +42,20 @@ router.get('/owned', async (req, res) => {
 router.get('/in', async (req, res) => {
   var userId = req.user.id
   try {
-    const groups = await Subscriber.find({ 'user.id': { $eq: userId } }).sort({ name: 1 }) //groups that the user owned
-    for (var i = 0; i < groups.length; i++) {
-      var groupId = groups[i].group
-      const matchedGroup = await Notification.findOne({ _id: { $eq: groupId } }).select('name')
+    const groups = await Subscriber.find({'user.id': {$eq: userId}}).sort({name: 1}) // groups that the user owned
+
+    const fetchedGroup = groups.map(async (group, i) => {
+      const matchedGroup = await Notification.findOne({_id: {$eq: group.group}}).select('name')
       const groupName = matchedGroup.name
-      groups[i].name = groupName
-    }
-    
+
+      return {...group, name: groupName}
+    })
+
+    await Promise.all(fetchedGroup)
+
     const payload = []
-    groups.map(group => {
+
+    fetchedGroup.map(group => {
       payload.push({
         id: group._id,
         name: group.name,

@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import express from 'express'
 
 import Notification from '../../../models/notification'
@@ -21,7 +20,7 @@ router.post('/', (req, res, next) => {
 router.post('/', async (req, res) => {
   const payload = {
     name: req.body.groupName,
-    owner: req.user.id
+    owner: req.user.id,
   }
   console.log(payload)
   try {
@@ -34,7 +33,7 @@ router.post('/', async (req, res) => {
         data: {
           groupRef: group.groupRef,
           name: group.name,
-          id: group.id
+          id: group.id,
         },
       },
     })
