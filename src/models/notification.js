@@ -1,16 +1,28 @@
 import mongoose from 'mongoose'
-
 const NotificationSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
     trim: true,
   },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    trim: true,
+  },
+  groupRef: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
+  },
 })
 
 NotificationSchema.statics.addGroup = function(data) {
-  const Noti = mongoose.model('Notification', NotificationSchema)
-  const payload = new Noti(data)
+  data.groupRef = Math.random()
+    .toString(36)
+    .substr(2, 8)
+  const payload = new Notification(data)
   return payload.save()
 }
 

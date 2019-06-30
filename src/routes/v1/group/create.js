@@ -4,36 +4,36 @@ import Group from '../../../models/group'
 
 const router = express.Router()
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const payload = {
     name: req.body.name,
     owner: req.user.id,
   }
-  Group.addGroup(payload, (err, group) => {
-    if (err) {
-      return res.status(400).send({
-        status: 'failure',
-        code: 701,
-        response: {
-          message: 'failed to create new group',
-          data: err,
-        },
-      })
-    } else {
-      return res.status(200).send({
-        status: 'success',
-        code: 201,
-        response: {
-          message: 'group created',
-          data: {
-            group: {
-              id: group._id,
-            },
+  try {
+    const group = await Group.addGroup(payload)
+    console.log(group)
+    return res.status(200).send({
+      status: 'success',
+      code: 201,
+      response: {
+        message: 'group created',
+        data: {
+          group: {
+            groupRef: group.groupRef,
           },
         },
-      })
-    }
-  })
+      },
+    })
+  } catch (err) {
+    return res.status(400).send({
+      status: 'failure',
+      code: 701,
+      response: {
+        message: 'failed to create new group',
+        data: err.message,
+      },
+    })
+  }
 })
 
 router.all('/', (req, res) => {

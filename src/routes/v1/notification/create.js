@@ -1,11 +1,10 @@
-import _ from 'lodash'
 import express from 'express'
 
 import Notification from '../../../models/notification'
 const router = express.Router()
 
 router.post('/', (req, res, next) => {
-  if (!req.body.name) {
+  if (!req.body.groupName) {
     res.status(400).send({
       status: 'failure',
       code: 702,
@@ -18,34 +17,12 @@ router.post('/', (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
-  const {name} = req.body
-  const groups = await Notification.find({name: {$eq: name.trim()}})
-
-  if (!_.isEmpty(groups)) {
-    return res.status(400).send({
-      status: 'failure',
-      code: 709,
-      response: {
-        message: 'duplicated name',
-      },
-    })
-  } else {
-    next()
-  }
-})
-
 router.post('/', async (req, res) => {
-  const {name} = req.body
-  const groupId = Math.random()
-    .toString(36)
-    .substr(2, 8)
-
   const payload = {
-    name: name.trim(),
-    id: groupId,
+    name: req.body.groupName,
+    owner: req.user.id,
   }
-
+  console.log(payload)
   try {
     const group = await Notification.addGroup(payload)
     return res.status(200).send({
@@ -54,8 +31,9 @@ router.post('/', async (req, res) => {
       response: {
         message: 'notification group created',
         data: {
-          id: group.id,
+          groupRef: group.groupRef,
           name: group.name,
+          id: group.id,
         },
       },
     })

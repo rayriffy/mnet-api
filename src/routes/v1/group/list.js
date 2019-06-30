@@ -1,22 +1,27 @@
 import express from 'express'
-
 import Group from '../../../models/group'
+import User from '../../../models/user'
 
 const router = express.Router()
 
+// List for groups that the user is a member of
 router.post('/', async (req, res) => {
   try {
-    const group = await Group.addUserToGroup(req.body.groupRef, req.body.userId)
+    const groupList = await Group.listUserGroups(req.body.userId)
+
+    const fetchedGroup = groupList.map((group, i) => {
+      const ownerId = group.owner
+      const owner = User.getNameById(ownerId)
+      const ownerName = owner.profile.fullname
+
+      return {...group, owner: ownerName}
+    })
+
     return res.status(200).send({
       status: 'success',
       code: 201,
       response: {
-        message: 'group joined',
-        data: {
-          group: {
-            id: group._id,
-          },
-        },
+        data: fetchedGroup,
       },
     })
   } catch (err) {

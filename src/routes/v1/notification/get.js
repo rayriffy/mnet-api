@@ -8,7 +8,6 @@ const router = express.Router()
 
 router.get('/:id', async (req, res, next) => {
   const {id} = req.params
-
   const notificationGroup = await Notification.findById(id)
   console.log(notificationGroup)
   if (_.isEmpty(notificationGroup)) {
@@ -20,45 +19,37 @@ router.get('/:id', async (req, res, next) => {
       },
     })
   } else {
-    next()
-  }
-})
-
-router.get('/:id', async (req, res) => {
-  const {id} = req.params
-
-  try {
-    const subscribers = await Subscriber.find({group: {$eq: id}})
-
-    const payload = []
-
-    subscribers.map(subscriber => {
-      payload.push({
-        id: subscriber._id,
-        group: subscriber.group,
-        token: subscriber.token,
+    try {
+      const subscribers = await Subscriber.find({group: {$eq: id}})
+      const payload = []
+      subscribers.map(subscriber => {
+        payload.push({
+          id: subscriber._id,
+        })
       })
-    })
 
-    return res.status(200).send({
-      status: 'success',
-      code: 201,
-      response: {
-        message: 'data retrived',
-        data: {
-          subscribers: payload,
+      return res.status(200).send({
+        status: 'success',
+        code: 201,
+        response: {
+          message: 'data retrived',
+          data: {
+            subscribers: payload,
+            groupRef: notificationGroup.groupRef,
+            name: notificationGroup.name,
+          },
         },
-      },
-    })
-  } catch (err) {
-    return res.status(400).send({
-      status: 'failure',
-      code: 701,
-      response: {
-        message: 'unexpected error',
-        data: err,
-      },
-    })
+      })
+    } catch (err) {
+      return res.status(400).send({
+        status: 'failure',
+        code: 701,
+        response: {
+          message: 'unexpected error',
+          data: err,
+        },
+      })
+    }
   }
 })
 
