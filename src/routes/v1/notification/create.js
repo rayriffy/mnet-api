@@ -34,6 +34,7 @@ router.post('/', async (req, res) => {
         data: {
           groupRef: group.groupRef,
           name: group.name,
+          id: group.id
         },
       },
     })
