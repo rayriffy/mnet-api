@@ -8,17 +8,17 @@ const NotificationSchema = new mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    trim: true
+    trim: true,
   },
   groupRef: {
     type: String,
     required: true,
     trim: true,
-    unique: true
-  }
+    unique: true,
+  },
 })
 
-NotificationSchema.statics.addGroup = function (data) {
+NotificationSchema.statics.addGroup = function(data) {
   data.groupRef = Math.random()
     .toString(36)
     .substr(2, 8)

@@ -10,14 +10,14 @@ dotenv.config()
 const expo = new Expo()
 
 export default async function notifyService(to, title, body) {
-  //if (NODE_ENV === 'production' || (NODE_ENV === 'production' && MOCHA_TEST === false)) {
-  
-  const group = await Notification.findOne({ _id: { $eq: to } })
+  // if (NODE_ENV === 'production' || (NODE_ENV === 'production' && MOCHA_TEST === false)) {
+
+  const group = await Notification.findOne({_id: {$eq: to}})
   if (group === null) {
     return false
   } else {
     const messages = []
-    const subscribers = await Subscriber.find({ group: { $eq: group._id } })
+    const subscribers = await Subscriber.find({group: {$eq: group._id}})
 
     subscribers.map(subscriber => {
       if (Expo.isExpoPushToken(subscriber.user.token)) {
