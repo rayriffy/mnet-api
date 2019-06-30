@@ -77,7 +77,6 @@ router.post('/', async (req, res) => {
       },
     })
   } else {
-    
     _.each(req.body.announce.to, to => {
       notifyService(to, announce.message.title, announce.message.body)
     })
