@@ -24,7 +24,8 @@
     "mongoose": "^5.6.2",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "repo-latest-commit": "^1.0.0"
+    "repo-latest-commit": "^1.0.0",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",
@@ -49,6 +50,9 @@
     "format": "prettier --write --no-semi --list-different './src/**/*.js'",
     "lint": "eslint ./src/**/*.js",
     "start": "cross-env NODE_ENV=production node ./build/main.js",
-    "test": "yarn build && cross-env MOCHA_TEST=true mocha ./test --timeout 5000 --exit"
-  }
+    "test": "yarn build && cross-env MOCHA_TEST=true mocha ./test --timeout 5000 --exit",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
