@@ -79,16 +79,16 @@ UserSchema.statics.getUserByUsername = async user => {
 }
 
 UserSchema.statics.comparePassword = async (candidatePassword, hash) => {
-  let res = await bcrypt.compare(candidatePassword, hash)
+  const res = await bcrypt.compare(candidatePassword, hash)
   if (res === true) return true
   else return false
 }
 
 UserSchema.static.changePassword = async (id, oldPassword, newPassword) => {
-  let user = await User.getUserById(id)
+  const user = await User.getUserById(id)
 
   if ((await User.comparePassword(oldPassword, user.pass)) === true) {
-    let newHashedPassword = await bcrypt.hash(newPassword, 10)
+    const newHashedPassword = await bcrypt.hash(newPassword, 10)
     return User.findByIdAndUpdate(id, {$set: {pass: newHashedPassword}})
   } else {
     return false

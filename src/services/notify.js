@@ -30,7 +30,7 @@ export default async function notifyService(to, title, body) {
       }
     })
 
-    let chunks = expo.chunkPushNotifications(messages)
+    const chunks = expo.chunkPushNotifications(messages)
 
     _.each(chunks, async chunk => {
       console.log(chunk)

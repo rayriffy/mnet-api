@@ -46,7 +46,7 @@ AnnounceSchema.statics.getAnnounceById = async id => {
 }
 
 AnnounceSchema.statics.countLikeById = async id => {
-  let announce = await Announce.findById(id)
+  const announce = await Announce.findById(id)
 
   if (_.isEmpty(announce)) {
     return false

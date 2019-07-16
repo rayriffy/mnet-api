@@ -7,13 +7,13 @@ dotenv.config()
 const {SECRET} = process.env
 
 export default passport => {
-  let opts = {}
+  const opts = {}
   opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt')
   opts.secretOrKey = SECRET
   passport.use(
     new Strategy(opts, async (payload, res) => {
       try {
-        let user = await User.getUserById(payload.id)
+        const user = await User.getUserById(payload.id)
 
         if (user) {
           return res(null, user)
