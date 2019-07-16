@@ -48,6 +48,8 @@ server.use((req, res, next) => {
   next()
 })
 
+server.use('/bucket', express.static('bucket'))
+
 server.use('/', indexRoute)
 
 server.use('/about', aboutRoute)
